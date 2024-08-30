@@ -19,8 +19,7 @@ export {
 
 	GrobGroup			,
 	GrobGroupType		,
-	groupKeyType		,
-
+	groupKeyType		, 
 	TTRPGSystemGraphModel as TTRPGSystem, 
 }
 	

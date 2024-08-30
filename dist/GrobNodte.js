@@ -3,21 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GrobDerivedNode = exports.GrobFixedNode = exports.GrobNode = exports.GrobDerivedOrigin = void 0;
 var tslib_1 = require("tslib");
 var AGraphItem_1 = require("./Abstractions/AGraphItem");
-var grobax_json_handler_1 = require("grobax-json-handler");
 var grobDerivedSymbolRegex = /@[a-zA-Z]/g;
 var GrobDerivedOrigin = /** @class */ (function () {
     function GrobDerivedOrigin() {
         this.standardValue = 1;
     }
     GrobDerivedOrigin.UnkownLocationKey = 'unknown.unknown.unknown';
-    tslib_1.__decorate([
-        (0, grobax_json_handler_1.JsonString)(),
-        tslib_1.__metadata("design:type", String)
-    ], GrobDerivedOrigin.prototype, "symbol", void 0);
-    tslib_1.__decorate([
-        (0, grobax_json_handler_1.JsonString)(),
-        tslib_1.__metadata("design:type", String)
-    ], GrobDerivedOrigin.prototype, "originKey", void 0);
     return GrobDerivedOrigin;
 }());
 exports.GrobDerivedOrigin = GrobDerivedOrigin;
@@ -152,10 +143,6 @@ var GrobFixedNode = /** @class */ (function (_super) {
     GrobFixedNode.prototype.removeDependency = function (node) { return false; };
     GrobFixedNode.prototype.nullifyDependency = function (node) { return false; };
     GrobFixedNode.prototype._update = function () { };
-    tslib_1.__decorate([
-        (0, grobax_json_handler_1.JsonNumber)({ name: 'standardValue' }),
-        tslib_1.__metadata("design:type", Number)
-    ], GrobFixedNode.prototype, "___value", void 0);
     return GrobFixedNode;
 }(GrobNode));
 exports.GrobFixedNode = GrobFixedNode;
@@ -427,14 +414,6 @@ var GrobDerivedNode = /** @class */ (function (_super) {
             return;
         orig.originKey = dependency.getLocationKey();
     };
-    tslib_1.__decorate([
-        (0, grobax_json_handler_1.JsonString)({ name: 'calculationString' }),
-        tslib_1.__metadata("design:type", String)
-    ], GrobDerivedNode.prototype, "calc", void 0);
-    tslib_1.__decorate([
-        (0, grobax_json_handler_1.JsonArrayClassTyped)(GrobDerivedOrigin, { name: 'calcOrigins' }),
-        tslib_1.__metadata("design:type", Array)
-    ], GrobDerivedNode.prototype, "origins", void 0);
     return GrobDerivedNode;
 }(GrobNode));
 exports.GrobDerivedNode = GrobDerivedNode;

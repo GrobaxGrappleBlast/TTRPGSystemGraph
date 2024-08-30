@@ -1,20 +1,17 @@
 import { GrobCollection } from "./GrobCollection"; 
 import { AGraphItem } from "./Abstractions/AGraphItem"; 
-import type { GrobNodeType } from "./Graph/TTRPGSystemsGraphDependencies"; 
-import { JsonArrayClassTyped, JsonNumber, JsonString } from "grobax-json-handler";
+import type { GrobNodeType } from "./Graph/TTRPGSystemsGraphDependencies";  
 
 var grobDerivedSymbolRegex =/@[a-zA-Z]/g;
 
 export class GrobDerivedOrigin {
 
 	public static UnkownLocationKey = 'unknown.unknown.unknown'
-
-	@JsonString()
+ 
 	public symbol: string;
 	public standardValue:number = 1;
 	public origin: GrobNodeType | null;
-	
-	@JsonString()
+	 
 	public originKey: string ;
 
 }
@@ -153,8 +150,7 @@ export class GrobFixedNode extends GrobNode<GrobFixedNode>{
 	constructor(name ,  parent? : GrobCollection<GrobFixedNode>) {  
 		super(name ,'NF',parent) 
 	}
-
-	@JsonNumber({name : 'standardValue'})
+ 
 	public ___value:number= 1;
 
 	getValue(): number {
@@ -188,11 +184,9 @@ export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
 	constructor(name? , parent? : GrobCollection<GrobDerivedNode> ) {  
 		super(name  ,'ND', parent)  
 	}
-
-	@JsonString({name : 'calculationString'})
+ 
 	public calc:string = '@a';
-
-	@JsonArrayClassTyped(GrobDerivedOrigin,{name:'calcOrigins'})
+ 
 	public origins : GrobDerivedOrigin[] = [];
 	private _value : number = NaN;
 
