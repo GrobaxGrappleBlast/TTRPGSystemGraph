@@ -1,5 +1,5 @@
 {
-    "name": "ttrpg-environment",
+    "name": "ttrpg-system-graph",
     "version": "0.0.1",
     "description": "A plugin development template for devs who want to use svelte in Obsidian.",
     "main": "main.js",
