@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uuidv4 = exports.TTRPGSystem = exports.GrobGroup = exports.GrobCollection = exports.GrobDerivedNode = exports.GrobDerivedOrigin = exports.GrobFixedNode = void 0;
+exports.uuidv4 = exports.TTRPGSystem = exports.GrobGroup = exports.GrobCollection = exports.GrobDerivedNode = exports.GrobDerivedOrigin = exports.GrobFixedNode = exports.keyManagerInstance = void 0;
+var KeyManager_1 = require("./Abstractions/KeyManager");
+Object.defineProperty(exports, "keyManagerInstance", { enumerable: true, get: function () { return KeyManager_1.keyManagerInstance; } });
 var TTRPGSystemGraphModel_1 = require("./Graph/TTRPGSystemGraphModel");
 Object.defineProperty(exports, "TTRPGSystem", { enumerable: true, get: function () { return TTRPGSystemGraphModel_1.TTRPGSystemGraphModel; } });
 var GrobCollection_1 = require("./GrobCollection");
