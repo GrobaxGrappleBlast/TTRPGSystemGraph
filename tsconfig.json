@@ -3,6 +3,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "baseUrl": "./",   
+		"sourceMap":true,
         "inlineSources": true,
         "module": "ESNext",
         "target": "ES6",
@@ -14,15 +15,21 @@
         "strictNullChecks": true,
         "importsNotUsedAsValues":"remove", 
         "types": ["svelte", "jest","node"],
-        
-        "lib": [
+        "strict": false,
+		"allowSyntheticDefaultImports":true,
+		"resolveJsonModule": true,
+		"esModuleInterop":true,
+		
+		"outDir": "./dist",  
+		"declaration":true,  
+        "lib": [ 
+			"es2017",
             "DOM",
             "ES5",
             "ES6",
             "ES7"
         ]
-    },
-    "extends": "@tsconfig/svelte/tsconfig.json",
+    }, 
     "include": [
         "**/globals.d.ts"   ,
         "**/*.js"           ,
@@ -31,6 +38,7 @@
     "exclude": [
         "node_modules",
         "**/*.test.ts",
-        "subProjects"
+        "subProjects",
+		"**/dist/*"
     ]
 }   

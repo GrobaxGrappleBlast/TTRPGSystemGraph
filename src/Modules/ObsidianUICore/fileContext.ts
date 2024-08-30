@@ -1,6 +1,6 @@
 import { Mutex } from "async-mutex";
 import { FileHandler } from "./fileHandler";
-import { JSONHandler } from "../JSONModules";
+import { JSONHandler } from 'grobax-json-handler';
 import { TTRPGSystem, TTRPG_SCHEMES } from "../Designer/index";
 import { SystemPreview } from "./model/systemPreview";
 import type { Message, messageList } from "../ObsidianUI/UIInterfaces/Designer01/BaseComponents/Messages/message";
@@ -43,7 +43,7 @@ export class FileContext {
 		const folderName = folderPath.split('/').last();
 		let exists = await FileHandler.exists(indexPath)
 		if( exists ){
-			const content = await FileHandler.readFile(indexPath);
+			const content = await FileHandler.readFile(indexPath); 
 			const systemPreview = JSONHandler.deserialize(SystemPreview,content);
 			systemPreview.folderName	= folderName;
 			systemPreview.folderPath	= folderPath;
@@ -188,7 +188,7 @@ export class FileContext {
 		return FileContext.getInstance().systemDefinitionExistsInFolder(folder);
 	}
 	public async getOrCreateSystemsDesigns( folder:string ){
-
+ 
 		// if the folder does not exist. return false 
 		if (! await FileHandler.exists(folder)){
 			return null;

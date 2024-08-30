@@ -1,8 +1,6 @@
-
-import { JsonString } from "../../../../src/Modules/JSONModules/Decorators";
 import type { IGraphItem } from "./IGraphItem";
 import { KeyManager } from "./KeyManager";
-
+import { JsonString } from "grobax-json-handler";
 
 
 var keyManager = new KeyManager();

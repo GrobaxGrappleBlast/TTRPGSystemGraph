@@ -1,7 +1,6 @@
 
-import { JSONHandler } from '../../../JSONModules';
-import {
-	GrobCollection,
+import { JSONHandler } from 'grobax-json-handler';
+import { 
 	GrobDerivedNode,
 	TTRPGSystem,
 	TTRPG_SCHEMES,
