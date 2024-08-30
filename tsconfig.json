@@ -1,12 +1,14 @@
 {
     "compilerOptions": {
+		"outDir": "./dist",  
+		"rootDir": "./src",
+		"declaration":true, 
+        "esModuleInterop":true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "baseUrl": "./",   
-		"sourceMap":true,
-        "inlineSources": true,
-        "module": "ESNext",
-        "target": "ES6",
+        "baseUrl": "./",    
+        "module": "commonjs",
+        "target": "ES5", 
         "allowJs": true,
         "noImplicitAny": false,
         "moduleResolution": "node",
@@ -14,31 +16,22 @@
         "isolatedModules": true,
         "strictNullChecks": true,
         "importsNotUsedAsValues":"remove", 
-        "types": ["svelte", "jest","node"],
-        "strict": false,
-		"allowSyntheticDefaultImports":true,
-		"resolveJsonModule": true,
-		"esModuleInterop":true,
-		
-		"outDir": "./dist",  
-		"declaration":true,  
-        "lib": [ 
-			"es2017",
-            "DOM",
+		"skipLibCheck":true,
+        "types": ["jest","node"],
+        "lib": [
             "ES5",
             "ES6",
             "ES7"
         ]
-    }, 
+    },
     "include": [
         "**/globals.d.ts"   ,
         "**/*.js"           ,
-        "**/*.svelte"       ,
         "**/*.ts"],
     "exclude": [
         "node_modules",
         "**/*.test.ts",
-        "subProjects",
-		"**/dist/*"
+        "**/dist/*",
+		"**.config.*"
     ]
 }   

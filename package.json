@@ -36,7 +36,7 @@
         "lint": "eslint . --ext .ts",
         "dev": "vite build --watch",
         "vite": "vite build --watch",
-        "build": "vite build",
+        "build": "npx tsc", 
         "test": "jest --coverage"
     },
     "keywords": [],
