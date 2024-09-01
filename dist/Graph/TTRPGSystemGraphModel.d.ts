@@ -30,6 +30,7 @@ export declare class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel
     getNode(group: groupKeyType, col: GrobCollection<GrobNodeType> | string, name: string): GrobNodeType | null;
     getDerivedNode(col: GrobCollection<GrobDerivedNode> | string, name: string): GrobDerivedNode;
     getFixedNode(col: GrobCollection<GrobFixedNode> | string, name: string): GrobFixedNode;
+    getNodeNames(group: groupKeyType, col: GrobCollection<GrobNodeType> | string): string[] | null;
     protected _deleteGroup(group: GrobGroupType | string): false | undefined;
     deleteCollection(group: groupKeyType, col: string | GrobCollection<GrobNodeType>): any;
     deleteDerivedCollection(col: string | GrobCollection<GrobDerivedNode> | string): any;

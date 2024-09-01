@@ -257,6 +257,24 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		return this.getNode(fixed,col,name ) as GrobFixedNode;
 
 	}
+	public getNodeNames(  group : groupKeyType , col : GrobCollection<GrobNodeType> | string  ){
+		const grp = this._getGroup(group);
+		if(!grp){
+			this.out.outError(`No group existed by name ${group}`)
+			return null;
+		}
+		
+		let _col : GrobCollection<GrobNodeType>;
+		if ( typeof col === 'string') {
+			_col = grp.getCollection(col);
+		}else{
+			_col = col;
+		}
+
+		return _col.getNodeNames();
+	}
+
+
 
 	// delete Statements 
 	protected _deleteGroup		(group:GrobGroupType | string ){

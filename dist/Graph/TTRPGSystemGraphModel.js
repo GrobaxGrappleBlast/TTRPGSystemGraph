@@ -214,6 +214,21 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
     TTRPGSystemGraphModel.prototype.getFixedNode = function (col, name) {
         return this.getNode(fixed, col, name);
     };
+    TTRPGSystemGraphModel.prototype.getNodeNames = function (group, col) {
+        var grp = this._getGroup(group);
+        if (!grp) {
+            this.out.outError("No group existed by name ".concat(group));
+            return null;
+        }
+        var _col;
+        if (typeof col === 'string') {
+            _col = grp.getCollection(col);
+        }
+        else {
+            _col = col;
+        }
+        return _col.getNodeNames();
+    };
     // delete Statements 
     TTRPGSystemGraphModel.prototype._deleteGroup = function (group) {
         if (typeof group == 'string') {
