@@ -1,9 +1,6 @@
+import { TTRPGSystem } from "../../src";
 
-
-
-import {
-	TTRPGSystem,
-} from '../../index'
+ 
 
 function setUpTests(){
 	let sys = new TTRPGSystem();

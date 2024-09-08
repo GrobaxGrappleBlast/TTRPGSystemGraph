@@ -1,185 +1,10 @@
-import { GrobCollection } from "./GrobCollection"; 
-import { AGraphItem } from "./Abstractions/AGraphItem"; 
-import type { GrobNodeType } from "./Graph/TTRPGSystemsGraphDependencies";  
+import { AGrobNode } from "./AGrobNodte";
+import { GrobCollection } from "../GrobCollection"; 
+import { AGraphItem } from "../Abstractions/AGraphItem"; 
+import { grobDerivedSymbolRegex, type GrobNodeType } from "../Graph/TTRPGSystemsGraphDependencies";  
+import { GrobOrigin } from "./GrobOrigin";
 
-var grobDerivedSymbolRegex =/@[a-zA-Z]/g;
-
-export class GrobDerivedOrigin {
-
-	public static UnkownLocationKey = 'unknown.unknown.unknown'
- 
-	public symbol: string;
-	public standardValue:number = 1;
-	public origin: GrobNodeType | null;
-	 
-	public originKey: string ;
-
-}
-
-
-export abstract class GrobNode<T extends GrobNode<T>> extends AGraphItem{
-
-	constructor(name? , keystart? , parent? : GrobCollection<GrobNodeType> ) {  
-		super(name, keystart) 
-		if(parent)
-			this.parent = parent;
-	}
-	
-	// @ts-ignore
- 	parent: GrobCollection<GrobNodeType>;
-
-	public dependencies :Record<any,GrobNodeType> = {};
-	public dependents : Record<any,GrobNodeType> = {};
-
-	public updateListeners = {};
-
-	public static getTypeString(): string{
-		return 'Nodte<T extends Nodte<T>>';
-	}
-
-	public addDependent(node: GrobNodeType ) : boolean {
-		const key = node.getKey();
-
-		if(this.dependents[key]){
-			return true;
-		}
-
-		this.dependents[key] = node;
-		return true;
-	} 
-	public removeDependent(node:GrobNodeType) : boolean{
-		delete this.dependents[node.getKey()];
-		return this.dependents[node.getKey()] == null;
-	}
-	public getDependents(): GrobNodeType[] {
-		//@ts-ignore
-		return Object.values( this.dependents ) as GrobNodeType[] ?? [];
-	}
-
-	abstract addDependency( node:GrobNodeType) : boolean 
-	abstract removeDependency( node:GrobNodeType)  : boolean
-	abstract nullifyDependency( node:GrobNodeType ): boolean
-
-	public getDependencies(): GrobNodeType[] {
-		//@ts-ignore
-		return Object.values( this.dependencies ) as GrobNodeType[] ?? [];
-	}
-
-	abstract getValue() : number  
- 
-	public getLocationKey(){
-		let segs = this.getLocationKeySegments();
-		return segs.join('.');
-	}
-	public getLocationKeySegments() : string [] {
-		let seg : string[] = ['','',''];
-		seg[0] = this.parent?.parent?.getName() ?? 'unknown';
-		seg[1] = this.parent?.getName () ?? 'unknown';
-		seg[2] = this.getName() ?? 'unknown';
-		return seg;
-	}
-	public update( ){
-		this._update();
-		( Object.keys(this.updateListeners) ).forEach( key => {
-			this.updateListeners[key]();
-		})
-		return true;
-	}
-	abstract _update();
-
-	dispose () {
-		// delete references all
-		
-
-		for(const key in this.dependencies){
-			const curr = this.dependencies[key]
-			curr.removeDependent(this as any)
-		}
-		
-		for(const key in this.dependents){
-			const curr = this.dependents[key]
-			curr.nullifyDependency(this as any)
-		}
-
-		//@ts-ignore
-		this.parent = null;
-		//@ts-ignore
-		this.name = null;
-
-	}
-
-	public setName( name ){
-		const oldname= this.getName();
-		super.setName(name);
-		this.parent.update_node_name(oldname,name); 
-		this.updateLocation(this.parent);
-	} 
-	updateLocation( parent ){
-		this.parent = parent;
-		for(const key in this.dependents){
-			const dep = this.dependents [key];
-			dep.updateDependecysLocation(this)
-		}
-	}
-
-	public updateDependecysLocation( dependency ){}
-
-	public isValid(  ){
-		return true;
-	}
-
-	addUpdateListener( key , listener : () => any ){
-		if (this.updateListeners[key] != undefined){
-			console.error('tried to add updatelistener to node with key:' + key + '. but there was already a listener using that key');
-			return false;
-		}
-
-		this.updateListeners[key] = listener;
-
-	}
-	removeUpdateListener( key ){
-		delete this.updateListeners[key];
-	}
-	removeAllUpdateListeners(){
-		this.updateListeners = {}
-	}
-}
-  
-export class GrobFixedNode extends GrobNode<GrobFixedNode>{
-	
-	constructor(name ,  parent? : GrobCollection<GrobFixedNode>) {  
-		super(name ,'NF',parent) 
-	}
- 
-	public ___value:number= 1;
-
-	getValue(): number {
-		return this.___value;
-	} 
-	setValue( value : number ) {
-		this.___value = value;
-		for(const key in this.dependents){
-			const curr = this.dependents[key] as GrobDerivedNode;
-			curr.update();
-		}
-	} 
-	
-	public static  getTypeString(): string {
-		return 'fixedNode';
-	}  
-	public getTypeString(){
-		return GrobFixedNode.getTypeString();
-	}
-
-	public addDependency(node:GrobNodeType){ return false } 
-	public removeDependency(node:GrobNodeType){ return false  }
-	public nullifyDependency(node:GrobNodeType){return false}
-	
-	_update(){}
-}
- 
-
-export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
+export class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
 	
 	constructor(name? , parent? : GrobCollection<GrobDerivedNode> ) {  
 		super(name  ,'ND', parent)  
@@ -187,15 +12,21 @@ export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
  
 	public calc:string = '@a';
  
-	public origins : GrobDerivedOrigin[] = [];
+	public origins : GrobOrigin[] = [];
 	private _value : number = NaN;
 
-	getValue(): number {
+	_getValue(): number {
 		return this._value;
 	} 
 	setValue( value : number ){
 		this._value = value;
 	}
+
+
+	
+	
+
+
 
 	public static getTypeString(): string {
 		return 'derivedNode';
@@ -237,7 +68,7 @@ export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
 		let orig = this.origins.find( p => p.origin?.getKey() == key );
 		if(orig){
 			orig.origin = null;	
-			orig.originKey = GrobDerivedOrigin.UnkownLocationKey;
+			orig.originKey = GrobOrigin.UnkownLocationKey;
 		}
 		
 		// then nulify the dependency
@@ -314,11 +145,11 @@ export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
 			// add items if there is anything to add.  
 			if( symbolsToAdd.length != 0){
 				for (let i = 0; i < symbolsToAdd.length; i++) {
-					const orig = new GrobDerivedOrigin();
+					const orig = new GrobOrigin();
 					orig.symbol = symbolsToAdd[i];
 					orig.standardValue = 1;
 					orig.origin = null; 
-					orig.originKey = GrobDerivedOrigin.UnkownLocationKey;
+					orig.originKey = GrobOrigin.UnkownLocationKey;
 					this.origins.push(orig);
 				}
 			}
@@ -366,8 +197,6 @@ export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
 
 		return true;
 	}
-
-
 	/**
 	 * Parses calculation To a Number of Origins.
 	 * @returns  
@@ -398,8 +227,6 @@ export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
 		symbols = Array.from(new Set(symbols))
 		return symbols;
 	}
-	
-
 	public recalculate( useTempValues = false ){ 
 		
 		//const symbols = this.calc.match( grobDerivedSymbolRegex );  
@@ -447,7 +274,6 @@ export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
 		}  
 		return { success:recalcSuccess, value:value};
 	}
-
 	public testCalculate( statement ){
 		const symbols = statement.match( grobDerivedSymbolRegex );  
 		let rec = symbols ? Object.fromEntries( symbols.map( s => [s,1])) : {};
@@ -467,7 +293,6 @@ export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
 		let res = GrobDerivedNode.recalculate(rec,statement); 
 		return res;
 	}
-
 	_update( ){
 
 		if(!this.isValid()){
@@ -486,7 +311,6 @@ export class GrobDerivedNode extends GrobNode<GrobDerivedNode> {
 		} 
 		return success;
 	}
-
 	public updateDependecysLocation( dependency ){
 		let orig = this.origins.find( p => p.origin?.getName() == dependency.getName() );
 		if(!orig)

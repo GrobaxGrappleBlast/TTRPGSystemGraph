@@ -1,10 +1,6 @@
-import type { GrobNodeType } from "../../../../../src/Modules/Designer/GraphV2/TTRPGSystemsGraphDependencies";
-import type { IOutputHandler } from "../../Abstractions/IOutputHandler"; 
-import { GrobCollection } from "../../GrobCollection";
-import { GrobDerivedNode, GrobFixedNode } from "../../GrobNodte";
-import{
-	TTRPGSystem,
-} from '../../index'
+import { GrobCollection, GrobDerivedNode, GrobFixedNode, GrobNodeType, TTRPGSystem } from "../../src";
+import { IOutputHandler } from "../../src/Abstractions/IOutputHandler";
+
  
 
 interface TestIOutputHandler extends IOutputHandler{

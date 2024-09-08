@@ -1,12 +1,7 @@
 import exp from 'constants';
-import { JSONHandler } from 'grobax-json-handler';
-import 
-{
-	GrobDerivedOrigin,
-	TTRPGSystem,
-} from '../../index'
-
-import {type GrobNodeType } from '../../index';
+import { JSONHandler } from 'grobax-json-handler'; 
+import { GrobDerivedOrigin, GrobNodeType, TTRPGSystem } from '../../src';
+ 
 
 function setUpTests(){
 	let sys = new TTRPGSystem();
@@ -225,12 +220,12 @@ test('Test After Deserialization, that everything is ok!', () => {
 
 						// ensure all origins are precent in the dependencies list.
 						const deplist			= Object.values((node as GrobNodeType).dependencies);
-						const findoriginInDep	= deplist.findIndex(p => p.getKey() == origin.origin?.getKey()) ;
+						const findoriginInDep	= deplist.findIndex(p => (p as any).getKey() == origin.origin?.getKey()) ;
 						expect(findoriginInDep != -1 ).toBe(true)
 
 						// ensure that this node exists as a dependent on the target node
 						const deptsList = Object.values((origin.origin  as GrobNodeType).dependents);
-						const findOriginInDepts = deptsList.findIndex( p => p.getKey() == node.getKey() );
+						const findOriginInDepts = deptsList.findIndex( p => (p as any).getKey() == node.getKey() );
 						expect(findOriginInDepts != -1 ).toBe(true)
 
 					} catch (e) {

@@ -9,10 +9,12 @@ var GrobCollection_1 = require("./GrobCollection");
 Object.defineProperty(exports, "GrobCollection", { enumerable: true, get: function () { return GrobCollection_1.GrobCollection; } });
 var GrobGroup_1 = require("./GrobGroup");
 Object.defineProperty(exports, "GrobGroup", { enumerable: true, get: function () { return GrobGroup_1.GrobGroup; } });
-var GrobNodte_1 = require("./GrobNodte");
-Object.defineProperty(exports, "GrobDerivedNode", { enumerable: true, get: function () { return GrobNodte_1.GrobDerivedNode; } });
-Object.defineProperty(exports, "GrobDerivedOrigin", { enumerable: true, get: function () { return GrobNodte_1.GrobDerivedOrigin; } });
-Object.defineProperty(exports, "GrobFixedNode", { enumerable: true, get: function () { return GrobNodte_1.GrobFixedNode; } });
+var GrobDerivedNode_1 = require("./Nodes/GrobDerivedNode");
+Object.defineProperty(exports, "GrobDerivedNode", { enumerable: true, get: function () { return GrobDerivedNode_1.GrobDerivedNode; } });
+var GrobFixedNode_1 = require("./Nodes/GrobFixedNode");
+Object.defineProperty(exports, "GrobFixedNode", { enumerable: true, get: function () { return GrobFixedNode_1.GrobFixedNode; } });
+var GrobOrigin_1 = require("./Nodes/GrobOrigin");
+Object.defineProperty(exports, "GrobDerivedOrigin", { enumerable: true, get: function () { return GrobOrigin_1.GrobOrigin; } });
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
         .replace(/[xy]/g, function (c) {

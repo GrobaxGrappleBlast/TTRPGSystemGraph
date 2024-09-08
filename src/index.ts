@@ -5,13 +5,15 @@ import { keyManagerInstance } from './Abstractions/KeyManager';
 import { TTRPGSystemGraphModel, type groupKeyType } from './Graph/TTRPGSystemGraphModel';
 import type { GrobNodeType } from './Graph/TTRPGSystemsGraphDependencies';
 import { GrobCollection, type GrobCollectionType } from './GrobCollection';
-import { GrobGroup, type GrobGroupType } from './GrobGroup';
-import { GrobDerivedNode, GrobDerivedOrigin, GrobFixedNode } from './GrobNodte'; 
+import { GrobGroup, type GrobGroupType } from './GrobGroup'; 
+import { GrobDerivedNode } from './Nodes/GrobDerivedNode';
+import { GrobFixedNode } from './Nodes/GrobFixedNode';
+import { GrobOrigin } from './Nodes/GrobOrigin';
 
 export {keyManagerInstance}
 export { 
 	GrobFixedNode		,
-	GrobDerivedOrigin	,
+	GrobOrigin as GrobDerivedOrigin	,
 	GrobDerivedNode		,
 	GrobNodeType		,
 

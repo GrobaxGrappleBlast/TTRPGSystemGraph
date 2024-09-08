@@ -1,10 +1,9 @@
  
 import type { IOutputHandler } from "../../src/Abstractions/IOutputHandler";
-import { TTRPGSystem } from "../../src/index";
+import { GrobDerivedNode, GrobDerivedOrigin, TTRPGSystem } from "../../src/index";
 import type { GrobNodeType } from "../../src/Graph/TTRPGSystemsGraphDependencies";
 import type { GrobCollection, GrobCollectionType } from "../../src/GrobCollection";
-import type { GrobGroup, GrobGroupType } from "../../src/GrobGroup";
-import { GrobDerivedNode, GrobDerivedOrigin } from "../../src/GrobNodte";
+import type { GrobGroup, GrobGroupType } from "../../src/GrobGroup"; 
 
 interface TestIOutputHandler extends IOutputHandler{
 	errorMessages 	:string[],

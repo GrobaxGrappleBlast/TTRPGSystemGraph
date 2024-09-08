@@ -1,6 +1,6 @@
-import exp from "constants";
-import type { IOutputHandler } from "../../Abstractions/IOutputHandler";
-import { TTRPGSystem } from "../../index";
+import exp from "constants"; 
+import { IOutputHandler } from "../../src/Abstractions/IOutputHandler";
+import { TTRPGSystem } from "../../src";
 
 interface TestIOutputHandler extends IOutputHandler{
 	errorMessages 	:string[],
@@ -177,7 +177,6 @@ test('Try Wrong Calculations ', () => {
 	let addO = node.setOrigin('@w',node2);
 	expect(addO).toBe(false);
 });
-
 
 test('Try Updating  Node through Dependency Calculations ', () => {
 	let sys = startTest();

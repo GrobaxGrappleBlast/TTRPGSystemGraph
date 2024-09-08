@@ -1,9 +1,6 @@
-import type { IOutputHandler } from "../../Abstractions/IOutputHandler";
-import { TTRPGSystem } from "../../index";
-import type { GrobNodeType } from "../../GraphV2/TTRPGSystemsGraphDependencies";
-import type { GrobCollection, GrobCollectionType } from "../../GrobCollection";
-import type { GrobGroup, GrobGroupType } from "../../GrobGroup";
-import { GrobDerivedNode, GrobDerivedOrigin } from "../../GrobNodte";
+import { GrobCollection, GrobCollectionType, GrobDerivedNode, GrobGroup, GrobGroupType, GrobNodeType, TTRPGSystem } from "../../src";
+import { IOutputHandler } from "../../src/Abstractions/IOutputHandler";
+
  
 
 var out = {

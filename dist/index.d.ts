@@ -3,7 +3,9 @@ import { TTRPGSystemGraphModel, type groupKeyType } from './Graph/TTRPGSystemGra
 import type { GrobNodeType } from './Graph/TTRPGSystemsGraphDependencies';
 import { GrobCollection, type GrobCollectionType } from './GrobCollection';
 import { GrobGroup, type GrobGroupType } from './GrobGroup';
-import { GrobDerivedNode, GrobDerivedOrigin, GrobFixedNode } from './GrobNodte';
+import { GrobDerivedNode } from './Nodes/GrobDerivedNode';
+import { GrobFixedNode } from './Nodes/GrobFixedNode';
+import { GrobOrigin } from './Nodes/GrobOrigin';
 export { keyManagerInstance };
-export { GrobFixedNode, GrobDerivedOrigin, GrobDerivedNode, GrobNodeType, GrobCollection, GrobCollectionType, GrobGroup, GrobGroupType, groupKeyType, TTRPGSystemGraphModel as TTRPGSystem, };
+export { GrobFixedNode, GrobOrigin as GrobDerivedOrigin, GrobDerivedNode, GrobNodeType, GrobCollection, GrobCollectionType, GrobGroup, GrobGroupType, groupKeyType, TTRPGSystemGraphModel as TTRPGSystem, };
 export declare function uuidv4(): string;

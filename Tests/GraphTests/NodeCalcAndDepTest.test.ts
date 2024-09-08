@@ -1,4 +1,4 @@
-import { TTRPGSystem } from "../../index";
+import { TTRPGSystem } from "../../src";
 
  
 var out = {

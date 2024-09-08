@@ -1,11 +1,6 @@
+import { TTRPGSystem } from "../../src";
 
-import { JSONHandler } from 'grobax-json-handler';
-import { 
-	GrobDerivedNode,
-	TTRPGSystem,
-	TTRPG_SCHEMES,
-} from '../../index'
-
+ 
 function setUpTests(){
 	let sys = new TTRPGSystem();
 	sys.initAsNew();
