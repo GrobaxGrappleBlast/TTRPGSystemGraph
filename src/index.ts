@@ -6,6 +6,8 @@ import { TTRPGSystemGraphModel, type groupKeyType } from './Graph/TTRPGSystemGra
 import type { GrobNodeType } from './Graph/TTRPGSystemsGraphDependencies';
 import { GrobCollection, type GrobCollectionType } from './GrobCollection';
 import { GrobGroup, type GrobGroupType } from './GrobGroup'; 
+import { TTRPGSystemBonusDesigner } from './Helpers/TTRPGSystemBonusDesigner';
+import { GrobBonusNode } from './Nodes/GrobBonusNode';
 import { GrobDerivedNode } from './Nodes/GrobDerivedNode';
 import { GrobFixedNode } from './Nodes/GrobFixedNode';
 import { GrobOrigin } from './Nodes/GrobOrigin';
@@ -15,6 +17,7 @@ export {
 	GrobFixedNode		,
 	GrobOrigin as GrobDerivedOrigin	,
 	GrobDerivedNode		,
+	GrobBonusNode		,
 	GrobNodeType		,
 
 	GrobCollection		,
@@ -25,8 +28,10 @@ export {
 	groupKeyType		, 
 	
 	TTRPGSystemGraphModel as TTRPGSystem, 
+	TTRPGSystemBonusDesigner as TTRPGSystemHelper,
 }
 	
+
 export function uuidv4() {
 	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
 	.replace(/[xy]/g, function (c) {

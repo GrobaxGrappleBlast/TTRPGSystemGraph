@@ -2,8 +2,8 @@ import { GrobCollection } from "../GrobCollection";
 import { type GrobGroupType } from "../GrobGroup";
 import type { GrobNodeType } from "./TTRPGSystemsGraphDependencies";
 import { TTRPGSystemGraphAbstractModel } from "./TTRPGSystemGraphAbstractModel";
-import { GrobFixedNode } from "src/Nodes/GrobFixedNode";
-import { GrobDerivedNode } from "src/Nodes/GrobDerivedNode";
+import { GrobFixedNode }    from "../../src/Nodes/GrobFixedNode";
+import { GrobDerivedNode }  from "../../src/Nodes/GrobDerivedNode";
 export type groupKeyType = 'fixed' | 'derived';
 /**
  *  handles Model operations and Data Containment,

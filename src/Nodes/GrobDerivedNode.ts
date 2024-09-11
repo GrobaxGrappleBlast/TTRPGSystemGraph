@@ -13,7 +13,7 @@ export class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
 	public calc:string = '@a';
  
 	public origins : GrobOrigin[] = [];
-	private _value : number = NaN;
+	protected _value : number = NaN;
 
 	_getValue(): number {
 		return this._value;
@@ -239,10 +239,10 @@ export class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
 		this._value = res.value;
 		return res.success;
 	}
-	private _recalculate(  rec : Record<string,number> = {} , statement ){
+	protected _recalculate(  rec : Record<string,number> = {} , statement ){
 		return GrobDerivedNode.recalculate(rec,statement);
 	}
-	private static recalculate(  rec : Record<string,number> = {} , statement ){
+	protected static recalculate(  rec : Record<string,number> = {} , statement ){
 		
 		const symbols = statement.match( grobDerivedSymbolRegex );  
 		//let rec = 

@@ -2,10 +2,9 @@ import { GrobCollection } from "../GrobCollection";
 import { AGraphItem } from "../Abstractions/AGraphItem"; 
 import type { GrobNodeType } from "../Graph/TTRPGSystemsGraphDependencies";  
 import { GrobDerivedNode } from "./GrobDerivedNode"; 
-import { TarjanAlgorithmLink } from "./algorithm/TarjanNode";
+import { GrobAlgorithms, TarjanAlgorithmLink } from "./algorithm/TarjanNode";
 
-
-
+ 
 export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem implements TarjanAlgorithmLink {
 
 	constructor(name? , keystart? , parent? : GrobCollection<GrobNodeType> ) {  
@@ -24,11 +23,44 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 
 	
 	public bonuses : Record<any,GrobNodeType> = {};
-	public addBonus( sourceKey:string , bonus : GrobDerivedNode ){
-
-	}
-	public remBonus( sourceKey:string ){
+	public addBonus( bonusIndex:string , bonus : GrobDerivedNode, errors:{msg: string,key: string}[] = [] ){
 		
+		bonus.update();
+		
+		// first see if there is a circular dependency, if there already is dont do a thing. 
+		let preStrongComponents = {};
+		let alreadyHadStrongComps = GrobAlgorithms.TarjAlgo( [this] , preStrongComponents );
+		if (alreadyHadStrongComps[0]){
+			errors.push({key:'Pre-AddBonusError',msg:'this node already had circular dependencies, before adding another node. Added Bonus is therefore refused'});
+			return false;
+		}
+
+		if(this.bonuses[bonusIndex]){
+			this.remBonus(bonusIndex);
+		}
+		this.bonuses[bonusIndex] = bonus;
+		this.addDependency( bonus );
+		
+
+		// first see if there is a circular dependency, if there already is dont do a thing. 
+		let StrongComponents = {};
+		let StrongComps = GrobAlgorithms.TarjAlgo( [this] , StrongComponents );
+		if (StrongComps[0]){
+			errors.push({key:'Pre-AddBonusError',msg:'this node already had circular dependencies, before adding another node. Added Bonus is therefore refused'});
+			this.remBonus(bonusIndex); 
+			return false;
+		}
+		return true;
+	}
+	public remBonus( bonusIndex:string ){
+
+		if(!this.bonuses[bonusIndex])
+			return true;
+
+		const node = this.bonuses[bonusIndex];
+		delete this.bonuses[bonusIndex];
+		this.removeDependency( node );
+		return true;
 	}
 
 	public static getTypeString(): string{
@@ -70,7 +102,13 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 
 	public getValue() : number  {
 
-		return this._getValue();
+		var initialValue = this._getValue();
+		for(const key in this.bonuses){
+			const bonus = this.bonuses[key];
+			const value = bonus._getValue();
+			initialValue += value;
+		}
+		return initialValue;
 	}
 	abstract _getValue() : number  
 

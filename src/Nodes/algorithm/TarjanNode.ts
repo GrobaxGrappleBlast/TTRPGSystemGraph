@@ -14,10 +14,10 @@ export interface TarjanAlgorithmLink {
 
 
 
-export class GrobNode_Algorithms{ 
+export class GrobAlgorithms{ 
 
 	public static algLevel = 1;
-	public static TarjAlgo( nodes : GrobNode[]  ){
+	public static TarjAlgo( nodes : GrobNode[] , strongComponents : Record<string,GrobNode> = {}){
 		/*	
 			const derived = 'derived';
 			function createGraph(  ) : Record<string,dependencyNode>{
@@ -85,7 +85,7 @@ export class GrobNode_Algorithms{
 		nodes.forEach(node => {
 			que.push(node);
 		});
-		let algLevel = GrobNode_Algorithms.algLevel++;
+		let algLevel = GrobAlgorithms.algLevel++;
 		let counter = 0;
 		//let cyclicCounter = 0;
 		//let islands : GrobNode[][] = [];
@@ -112,8 +112,7 @@ export class GrobNode_Algorithms{
 		nodes.forEach(node => {
 			que.push(node);
 		});
-		algLevel = GrobNode_Algorithms.algLevel++; 
-		let strongComponents : Record<string,GrobNode> = {};
+		algLevel = GrobAlgorithms.algLevel++; 
 		while ( que.length > 0){	
 			const curr = que.pop() as GrobNode;
 			tarjanNodeVisit(algLevel,curr,strongComponents);

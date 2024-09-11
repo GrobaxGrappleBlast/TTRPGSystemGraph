@@ -8,7 +8,7 @@ import { GrobDerivedNode } from "../../src/Nodes/GrobDerivedNode";
 
 const derived 	= 'derived';
 const fixed 	= 'fixed';
-export type groupKeyType = 'fixed' | 'derived';
+export type groupKeyType = 'fixed' | 'derived' | string ;
 
 /**
  *  handles Model operations and Data Containment, 
@@ -26,6 +26,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 	public initAsNew(){
 		this._createGroup( 'fixed' )	;
 		this._createGroup( 'derived' )	;
+		this._createGroup( 'extra' )	;
 	}
 
 

@@ -1,14 +1,13 @@
-import exp from "constants";  
-import { GrobBonusNode, GrobDerivedNode, TTRPGSystem } from "../..";
-import { IOutputHandler } from "../../Abstractions/IOutputHandler";
-import { GrobAlgorithms, GrobNode } from "./TarjanNode";
-
+import exp from "constants"; 
+import { IOutputHandler } from "../../src/Abstractions/IOutputHandler";
+import { GrobBonusNode, GrobDerivedNode, TTRPGSystem } from "../../src";
 
 interface TestIOutputHandler extends IOutputHandler{
 	errorMessages 	:string[],
 	logMessages 	:string[],
 	clean : () => void
 }
+
 var out : TestIOutputHandler = {
 	errorMessages: [],
 	logMessages: [],
@@ -25,117 +24,9 @@ var out : TestIOutputHandler = {
 		this.logMessages	= [];
 	}
 }
-function startTest(){
-	let sys = new TTRPGSystem();
-	sys.initAsNew();
-	sys.setOut(out);
-	out.clean();
-
-	function createDerivedFunctions(){
-		for (let c = 0; c < 5; c++){
-			const colName = (c+1) + 'c';
-			sys.createDerivedCollection(colName)
-
-			for (let i = 0; i < 5; i++) {
-				sys.createDerivedNode(colName,(i+1)+'n');
-				sys.createDerivedNode(colName,(i+1)+'n');
-				sys.createDerivedNode(colName,(i+1)+'n');
-				sys.createDerivedNode(colName,(i+1)+'n');
-				sys.createDerivedNode(colName,(i+1)+'n');
-			}
-		}
-	}
-	function createfixedFunctions(){
-		for (let c = 0; c < 6; c++){
-			const colName = (c+1) + 'c';
-			sys.createFixedCollection(colName)
-			
-			for (let i = 0; i < 6; i++) {
-				sys.createFixedNode(colName,(i+1)+'n'); 
-			}
-		}
-	}
-
-	createDerivedFunctions();
-	createfixedFunctions();
-	return sys;
-}
-
-test('Tarjan - Succes ', () => {
 
 
-	let sys = startTest();
-	let arr : GrobNode[] = [];
-	const groups = Object.values(sys.data);
-
-	for (let g = 0; g < groups.length; g++) {
-		const group = groups[g];
-		
-		const collections = Object.values(group.collections_names);
-		for (let c = 0; c < collections.length; c++) {
-			const col = collections[c];
-			
-			const nodes = Object.values(col.nodes_names);
-			for (let n = 0; n < nodes.length; n++) {
-				const node = nodes[n];
-				
-				arr.push(node);
-			}
-		}
-	}
-
-	const res = GrobAlgorithms.TarjAlgo(arr);
-	expect(res[0]).toBe(true);
-	expect(Object.keys(res[1]).length).toBe(0);
- 
-});
-
-
-
-test('Tarjan - Failure ', () => {
-
-
-	let sys = startTest();
-	let arr : GrobNode[] = [];
-	const groups = Object.values(sys.data);
-
-	// create a circular dependency
-	let n1 : GrobDerivedNode = sys.getNode('derived','1c','1n');
-	let n2 : GrobDerivedNode = sys.getNode('derived','2c','3n');
-	let n3 : GrobDerivedNode = sys.getNode('derived','4c','2n');
-	let n4 : GrobDerivedNode = sys.getNode('derived','5c','4n');
-	n1.addDependency(n2);
-	n2.addDependency(n3);
-	n3.addDependency(n4);
-	n4.addDependency(n1);
-
-
-	for (let g = 0; g < groups.length; g++) {
-		const group = groups[g];
-		
-		const collections = Object.values(group.collections_names);
-		for (let c = 0; c < collections.length; c++) {
-			const col = collections[c];
-			
-			const nodes = Object.values(col.nodes_names);
-			for (let n = 0; n < nodes.length; n++) {
-				const node = nodes[n];
-				
-				arr.push(node);
-			}
-		}
-	}
-
-	const res = GrobAlgorithms.TarjAlgo(arr);
-	expect(res[0]).toBe(false);
-	expect(Object.keys(res[1]).length).toBeGreaterThan(0);
- 
-});
-
-
-
-
-function setUpTests2(){
+function setUpTests(){
 	let sys = new TTRPGSystem();
 	sys.initAsNew();
 	
@@ -218,8 +109,8 @@ function setUpTests2(){
 	 
 }
 
-test('Tarjan Test Where it failed before', () => {
-	let sys = setUpTests2();
+test('Try To Add a Bonus', () => {
+	let sys = setUpTests();
 	let node ;
  
 	node = sys.getNode('fixed','generel','proficiency bonus');
@@ -234,9 +125,19 @@ test('Tarjan Test Where it failed before', () => {
 	.update()
 	.getNode();
 
+	let depCount1= Object.keys(node.dependencies).length
 	let v1 = node.getValue();
 	node.addBonus('myBonusIndex',bonus);
+	let depCount2= Object.keys(node.dependencies).length
 	let v2 = node.getValue();
-
+  
 	expect(v2).toBe(v1 + 2);
+	node.remBonus('myBonusIndex');
+	let depCount3= Object.keys(node.dependencies).length
+	let v3 = node.getValue();
+
+	expect(v1).toBe(v3);
+	expect(depCount1).toEqual(depCount3);
+	expect(depCount1).toEqual(depCount2 - 1);
+	
 });

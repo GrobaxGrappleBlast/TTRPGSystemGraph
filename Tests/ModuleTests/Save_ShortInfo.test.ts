@@ -1,4 +1,4 @@
-import { TTRPGSystem } from "../../src";
+import { GrobDerivedNode, TTRPGSystem } from "../../src";
 
  
 function setUpTests(){
