@@ -4,8 +4,8 @@ exports.TTRPGSystemGraphModel = void 0;
 var tslib_1 = require("tslib");
 var IOutputHandler_1 = require("../Abstractions/IOutputHandler");
 var TTRPGSystemGraphAbstractModel_1 = require("./TTRPGSystemGraphAbstractModel");
-var GrobFixedNode_1 = require("../../src/Nodes/GrobFixedNode");
-var GrobDerivedNode_1 = require("../../src/Nodes/GrobDerivedNode");
+var index_1 = require("../../src/index");
+var index_2 = require("../../src/index");
 var derived = 'derived';
 var fixed = 'fixed';
 /**
@@ -79,7 +79,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             this.out.outError("No Derived collection found by name: ".concat(colName, " "));
             return null;
         }
-        var node = new GrobDerivedNode_1.GrobDerivedNode(name, col);
+        var node = new index_2.GrobDerivedNode(name, col);
         col.addNode(node);
         return node;
     };
@@ -99,7 +99,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             this.out.outError("No Fixed collection found by name: ".concat(colName, " "));
             return null;
         }
-        var node = new GrobFixedNode_1.GrobFixedNode(name, col);
+        var node = new index_1.GrobFixedNode(name, col);
         col.addNode(node);
         return node;
     };
