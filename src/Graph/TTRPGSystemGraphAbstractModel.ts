@@ -2,9 +2,9 @@ import { GrobCollection, type GrobCollectionType } from "../GrobCollection";
 import { GrobGroup, type GrobGroupType } from "../GrobGroup";
 import { newOutputHandler, type IOutputHandler } from "../Abstractions/IOutputHandler"; 
 import type { GrobNodeType } from "./TTRPGSystemsGraphDependencies"; 
-import { GrobDerivedNode } from "src/Nodes/GrobDerivedNode";
-import { ADataTable } from "src/Tables/DataTable";
-import { IGrobNode } from "src/Nodes/IGrobNode";
+import { GrobDerivedNode } 	from "../../src/Nodes/GrobDerivedNode";
+import { ADataTable }		from "../../src/Tables/DataTable";
+import { IGrobNode } 		from "../../src/Nodes/IGrobNode";
 
 /**
 * a general and flexible implementation of TTRPG system. it focusses on not diskrimination or sorting data. 

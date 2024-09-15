@@ -2,7 +2,7 @@ import { GrobCollection } from "../GrobCollection";
 import { AGraphItem } from "../Abstractions/AGraphItem";
 import { GrobDerivedNode } from "./GrobDerivedNode";
 import { TarjanAlgorithmLink } from "./algorithm/TarjanNode";
-import { GrobNodeType } from "src";
+import { GrobNodeType } from "../../src";
 export declare abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem implements TarjanAlgorithmLink {
     constructor(name?: any, keystart?: any, parent?: GrobCollection<GrobNodeType>);
     parent: GrobCollection<GrobNodeType>;
