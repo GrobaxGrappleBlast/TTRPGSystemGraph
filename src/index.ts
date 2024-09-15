@@ -11,7 +11,7 @@ import { GrobBonusNode } from './Nodes/GrobBonusNode';
 import { GrobDerivedNode } from './Nodes/GrobDerivedNode';
 import { GrobFixedNode } from './Nodes/GrobFixedNode';
 import { GrobOrigin } from './Nodes/GrobOrigin';
-import { AdataRow, ADataTable } from './Tables/DataTable';
+import { ADataRow, ADataTable } from './Tables/DataTable';
 
 export {keyManagerInstance}
 export { 
@@ -27,7 +27,7 @@ export {
 	GrobGroup			,
 	GrobGroupType		,
 	groupKeyType		,
-	AdataRow			,
+	ADataRow			,
 	ADataTable			, 
 	
 	TTRPGSystemGraphModel as TTRPGSystem, 

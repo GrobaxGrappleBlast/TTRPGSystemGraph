@@ -5,9 +5,9 @@ export declare class ADataTable implements IGrobNode {
     getName(): string;
     dispose(): void;
     updateLocation(this: any): void;
-    data: Record<string, AdataRow>;
+    data: Record<string, ADataRow>;
     name: string;
 }
-export declare class AdataRow {
+export declare class ADataRow {
     level: number;
 }

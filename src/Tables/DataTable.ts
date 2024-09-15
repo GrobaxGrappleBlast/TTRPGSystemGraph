@@ -17,12 +17,12 @@ export class ADataTable implements IGrobNode {
 		throw new Error("Method not implemented.");
 	}
 
-	public data : Record<string,AdataRow> = {};
+	public data : Record<string,ADataRow> = {};
 
 	public name : string ;
 }
 
-export class AdataRow { 
+export class ADataRow { 
 	public level : number ; 
 }
 

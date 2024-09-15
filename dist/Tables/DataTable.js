@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdataRow = exports.ADataTable = void 0;
+exports.ADataRow = exports.ADataTable = void 0;
 var ADataTable = /** @class */ (function () {
     function ADataTable() {
         this.data = {};
@@ -17,9 +17,9 @@ var ADataTable = /** @class */ (function () {
     return ADataTable;
 }());
 exports.ADataTable = ADataTable;
-var AdataRow = /** @class */ (function () {
-    function AdataRow() {
+var ADataRow = /** @class */ (function () {
+    function ADataRow() {
     }
-    return AdataRow;
+    return ADataRow;
 }());
-exports.AdataRow = AdataRow;
+exports.ADataRow = ADataRow;
