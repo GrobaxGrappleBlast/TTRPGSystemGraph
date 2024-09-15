@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uuidv4 = exports.TTRPGSystemHelper = exports.TTRPGSystem = exports.GrobGroup = exports.GrobCollection = exports.GrobBonusNode = exports.GrobDerivedNode = exports.GrobDerivedOrigin = exports.GrobFixedNode = exports.keyManagerInstance = void 0;
+exports.uuidv4 = exports.TTRPGSystemHelper = exports.TTRPGSystem = exports.ADataTable = exports.AdataRow = exports.GrobGroup = exports.GrobCollection = exports.GrobBonusNode = exports.GrobDerivedNode = exports.GrobDerivedOrigin = exports.GrobFixedNode = exports.keyManagerInstance = void 0;
 var KeyManager_1 = require("./Abstractions/KeyManager");
 Object.defineProperty(exports, "keyManagerInstance", { enumerable: true, get: function () { return KeyManager_1.keyManagerInstance; } });
 var TTRPGSystemGraphModel_1 = require("./Graph/TTRPGSystemGraphModel");
@@ -19,6 +19,9 @@ var GrobFixedNode_1 = require("./Nodes/GrobFixedNode");
 Object.defineProperty(exports, "GrobFixedNode", { enumerable: true, get: function () { return GrobFixedNode_1.GrobFixedNode; } });
 var GrobOrigin_1 = require("./Nodes/GrobOrigin");
 Object.defineProperty(exports, "GrobDerivedOrigin", { enumerable: true, get: function () { return GrobOrigin_1.GrobOrigin; } });
+var DataTable_1 = require("./Tables/DataTable");
+Object.defineProperty(exports, "AdataRow", { enumerable: true, get: function () { return DataTable_1.AdataRow; } });
+Object.defineProperty(exports, "ADataTable", { enumerable: true, get: function () { return DataTable_1.ADataTable; } });
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
         .replace(/[xy]/g, function (c) {
