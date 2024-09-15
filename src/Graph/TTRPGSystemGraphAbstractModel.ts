@@ -3,6 +3,8 @@ import { GrobGroup, type GrobGroupType } from "../GrobGroup";
 import { newOutputHandler, type IOutputHandler } from "../Abstractions/IOutputHandler"; 
 import type { GrobNodeType } from "./TTRPGSystemsGraphDependencies"; 
 import { GrobDerivedNode } from "src/Nodes/GrobDerivedNode";
+import { ADataTable } from "src/Tables/DataTable";
+import { IGrobNode } from "src/Nodes/IGrobNode";
 
 /**
 * a general and flexible implementation of TTRPG system. it focusses on not diskrimination or sorting data. 
@@ -11,7 +13,7 @@ import { GrobDerivedNode } from "src/Nodes/GrobDerivedNode";
 export abstract class TTRPGSystemGraphAbstractModel {
 	 
 	
-	public data : Record< string , GrobGroup<GrobNodeType> > = {} 
+	public data : Record< string , GrobGroup< GrobNodeType | IGrobNode > > = {} 
  
 	protected out : IOutputHandler;
 	public setOut( out : IOutputHandler | null  ){
@@ -43,7 +45,7 @@ export abstract class TTRPGSystemGraphAbstractModel {
 			this.out.outError('attempted to add new group, however group already existed')
 			return null;
 		} 
-		let gp = new GrobGroup<GrobNodeType>(name,this);
+		let gp = new GrobGroup<IGrobNode>(name,this);
 		this.data[gp.getName()] = gp;
 		return gp;
 	}
@@ -87,7 +89,7 @@ export abstract class TTRPGSystemGraphAbstractModel {
 			return null;
 		}
 
-		const collection = new GrobCollection<GrobNodeType>( name, group );
+		const collection = new GrobCollection<IGrobNode>( name, group );
 		group.addCollection(collection);
 		return collection;
 	}
@@ -96,6 +98,11 @@ export abstract class TTRPGSystemGraphAbstractModel {
 		
 		if (!collection){
 			this.out.outError(`tried to add node, but supplied collection was invalid`);
+		}
+
+		
+		if ( collection.getCollectionType() != 'Node' ){
+			throw new Error('Tried to Add Node to Non Node Collecton')
 		}
 
 		return collection.addNode(node);
@@ -142,4 +149,18 @@ export abstract class TTRPGSystemGraphAbstractModel {
 		}
 		return true
 	}	
+	
+	protected _addTable ( collection:GrobCollectionType , table : ADataTable ){
+		if (!collection){
+			this.out.outError(`tried to add node, but supplied collection was invalid`);
+			return;
+		}
+
+		if ( collection.getCollectionType() != 'Table' ){
+			this.out.outError('Tried to Add table to Non Table Collecton')
+			return;
+		}
+
+		return collection.addNode( table );
+	}
 }

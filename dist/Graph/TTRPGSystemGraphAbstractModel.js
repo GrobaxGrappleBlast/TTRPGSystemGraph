@@ -82,6 +82,9 @@ var TTRPGSystemGraphAbstractModel = /** @class */ (function () {
         if (!collection) {
             this.out.outError("tried to add node, but supplied collection was invalid");
         }
+        if (collection.getCollectionType() != 'Node') {
+            throw new Error('Tried to Add Node to Non Node Collecton');
+        }
         return collection.addNode(node);
     };
     TTRPGSystemGraphAbstractModel.prototype._deleteNode = function (node) {
@@ -117,6 +120,17 @@ var TTRPGSystemGraphAbstractModel = /** @class */ (function () {
             return false;
         }
         return true;
+    };
+    TTRPGSystemGraphAbstractModel.prototype._addTable = function (collection, table) {
+        if (!collection) {
+            this.out.outError("tried to add node, but supplied collection was invalid");
+            return;
+        }
+        if (collection.getCollectionType() != 'Table') {
+            this.out.outError('Tried to Add table to Non Table Collecton');
+            return;
+        }
+        return collection.addNode(table);
     };
     return TTRPGSystemGraphAbstractModel;
 }());

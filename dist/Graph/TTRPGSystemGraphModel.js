@@ -4,8 +4,8 @@ exports.TTRPGSystemGraphModel = void 0;
 var tslib_1 = require("tslib");
 var IOutputHandler_1 = require("../Abstractions/IOutputHandler");
 var TTRPGSystemGraphAbstractModel_1 = require("./TTRPGSystemGraphAbstractModel");
-var GrobFixedNode_1 = require("src/Nodes/GrobFixedNode");
-var GrobDerivedNode_1 = require("src/Nodes/GrobDerivedNode");
+var GrobFixedNode_1 = require("../../src/Nodes/GrobFixedNode");
+var GrobDerivedNode_1 = require("../../src/Nodes/GrobDerivedNode");
 var derived = 'derived';
 var fixed = 'fixed';
 /**
@@ -24,6 +24,10 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
     TTRPGSystemGraphModel.prototype.initAsNew = function () {
         this._createGroup('fixed');
         this._createGroup('derived');
+        this._createGroup('extra');
+        this.data['fixed'].setGroupType('Node');
+        this.data['derived'].setGroupType('Node');
+        this.data['extra'].setGroupType('Table');
     };
     /// Create Statements 
     TTRPGSystemGraphModel.prototype.createCollection = function (group, name) {

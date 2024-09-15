@@ -22,6 +22,7 @@ var GrobGroup = /** @class */ (function (_super) {
     GrobGroup.prototype.addCollection = function (collection) {
         collection.parent = this;
         this.collections_names[collection.getName()] = collection;
+        collection.setCollectionType(this.groupType);
         return true;
     };
     GrobGroup.prototype.removeCollection = function (collection) {
@@ -52,6 +53,19 @@ var GrobGroup = /** @class */ (function (_super) {
         }
         //@ts-ignore
         this.name = null;
+    };
+    GrobGroup.prototype.getGroupType = function () {
+        return this.groupType;
+    };
+    GrobGroup.prototype.setGroupType = function (groupType) {
+        if (this.groupType != null && groupType != groupType) {
+            throw new Error('tried to convert a group type after Setting. Denied Action');
+            return;
+        }
+        this.groupType = groupType;
+        Object.values(this.collections_names).forEach(function (col) {
+            col.setCollectionType(groupType);
+        });
     };
     return GrobGroup;
 }(AGraphItem_1.AGraphItem));

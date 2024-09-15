@@ -10,7 +10,7 @@ var GrobFixedNode = /** @class */ (function (_super) {
         _this.___value = 1;
         return _this;
     }
-    GrobFixedNode.prototype.getValue = function () {
+    GrobFixedNode.prototype._getValue = function () {
         return this.___value;
     };
     GrobFixedNode.prototype.setValue = function (value) {

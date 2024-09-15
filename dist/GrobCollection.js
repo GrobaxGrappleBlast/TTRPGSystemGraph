@@ -75,6 +75,16 @@ var GrobCollection = /** @class */ (function (_super) {
         //@ts-ignore
         this.name = null;
     };
+    GrobCollection.prototype.getCollectionType = function () {
+        return this.colType;
+    };
+    GrobCollection.prototype.setCollectionType = function (colType) {
+        if (this.colType != null && colType != colType) {
+            throw new Error('tried to convert a group type after Setting. Denied Action');
+            return;
+        }
+        this.colType = colType;
+    };
     return GrobCollection;
 }(AGraphItem_1.AGraphItem));
 exports.GrobCollection = GrobCollection;

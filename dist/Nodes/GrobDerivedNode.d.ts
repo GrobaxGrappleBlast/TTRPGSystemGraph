@@ -6,8 +6,8 @@ export declare class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
     constructor(name?: any, parent?: GrobCollection<GrobDerivedNode>);
     calc: string;
     origins: GrobOrigin[];
-    private _value;
-    getValue(): number;
+    protected _value: number;
+    _getValue(): number;
     setValue(value: number): void;
     static getTypeString(): string;
     getTypeString(): string;
@@ -35,8 +35,14 @@ export declare class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
     } | null;
     static staticParseCalculationToOrigins(calc: string): string[];
     recalculate(useTempValues?: boolean): boolean;
-    private _recalculate;
-    private static recalculate;
+    protected _recalculate(rec: Record<string, number> | undefined, statement: any): {
+        success: boolean;
+        value: number;
+    };
+    protected static recalculate(rec: Record<string, number> | undefined, statement: any): {
+        success: boolean;
+        value: number;
+    };
     testCalculate(statement: any): {
         success: boolean;
         value: number;

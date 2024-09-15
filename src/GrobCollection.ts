@@ -1,11 +1,12 @@
 import { AGraphItem } from "./Abstractions/AGraphItem"; 
-import type { GrobNodeType } from "./Graph/TTRPGSystemsGraphDependencies";  
+//import type { GrobNodeType } from "./Graph/TTRPGSystemsGraphDependencies";  
 import type { IGrobCollection } from "./IGrobCollection";
-import type { IGrobGroup } from "./IGrobGroup";
+import type { IGrobGroup } from "./IGrobGroup"; 
+import { IGrobNode } from "./Nodes/IGrobNode";
 
 
 
-export class GrobCollection<T extends GrobNodeType> extends AGraphItem implements IGrobCollection<T> {
+export class GrobCollection<T extends IGrobNode > extends AGraphItem implements IGrobCollection<T> {
 	
 	constructor(name? ,parent? : IGrobGroup<T> ) {
 		super(name, 'C')
@@ -94,8 +95,20 @@ export class GrobCollection<T extends GrobNodeType> extends AGraphItem implement
 		this.name = null;
 		
 	} 
+
+	protected colType : 'Node'|'Table'|null;
+	public getCollectionType(){
+		return this.colType;
+	}
+	public setCollectionType(  colType : 'Node'|'Table' ){
+		if ( this.colType != null && colType != colType){
+			throw new Error('tried to convert a group type after Setting. Denied Action');
+			return;
+		}
+		this.colType = colType;
+	}
 }
 
   
-export type GrobCollectionType = GrobCollection<GrobNodeType>;
+export type GrobCollectionType = GrobCollection<IGrobNode>;
 

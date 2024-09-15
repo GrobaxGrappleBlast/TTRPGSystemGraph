@@ -1,7 +1,7 @@
 import { AGrobNode } from "./AGrobNodte";
 import { GrobCollection } from "../GrobCollection"; 
 import { AGraphItem } from "../Abstractions/AGraphItem"; 
-import { grobDerivedSymbolRegex, type GrobNodeType } from "../Graph/TTRPGSystemsGraphDependencies";  
+import { grobDerivedSymbolRegex } from "../Graph/TTRPGSystemsGraphDependencies";  
 import { GrobOrigin } from "./GrobOrigin";
 import { GrobDerivedNode } from "./GrobDerivedNode";
 import { TTRPGSystemBonusDesigner } from "../../src/Helpers/TTRPGSystemBonusDesigner";

@@ -14,7 +14,7 @@ var GrobDerivedNode = /** @class */ (function (_super) {
         _this._value = NaN;
         return _this;
     }
-    GrobDerivedNode.prototype.getValue = function () {
+    GrobDerivedNode.prototype._getValue = function () {
         return this._value;
     };
     GrobDerivedNode.prototype.setValue = function (value) {

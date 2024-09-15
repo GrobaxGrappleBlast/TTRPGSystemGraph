@@ -1,10 +1,11 @@
 import { AGraphItem } from "./Abstractions/AGraphItem"; 
 import { GrobCollection } from "./GrobCollection"; 
-import type { GrobNodeType } from "./Graph/TTRPGSystemsGraphDependencies"; 
+//import type { GrobNodeType } from "./Graph/TTRPGSystemsGraphDependencies"; 
 import type { IGrobGroup } from "./IGrobGroup";
+import { IGrobNode } from "./Nodes/IGrobNode";
 
-export type GrobGroupType = GrobGroup<GrobNodeType>;
-export class GrobGroup<T extends GrobNodeType> extends AGraphItem implements IGrobGroup<T>{
+export type GrobGroupType = GrobGroup<IGrobNode>;
+export class GrobGroup<T extends IGrobNode > extends AGraphItem implements IGrobGroup<T>{
 	 
 	constructor(name? , parent? : any ) { 
 		super(name,'G' ) 
@@ -24,6 +25,7 @@ export class GrobGroup<T extends GrobNodeType> extends AGraphItem implements IGr
 	public addCollection(collection: GrobCollection<T>) {
 		collection.parent = this;
 		this.collections_names[collection.getName()] = collection;
+		collection.setCollectionType(this.groupType);
 		return true;
 	}  
 	public removeCollection( collection : GrobCollection<T> ){ 
@@ -61,5 +63,23 @@ export class GrobGroup<T extends GrobNodeType> extends AGraphItem implements IGr
 		this.name = null;
 	}
 
+	protected groupType : 'Node'|'Table';
+	public getGroupType(){
+		return this.groupType;
+	}
+	public setGroupType(  groupType : 'Node'|'Table' ){
+		if ( this.groupType != null && groupType != groupType){
+			throw new Error('tried to convert a group type after Setting. Denied Action');
+			return;
+		}
+		this.groupType = groupType;
+		
+		Object.values(this.collections_names).forEach( col => {
+			col.setCollectionType(groupType);
+		});
+	}
+	
+
 }
+
 

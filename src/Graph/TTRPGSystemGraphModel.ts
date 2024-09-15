@@ -27,6 +27,10 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		this._createGroup( 'fixed' )	;
 		this._createGroup( 'derived' )	;
 		this._createGroup( 'extra' )	;
+
+		this.data['fixed']	.setGroupType('Node');
+		this.data['derived'].setGroupType('Node');
+		this.data['extra']	.setGroupType('Table');
 	}
 
 
@@ -268,7 +272,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		
 		let _col : GrobCollection<GrobNodeType>;
 		if ( typeof col === 'string') {
-			_col = grp.getCollection(col);
+			_col = grp.getCollection(col) as  GrobCollection<GrobNodeType>;
 		}else{
 			_col = col;
 		}
@@ -364,8 +368,8 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		// Check that Collection exists and get the values 
 		let colName = col;
 		if ( typeof col == 'string') {
-			colName = col;
-			col = grp.getCollection(col);
+			colName = col; 
+			col = grp.getCollection(col) as GrobCollection<GrobNodeType> ;
 		} else {
 			colName = col.getName();
 		}
@@ -399,8 +403,8 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		// Check that Collection exists and get the values 
 		let colName = col;
 		if ( typeof col == 'string') {
-			colName = col;
-			col = grp.getCollection(col);
+			colName = col; 
+			col = grp.getCollection(col) as GrobCollection<GrobNodeType> ;
 		} else {
 			colName = col.getName();
 		}

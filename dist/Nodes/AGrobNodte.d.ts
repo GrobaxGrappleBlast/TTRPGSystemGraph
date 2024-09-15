@@ -1,15 +1,20 @@
 import { GrobCollection } from "../GrobCollection";
 import { AGraphItem } from "../Abstractions/AGraphItem";
-import type { GrobNodeType } from "../Graph/TTRPGSystemsGraphDependencies";
 import { GrobDerivedNode } from "./GrobDerivedNode";
-export declare abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem {
+import { TarjanAlgorithmLink } from "./algorithm/TarjanNode";
+import { GrobNodeType } from "src";
+export declare abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem implements TarjanAlgorithmLink {
     constructor(name?: any, keystart?: any, parent?: GrobCollection<GrobNodeType>);
     parent: GrobCollection<GrobNodeType>;
     dependencies: Record<any, GrobNodeType>;
     dependents: Record<any, GrobNodeType>;
     updateListeners: {};
-    addBonus(sourceKey: string, bonus: GrobDerivedNode): void;
-    remBonus(sourceKey: string): void;
+    bonuses: Record<any, GrobNodeType>;
+    addBonus(bonusIndex: string, bonus: GrobDerivedNode, errors?: {
+        msg: string;
+        key: string;
+    }[]): boolean;
+    remBonus(bonusIndex: string): boolean;
     static getTypeString(): string;
     addDependent(node: GrobNodeType): boolean;
     removeDependent(node: GrobNodeType): boolean;
@@ -18,7 +23,8 @@ export declare abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphIt
     removeDependency(node: GrobNodeType): boolean;
     nullifyDependency(node: GrobNodeType): boolean;
     getDependencies(): GrobNodeType[];
-    abstract getValue(): number;
+    getValue(): number;
+    abstract _getValue(): number;
     getLocationKey(): string;
     getLocationKeySegments(): string[];
     update(): boolean;
@@ -31,4 +37,7 @@ export declare abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphIt
     addUpdateListener(key: any, listener: () => any): false | undefined;
     removeUpdateListener(key: any): void;
     removeAllUpdateListeners(): void;
+    tarjanAlgorithmAlgorithmIndex: number;
+    LowLinkValue: number;
+    linkValue: number;
 }

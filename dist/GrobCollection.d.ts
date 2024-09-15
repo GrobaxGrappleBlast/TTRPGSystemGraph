@@ -1,8 +1,8 @@
 import { AGraphItem } from "./Abstractions/AGraphItem";
-import type { GrobNodeType } from "./Graph/TTRPGSystemsGraphDependencies";
 import type { IGrobCollection } from "./IGrobCollection";
 import type { IGrobGroup } from "./IGrobGroup";
-export declare class GrobCollection<T extends GrobNodeType> extends AGraphItem implements IGrobCollection<T> {
+import { IGrobNode } from "./Nodes/IGrobNode";
+export declare class GrobCollection<T extends IGrobNode> extends AGraphItem implements IGrobCollection<T> {
     constructor(name?: any, parent?: IGrobGroup<T>);
     nodes_names: Record<string, T>;
     parent: IGrobGroup<T>;
@@ -16,5 +16,8 @@ export declare class GrobCollection<T extends GrobNodeType> extends AGraphItem i
     setName(name: any): void;
     updateLocation(parent: any): void;
     dispose(): void;
+    protected colType: 'Node' | 'Table' | null;
+    getCollectionType(): "Node" | "Table" | null;
+    setCollectionType(colType: 'Node' | 'Table'): void;
 }
-export type GrobCollectionType = GrobCollection<GrobNodeType>;
+export type GrobCollectionType = GrobCollection<IGrobNode>;

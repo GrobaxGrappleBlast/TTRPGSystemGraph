@@ -1,10 +1,12 @@
 import { GrobCollection } from "../GrobCollection"; 
-import { AGraphItem } from "../Abstractions/AGraphItem"; 
-import type { GrobNodeType } from "../Graph/TTRPGSystemsGraphDependencies";  
+import { AGraphItem } from "../Abstractions/AGraphItem";  
 import { GrobDerivedNode } from "./GrobDerivedNode"; 
 import { GrobAlgorithms, TarjanAlgorithmLink } from "./algorithm/TarjanNode";
+import { IGrobNode } from "./IGrobNode";
+import { GrobNodeType } from "src";
 
  
+
 export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem implements TarjanAlgorithmLink {
 
 	constructor(name? , keystart? , parent? : GrobCollection<GrobNodeType> ) {  

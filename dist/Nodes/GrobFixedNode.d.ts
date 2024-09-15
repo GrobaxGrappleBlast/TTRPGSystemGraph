@@ -4,7 +4,7 @@ import type { GrobNodeType } from "../Graph/TTRPGSystemsGraphDependencies";
 export declare class GrobFixedNode extends AGrobNode<GrobFixedNode> {
     constructor(name: any, parent?: GrobCollection<GrobFixedNode>);
     ___value: number;
-    getValue(): number;
+    _getValue(): number;
     setValue(value: number): void;
     static getTypeString(): string;
     getTypeString(): string;

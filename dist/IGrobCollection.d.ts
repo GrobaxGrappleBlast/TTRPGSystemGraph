@@ -1,6 +1,6 @@
 import type { IGraphItem } from "./Abstractions/IGraphItem";
-import type { GrobNodeType } from "./Graph/TTRPGSystemsGraphDependencies";
-export interface IGrobCollection<T extends GrobNodeType> extends IGraphItem {
+import { IGrobNode } from "./Nodes/IGrobNode";
+export interface IGrobCollection<T extends IGrobNode> extends IGraphItem {
     hasNode(name: any): any;
     getNode(name: any): T;
     addNode(node: T): any;
