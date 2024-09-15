@@ -4,12 +4,6 @@ import { GrobGroup } from "src/GrobGroup";
 import { IGrobGroup } from "src/IGrobGroup";
 import { IGrobNode } from "src/Nodes/IGrobNode";
 
-export class tableGroup  extends GrobGroup<ADataTable>  {
-	 
-}
-export class tableCollection extends GrobCollection<ADataTable> {
-
-}
 
 export class ADataTable implements IGrobNode {
 	parent: IGrobCollection<IGrobNode>;
