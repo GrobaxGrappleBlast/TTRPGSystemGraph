@@ -20,6 +20,18 @@ export class ADataTable implements IGrobNode {
 	public data : Record<string,ADataRow> = {};
 
 	public name : string ;
+
+	public getLocationKey(){
+		let segs = this.getLocationKeySegments();
+		return segs.join('.');
+	}
+	public getLocationKeySegments() : string [] {
+		let seg : string[] = ['','',''];
+		seg[0] = this.parent?.parent?.getName() ?? 'unknown';
+		seg[1] = this.parent?.getName () ?? 'unknown';
+		seg[2] = this.getName() ?? 'unknown';
+		return seg;
+	}
 }
 
 export class ADataRow { 
