@@ -1,5 +1,5 @@
-import { GrobCollection, TTRPGSystem } from "../../src";
-import { GrobBonusNode } from "../../src/Nodes/GrobBonusNode";
+import { GrobCollection, TTRPGSystem } from "../";
+import { GrobBonusNode } from "../Nodes/GrobBonusNode";
 export declare class TTRPGSystemBonusDesigner {
     static createBonusNodeChain(sys: TTRPGSystem, name: string): TTRPGSystemBonusDesigner;
     protected activeNode: GrobBonusNode;

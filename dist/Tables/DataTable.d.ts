@@ -1,5 +1,5 @@
-import { IGrobCollection } from "../../src/IGrobCollection";
-import { IGrobNode } from "../../src/Nodes/IGrobNode";
+import { IGrobCollection } from "../IGrobCollection";
+import { IGrobNode } from "../Nodes/IGrobNode";
 export declare class ADataTable implements IGrobNode {
     parent: IGrobCollection<IGrobNode>;
     getName(): string;

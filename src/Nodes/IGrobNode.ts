@@ -1,4 +1,4 @@
-import { IGrobCollection } from "../../src/IGrobCollection";
+import { IGrobCollection } from "../IGrobCollection";
 
 export interface IGrobNode {
 	parent: IGrobCollection<IGrobNode>;

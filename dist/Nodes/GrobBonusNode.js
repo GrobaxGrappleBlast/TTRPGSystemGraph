@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GrobBonusNode = void 0;
 var tslib_1 = require("tslib");
 var GrobDerivedNode_1 = require("./GrobDerivedNode");
-var TTRPGSystemBonusDesigner_1 = require("../../src/Helpers/TTRPGSystemBonusDesigner");
+var TTRPGSystemBonusDesigner_1 = require("../Helpers/TTRPGSystemBonusDesigner");
 var GrobBonusNode = /** @class */ (function (_super) {
     tslib_1.__extends(GrobBonusNode, _super);
     function GrobBonusNode(name, parent) {

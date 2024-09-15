@@ -4,8 +4,8 @@ exports.TTRPGSystemGraphModel = void 0;
 var tslib_1 = require("tslib");
 var IOutputHandler_1 = require("../Abstractions/IOutputHandler");
 var TTRPGSystemGraphAbstractModel_1 = require("./TTRPGSystemGraphAbstractModel");
-var index_1 = require("../../src/index");
-var index_2 = require("../../src/index");
+var index_1 = require("../index");
+var index_2 = require("../index");
 var derived = 'derived';
 var fixed = 'fixed';
 /**

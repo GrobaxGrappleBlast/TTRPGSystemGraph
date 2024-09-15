@@ -1,5 +1,5 @@
-import { GrobCollection, TTRPGSystem } from "../../src";
-import { GrobBonusNode } from "../../src/Nodes/GrobBonusNode";
+import { GrobCollection, TTRPGSystem } from "../";
+import { GrobBonusNode } from "../Nodes/GrobBonusNode";
 
 export class TTRPGSystemBonusDesigner{
 

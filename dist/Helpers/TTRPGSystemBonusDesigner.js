@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TTRPGSystemBonusDesigner = void 0;
-var GrobBonusNode_1 = require("../../src/Nodes/GrobBonusNode");
+var GrobBonusNode_1 = require("../Nodes/GrobBonusNode");
 var TTRPGSystemBonusDesigner = /** @class */ (function () {
     function TTRPGSystemBonusDesigner() {
     }

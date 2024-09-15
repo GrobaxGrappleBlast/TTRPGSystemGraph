@@ -1,8 +1,8 @@
-import { IGrobCollection } 	from "../../src/IGrobCollection"; 
-import { GrobCollection } 	from "../../src/GrobCollection";
-import { GrobGroup } 		from "../../src/GrobGroup";
-import { IGrobGroup } 		from "../../src/IGrobGroup";
-import { IGrobNode } 		from "../../src/Nodes/IGrobNode";
+import { IGrobCollection } 	from "../IGrobCollection"; 
+import { GrobCollection } 	from "../GrobCollection";
+import { GrobGroup } 		from "../GrobGroup";
+import { IGrobGroup } 		from "../IGrobGroup";
+import { IGrobNode } 		from "../Nodes/IGrobNode";
 
 
 export class ADataTable implements IGrobNode {

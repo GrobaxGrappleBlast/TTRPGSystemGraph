@@ -3,7 +3,7 @@ import { AGraphItem } from "../Abstractions/AGraphItem";
 import { GrobDerivedNode } from "./GrobDerivedNode"; 
 import { GrobAlgorithms, TarjanAlgorithmLink } from "./algorithm/TarjanNode";
 import { IGrobNode } from "./IGrobNode";
-import { GrobNodeType } from "../../src";
+import { GrobNodeType } from "../";
 
  
 

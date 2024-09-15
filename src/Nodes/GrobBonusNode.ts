@@ -4,8 +4,8 @@ import { AGraphItem } from "../Abstractions/AGraphItem";
 import { grobDerivedSymbolRegex } from "../Graph/TTRPGSystemsGraphDependencies";  
 import { GrobOrigin } from "./GrobOrigin";
 import { GrobDerivedNode } from "./GrobDerivedNode";
-import { TTRPGSystemBonusDesigner } from "../../src/Helpers/TTRPGSystemBonusDesigner";
-import { TTRPGSystem } from "../../src";
+import { TTRPGSystemBonusDesigner } from "../Helpers/TTRPGSystemBonusDesigner";
+import { TTRPGSystem } from "../";
 
 
 export class GrobBonusNode extends GrobDerivedNode{//AGrobNode<GrobBonusNode> {
