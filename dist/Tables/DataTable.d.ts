@@ -7,6 +7,8 @@ export declare class ADataTable implements IGrobNode {
     updateLocation(this: any): void;
     data: Record<string, ADataRow>;
     name: string;
+    getLocationKey(): string;
+    getLocationKeySegments(): string[];
 }
 export declare class ADataRow {
     level: number;
