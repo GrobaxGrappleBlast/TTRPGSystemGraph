@@ -430,25 +430,32 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 
 		let key_group,key_collection,key_node;
 		let collectionNames, nodeNames;
-		let group,collection,node; 
+		let group : GrobGroupType ,collection : GrobCollection<GrobNodeType> ,node; 
 		let isValid;
 
 		// foreach group, get do this for all collections.
 		for ( key_group in this.data ){
-			group = this.data[key_group];
+			group = this.data[key_group] as GrobGroupType; 
 			collectionNames =  group.getCollectionsNames();
 
 			// forach collection do this for all nodes 
-			for ( const colIndex in group.getCollectionsNames() ){
+			for ( let c = 0; c < collectionNames.length; c++){
+				const colIndex = c; 
+			//for ( const colIndex in group.getCollectionsNames() ){
 				key_collection = collectionNames[colIndex];
-				collection = group.getCollection(key_collection);
+				collection = group.getCollection(key_collection) as GrobCollection<GrobNodeType> ;
 				nodeNames = collection.getNodeNames();
 
 				// do this for each node. 
-				for ( const nodeIndex in nodeNames ){
+				for ( let n = 0; n < nodeNames.length; n++){
+					const nodeIndex = n; 
+				//for ( const nodeIndex in nodeNames ){
 					key_node = nodeNames[nodeIndex]
 					node	= collection.getNode(key_node);
 
+					if(node == null){
+						debugger;
+					}
 					isValid	= node.isValid();
 					if(!isValid){
 						let msg = `${key_group}.${key_collection}.${key_node} was invalid`;

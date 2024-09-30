@@ -189,6 +189,18 @@ function checkDependencyHasNodeInDependents (node:GrobJNodeType, dependency:Grob
 	const v = Object.values(dependency.dependents).find( p => p._key == node._key);
 	return v != null;
 }
+
+Array.prototype['remove'] = function(element) {
+    const index = this.indexOf(element);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+    return this;
+};
+Array.prototype['contains'] = function(substring) {
+    return this.includes(substring);
+};
+
 test('Test Collection Designer Derived Elements', () => {
  
 	// create the start requirements
@@ -281,7 +293,8 @@ test('Test Collection Designer Derived Elements', () => {
 		}
 	}
 
-	 
+	const isValid = system2.isValid([]);
+	expect(isValid).toBe(true);
 })
 
 

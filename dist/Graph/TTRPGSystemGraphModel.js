@@ -370,14 +370,21 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             group = this.data[key_group];
             collectionNames = group.getCollectionsNames();
             // forach collection do this for all nodes 
-            for (var colIndex in group.getCollectionsNames()) {
+            for (var c = 0; c < collectionNames.length; c++) {
+                var colIndex = c;
+                //for ( const colIndex in group.getCollectionsNames() ){
                 key_collection = collectionNames[colIndex];
                 collection = group.getCollection(key_collection);
                 nodeNames = collection.getNodeNames();
                 // do this for each node. 
-                for (var nodeIndex in nodeNames) {
+                for (var n = 0; n < nodeNames.length; n++) {
+                    var nodeIndex = n;
+                    //for ( const nodeIndex in nodeNames ){
                     key_node = nodeNames[nodeIndex];
                     node = collection.getNode(key_node);
+                    if (node == null) {
+                        debugger;
+                    }
                     isValid = node.isValid();
                     if (!isValid) {
                         var msg = "".concat(key_group, ".").concat(key_collection, ".").concat(key_node, " was invalid");
