@@ -452,10 +452,6 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 				//for ( const nodeIndex in nodeNames ){
 					key_node = nodeNames[nodeIndex]
 					node	= collection.getNode(key_node);
-
-					if(node == null){
-						debugger;
-					}
 					isValid	= node.isValid();
 					if(!isValid){
 						let msg = `${key_group}.${key_collection}.${key_node} was invalid`;

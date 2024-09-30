@@ -382,9 +382,6 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
                     //for ( const nodeIndex in nodeNames ){
                     key_node = nodeNames[nodeIndex];
                     node = collection.getNode(key_node);
-                    if (node == null) {
-                        debugger;
-                    }
                     isValid = node.isValid();
                     if (!isValid) {
                         var msg = "".concat(key_group, ".").concat(key_collection, ".").concat(key_node, " was invalid");
