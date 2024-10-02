@@ -379,8 +379,14 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 			return null;
 		}
 
+		// check that the new Name collection doesent already exist.
+		if (grp.getCollection(newName)){
+			this.out.outError(`Collection already existed by name ${ newName } in ${grpName}`)
+			return null;
+		}
+
 		// update 
-		return grp.update_collection_name(colName,newName);
+		return col.setName(newName);
 	}
 	public renameItem	   (  group : groupKeyType | GrobGroupType , col : GrobCollection<GrobNodeType> | string , oldName:string ,newName:string ){
 		

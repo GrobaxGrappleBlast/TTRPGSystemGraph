@@ -63,6 +63,9 @@ var GrobCollection = /** @class */ (function (_super) {
             var curr = this.nodes_names[name];
             curr.updateLocation(this);
         }
+        this.getNodes().forEach(function (node) {
+            node.update();
+        });
     };
     GrobCollection.prototype.dispose = function () {
         for (var name in this.nodes_names) {

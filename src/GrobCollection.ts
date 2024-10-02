@@ -70,8 +70,7 @@ export class GrobCollection<T extends IGrobNode > extends AGraphItem implements 
 		}
 		
 		super.setName(name);
-		this.parent.update_collection_name(oldname,name);
-
+		this.parent.update_collection_name(oldname,name); 
 		this.updateLocation(this.parent);
 	} 
 	updateLocation( parent ){
@@ -80,6 +79,10 @@ export class GrobCollection<T extends IGrobNode > extends AGraphItem implements 
 			const curr = this.nodes_names[name];
 			curr.updateLocation( this );
 		}
+
+		this.getNodes().forEach( node => {
+			node.update();
+		});
 	}
 	dispose () {
 		

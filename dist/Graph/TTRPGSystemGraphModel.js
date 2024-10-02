@@ -318,8 +318,13 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             this.out.outError("No Collection existed by name ".concat(colName, " in ").concat(grpName));
             return null;
         }
+        // check that the new Name collection doesent already exist.
+        if (grp.getCollection(newName)) {
+            this.out.outError("Collection already existed by name ".concat(newName, " in ").concat(grpName));
+            return null;
+        }
         // update 
-        return grp.update_collection_name(colName, newName);
+        return col.setName(newName);
     };
     TTRPGSystemGraphModel.prototype.renameItem = function (group, col, oldName, newName) {
         // check that group exists, and get the values. 

@@ -26,6 +26,7 @@ var ADataTable = /** @class */ (function () {
         seg[2] = (_f = this.getName()) !== null && _f !== void 0 ? _f : 'unknown';
         return seg;
     };
+    ADataTable.prototype.update = function () { };
     return ADataTable;
 }());
 exports.ADataTable = ADataTable;

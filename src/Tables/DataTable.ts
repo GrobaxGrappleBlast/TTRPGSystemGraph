@@ -32,6 +32,8 @@ export class ADataTable implements IGrobNode {
 		seg[2] = this.getName() ?? 'unknown';
 		return seg;
 	}
+
+	public update(){}
 }
 
 export class ADataRow { 
