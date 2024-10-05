@@ -83,6 +83,7 @@ export class GrobCollection<T extends IGrobNode > extends AGraphItem implements 
 		this.getNodes().forEach( node => {
 			node.update();
 		});
+		this.callUpdateListeners();
 	}
 	dispose () {
 		
@@ -109,6 +110,31 @@ export class GrobCollection<T extends IGrobNode > extends AGraphItem implements 
 			return;
 		}
 		this.colType = colType;
+	}
+
+
+
+	public updateListeners = {};
+	private callUpdateListeners(){
+		( Object.keys(this.updateListeners) ).forEach( key => {
+			this.updateListeners[key]();
+		})
+		return true;
+	}
+	addUpdateListener( key , listener : () => any ){
+		if (this.updateListeners[key] != undefined){
+			console.error('tried to add updatelistener to node with key:' + key + '. but there was already a listener using that key');
+			return false;
+		}
+
+		this.updateListeners[key] = listener;
+
+	}
+	removeUpdateListener( key ){
+		delete this.updateListeners[key];
+	}
+	removeAllUpdateListeners(){
+		this.updateListeners = {}
 	}
 }
 

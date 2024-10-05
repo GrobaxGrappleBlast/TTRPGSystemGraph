@@ -19,5 +19,10 @@ export declare class GrobCollection<T extends IGrobNode> extends AGraphItem impl
     protected colType: 'Node' | 'Table' | null;
     getCollectionType(): "Node" | "Table" | null;
     setCollectionType(colType: 'Node' | 'Table'): void;
+    updateListeners: {};
+    private callUpdateListeners;
+    addUpdateListener(key: any, listener: () => any): false | undefined;
+    removeUpdateListener(key: any): void;
+    removeAllUpdateListeners(): void;
 }
 export type GrobCollectionType = GrobCollection<IGrobNode>;

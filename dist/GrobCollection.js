@@ -8,6 +8,7 @@ var GrobCollection = /** @class */ (function (_super) {
     function GrobCollection(name, parent) {
         var _this = _super.call(this, name, 'C') || this;
         _this.nodes_names = {};
+        _this.updateListeners = {};
         return _this;
     }
     GrobCollection.prototype.getNodeNames = function () {
@@ -66,6 +67,7 @@ var GrobCollection = /** @class */ (function (_super) {
         this.getNodes().forEach(function (node) {
             node.update();
         });
+        this.callUpdateListeners();
     };
     GrobCollection.prototype.dispose = function () {
         for (var name in this.nodes_names) {
@@ -87,6 +89,26 @@ var GrobCollection = /** @class */ (function (_super) {
             return;
         }
         this.colType = colType;
+    };
+    GrobCollection.prototype.callUpdateListeners = function () {
+        var _this = this;
+        (Object.keys(this.updateListeners)).forEach(function (key) {
+            _this.updateListeners[key]();
+        });
+        return true;
+    };
+    GrobCollection.prototype.addUpdateListener = function (key, listener) {
+        if (this.updateListeners[key] != undefined) {
+            console.error('tried to add updatelistener to node with key:' + key + '. but there was already a listener using that key');
+            return false;
+        }
+        this.updateListeners[key] = listener;
+    };
+    GrobCollection.prototype.removeUpdateListener = function (key) {
+        delete this.updateListeners[key];
+    };
+    GrobCollection.prototype.removeAllUpdateListeners = function () {
+        this.updateListeners = {};
     };
     return GrobCollection;
 }(AGraphItem_1.AGraphItem));
