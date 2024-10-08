@@ -48,6 +48,7 @@ var GrobCollection = /** @class */ (function (_super) {
             return;
         this.nodes_names[newName] = this.nodes_names[oldName];
         delete this.nodes_names[oldName];
+        this.nodes_names[newName].update();
     };
     GrobCollection.prototype.setName = function (name) {
         var oldname = this.getName();

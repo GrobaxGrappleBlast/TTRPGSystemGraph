@@ -29,7 +29,8 @@ var GrobFixedNode = /** @class */ (function (_super) {
     GrobFixedNode.prototype.addDependency = function (node) { return false; };
     GrobFixedNode.prototype.removeDependency = function (node) { return false; };
     GrobFixedNode.prototype.nullifyDependency = function (node) { return false; };
-    GrobFixedNode.prototype._update = function () { };
+    GrobFixedNode.prototype._update = function () {
+    };
     return GrobFixedNode;
 }(AGrobNodte_1.AGrobNode));
 exports.GrobFixedNode = GrobFixedNode;

@@ -146,6 +146,7 @@ var AGrobNode = /** @class */ (function (_super) {
             var dep = this.dependents[key];
             dep.updateDependecysLocation(this);
         }
+        this.update();
     };
     AGrobNode.prototype.updateDependecysLocation = function (dependency) {
     };

@@ -38,6 +38,8 @@ export class GrobFixedNode extends AGrobNode<GrobFixedNode>{
 	public removeDependency(node:GrobNodeType){ return false  }
 	public nullifyDependency(node:GrobNodeType){return false}
 	
-	_update(){}
+	public _update(){
+
+	}
 }
  

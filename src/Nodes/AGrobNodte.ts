@@ -168,6 +168,7 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 			const dep = this.dependents [key];
 			dep.updateDependecysLocation(this)
 		}
+		this.update();
 	}
 	public updateDependecysLocation( dependency ){
 
