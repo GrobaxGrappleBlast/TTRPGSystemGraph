@@ -6,6 +6,9 @@ import { IGrobNode } 		from "../Nodes/IGrobNode";
 
 
 export class ADataTable implements IGrobNode {
+	setName(name: string) {
+		throw new Error("Method not implemented.");
+	}
 	parent: IGrobCollection<IGrobNode>;
 	getName(): string {
 		throw new Error("Method not implemented.");

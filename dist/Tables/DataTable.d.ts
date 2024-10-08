@@ -1,6 +1,7 @@
 import { IGrobCollection } from "../IGrobCollection";
 import { IGrobNode } from "../Nodes/IGrobNode";
 export declare class ADataTable implements IGrobNode {
+    setName(name: string): void;
     parent: IGrobCollection<IGrobNode>;
     getName(): string;
     dispose(): void;

@@ -8,6 +8,6 @@ export interface IGrobGroup<T extends IGrobNode> extends IGraphItem {
     addCollection(collection: IGrobCollection<T>): any;
     removeCollection(collection: IGrobCollection<T>): any;
     update_collection_name(oldName: any, newName: any): any;
-    setName(name: any): any;
+    setName(name: string): any;
     dispose(): void;
 }

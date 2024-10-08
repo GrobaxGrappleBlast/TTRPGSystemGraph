@@ -61,7 +61,7 @@ export class GrobCollection<T extends IGrobNode > extends AGraphItem implements 
 		this.nodes_names[newName] = this.nodes_names[oldName] ;
 		delete this.nodes_names[oldName] ;
 
-		this.nodes_names[newName] .update();
+		this.nodes_names[newName].setName(newName);
 	}
 
 	public setName( name ){

@@ -5,6 +5,9 @@ var ADataTable = /** @class */ (function () {
     function ADataTable() {
         this.data = {};
     }
+    ADataTable.prototype.setName = function (name) {
+        throw new Error("Method not implemented.");
+    };
     ADataTable.prototype.getName = function () {
         throw new Error("Method not implemented.");
     };

@@ -5,4 +5,5 @@ export interface IGrobNode {
     dispose(): void;
     updateLocation(parent: any): any;
     update(): any;
+    setName(name: string): any;
 }

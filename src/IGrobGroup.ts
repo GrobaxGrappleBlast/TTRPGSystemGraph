@@ -12,7 +12,7 @@ export interface IGrobGroup<T extends IGrobNode> extends IGraphItem {
 	addCollection(collection: IGrobCollection<T>) 
 	removeCollection( collection : IGrobCollection<T> )
 	update_collection_name(oldName,newName)
-	setName( name )
+	setName( name : string )
 	dispose () :void;
 
 }
