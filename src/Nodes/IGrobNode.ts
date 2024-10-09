@@ -6,5 +6,5 @@ export interface IGrobNode {
 	dispose() : void,
 	updateLocation( parent : any ),
 	update( )
-	setName( name : string )
+	setName( name : string , parentCall? : boolean )
 }

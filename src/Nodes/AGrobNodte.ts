@@ -153,10 +153,12 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 		this.name = null;
 
 	}
-	public setName( name ){
+	public setName( name , parentCall : boolean = false ){
 		const oldname= this.getName();
 		super.setName(name);
-		this.parent.update_node_name(oldname,name); 
+		if (!parentCall){
+			this.parent.update_node_name(oldname,name); 
+		}
 		this.updateLocation(this.parent);
 	} 
 
