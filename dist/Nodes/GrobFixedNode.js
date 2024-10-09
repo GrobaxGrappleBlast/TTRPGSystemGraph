@@ -30,6 +30,10 @@ var GrobFixedNode = /** @class */ (function (_super) {
     GrobFixedNode.prototype.removeDependency = function (node) { return false; };
     GrobFixedNode.prototype.nullifyDependency = function (node) { return false; };
     GrobFixedNode.prototype._update = function () {
+        for (var k in this.dependents) {
+            var dep = this.dependents[k];
+            dep.update();
+        }
     };
     return GrobFixedNode;
 }(AGrobNodte_1.AGrobNode));

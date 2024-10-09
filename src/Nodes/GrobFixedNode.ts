@@ -39,7 +39,10 @@ export class GrobFixedNode extends AGrobNode<GrobFixedNode>{
 	public nullifyDependency(node:GrobNodeType){return false}
 	
 	public _update(){
-
+		for( const k in this.dependents ){
+			const dep = this.dependents[k] as GrobDerivedNode;
+			dep.update();
+		} 
 	}
 }
  
