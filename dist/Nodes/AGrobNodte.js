@@ -133,10 +133,13 @@ var AGrobNode = /** @class */ (function (_super) {
         //@ts-ignore
         this.name = null;
     };
-    AGrobNode.prototype.setName = function (name) {
+    AGrobNode.prototype.setName = function (name, parentCall) {
+        if (parentCall === void 0) { parentCall = false; }
         var oldname = this.getName();
         _super.prototype.setName.call(this, name);
-        this.parent.update_node_name(oldname, name);
+        if (!parentCall) {
+            this.parent.update_node_name(oldname, name);
+        }
         this.updateLocation(this.parent);
     };
     /* by location we mean this items group - collection - node key.  */

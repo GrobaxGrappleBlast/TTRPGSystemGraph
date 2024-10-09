@@ -30,7 +30,7 @@ export declare abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphIt
     update(): boolean;
     abstract _update(): any;
     dispose(): void;
-    setName(name: any): void;
+    setName(name: any, parentCall?: boolean): void;
     updateLocation(parent: any): void;
     updateDependecysLocation(dependency: any): void;
     isValid(): boolean;

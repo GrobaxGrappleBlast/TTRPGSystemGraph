@@ -44,11 +44,15 @@ var GrobCollection = /** @class */ (function (_super) {
         return this.nodes_names[name] == null;
     };
     GrobCollection.prototype.update_node_name = function (oldName, newName) {
-        if (oldName == newName)
+        if (oldName == newName) {
             return;
+        }
+        if (!this.nodes_names[oldName]) {
+            return;
+        }
+        this.nodes_names[oldName].setName(newName, true);
         this.nodes_names[newName] = this.nodes_names[oldName];
         delete this.nodes_names[oldName];
-        this.nodes_names[newName].setName(newName);
     };
     GrobCollection.prototype.setName = function (name) {
         var oldname = this.getName();
