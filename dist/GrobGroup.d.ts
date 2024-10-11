@@ -17,4 +17,9 @@ export declare class GrobGroup<T extends IGrobNode> extends AGraphItem implement
     protected groupType: 'Node' | 'Table';
     getGroupType(): "Node" | "Table";
     setGroupType(groupType: 'Node' | 'Table'): void;
+    updateListeners: {};
+    private callUpdateListeners;
+    addUpdateListener(key: any, listener: () => any): false | undefined;
+    removeUpdateListener(key: any): void;
+    removeAllUpdateListeners(): void;
 }

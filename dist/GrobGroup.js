@@ -8,6 +8,7 @@ var GrobGroup = /** @class */ (function (_super) {
     function GrobGroup(name, parent) {
         var _this = _super.call(this, name, 'G') || this;
         _this.collections_names = {};
+        _this.updateListeners = {};
         return _this;
     }
     GrobGroup.prototype.getCollectionsNames = function () {
@@ -23,6 +24,7 @@ var GrobGroup = /** @class */ (function (_super) {
         collection.parent = this;
         this.collections_names[collection.getName()] = collection;
         collection.setCollectionType(this.groupType);
+        this.callUpdateListeners();
         return true;
     };
     GrobGroup.prototype.removeCollection = function (collection) {
@@ -32,11 +34,15 @@ var GrobGroup = /** @class */ (function (_super) {
             return false;
         collection.dispose();
         delete this.collections_names[name];
+        this.callUpdateListeners();
         return this.collections_names[name] == null;
     };
     GrobGroup.prototype.update_collection_name = function (oldName, newName) {
+        if (!this.collections_names[oldName])
+            return;
         this.collections_names[newName] = this.collections_names[oldName];
         delete this.collections_names[oldName];
+        this.collections_names[newName].setName(newName);
     };
     GrobGroup.prototype.setName = function (name) {
         _super.prototype.setName.call(this, name);
@@ -44,6 +50,7 @@ var GrobGroup = /** @class */ (function (_super) {
             var curr = this.collections_names[name_1];
             curr.updateLocation(this);
         }
+        this.callUpdateListeners();
     };
     GrobGroup.prototype.dispose = function () {
         for (var name in this.collections_names) {
@@ -66,6 +73,26 @@ var GrobGroup = /** @class */ (function (_super) {
         Object.values(this.collections_names).forEach(function (col) {
             col.setCollectionType(groupType);
         });
+    };
+    GrobGroup.prototype.callUpdateListeners = function () {
+        var _this = this;
+        (Object.keys(this.updateListeners)).forEach(function (key) {
+            _this.updateListeners[key]();
+        });
+        return true;
+    };
+    GrobGroup.prototype.addUpdateListener = function (key, listener) {
+        if (this.updateListeners[key] != undefined) {
+            console.error('tried to add updatelistener to node with key:' + key + '. but there was already a listener using that key');
+            return false;
+        }
+        this.updateListeners[key] = listener;
+    };
+    GrobGroup.prototype.removeUpdateListener = function (key) {
+        delete this.updateListeners[key];
+    };
+    GrobGroup.prototype.removeAllUpdateListeners = function () {
+        this.updateListeners = {};
     };
     return GrobGroup;
 }(AGraphItem_1.AGraphItem));
