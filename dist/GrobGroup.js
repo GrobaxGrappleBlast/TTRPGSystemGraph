@@ -74,6 +74,9 @@ var GrobGroup = /** @class */ (function (_super) {
             col.setCollectionType(groupType);
         });
     };
+    GrobGroup.prototype.update = function () {
+        this.callUpdateListeners();
+    };
     GrobGroup.prototype.callUpdateListeners = function () {
         var _this = this;
         (Object.keys(this.updateListeners)).forEach(function (key) {
