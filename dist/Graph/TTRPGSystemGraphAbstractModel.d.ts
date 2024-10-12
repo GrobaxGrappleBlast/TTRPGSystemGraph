@@ -13,7 +13,7 @@ export declare abstract class TTRPGSystemGraphAbstractModel {
     data: Record<string, GrobGroup<GrobNodeType | IGrobNode>>;
     protected out: IOutputHandler;
     setOut(out: IOutputHandler | null): void;
-    protected deleteGroup(group: GrobGroupType | string): false | undefined;
+    protected _deleteGroup(group: GrobGroupType | string): false | undefined;
     protected _createGroup(name: string): GrobGroup<IGrobNode> | null;
     protected _hasGroup(name: string): boolean;
     protected _getGroup_key(key: string): GrobGroup<GrobNodeType | IGrobNode>;

@@ -15,7 +15,7 @@ var TTRPGSystemGraphAbstractModel = /** @class */ (function () {
     TTRPGSystemGraphAbstractModel.prototype.setOut = function (out) {
         this.out = out ? out : (0, IOutputHandler_1.newOutputHandler)();
     };
-    TTRPGSystemGraphAbstractModel.prototype.deleteGroup = function (group) {
+    TTRPGSystemGraphAbstractModel.prototype._deleteGroup = function (group) {
         if (typeof group == 'string') {
             var g_1 = this.getGroup(group);
             if (!g_1)
