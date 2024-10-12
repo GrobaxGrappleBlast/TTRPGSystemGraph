@@ -20,10 +20,10 @@ export abstract class TTRPGSystemGraphAbstractModel {
 		this.out = out ? out : newOutputHandler();
 	}  
 	
-	protected _deleteGroup		(group:GrobGroupType | string ) {
+	protected deleteGroup		(group:GrobGroupType | string ) {
 
 		if(typeof group == 'string'){
-			let g = this._getGroup(group);
+			let g = this.getGroup(group);
 			if(!g)
 				return false
 			group = g;
@@ -60,7 +60,7 @@ export abstract class TTRPGSystemGraphAbstractModel {
 	protected _getGroup_key ( key:string ){
 		return this.data[key];
 	}
-	protected _getGroup ( name:string ){
+	protected getGroup ( name:string ){
 		for (const key in this.data){
 			if (this.data[key].getName() == name){
 				return this.data[key];

@@ -35,7 +35,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         if (!this._hasGroup(group)) {
             this.out.outError("No group existed by name ".concat(group));
         }
-        var grp = this._getGroup(group);
+        var grp = this.getGroup(group);
         if (!grp)
             return null;
         return this._createCollection(grp, name);
@@ -67,7 +67,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
     TTRPGSystemGraphModel.prototype.createDerivedNode = function (col, name) {
         var colName = col;
         if (typeof col == 'string') {
-            var grp = this._getGroup(derived);
+            var grp = this.getGroup(derived);
             if (!grp)
                 return null;
             col = grp.getCollection(col);
@@ -84,7 +84,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         return node;
     };
     TTRPGSystemGraphModel.prototype.createFixedNode = function (col, name) {
-        var grp = this._getGroup(fixed);
+        var grp = this.getGroup(fixed);
         if (!grp)
             return null;
         var colName = col;
@@ -105,7 +105,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
     };
     // has Statements 
     TTRPGSystemGraphModel.prototype.hasCollection = function (group, name) {
-        var grp = this._getGroup(group);
+        var grp = this.getGroup(group);
         if (!grp) {
             this.out.outError("No group existed by name ".concat(group));
             return false;
@@ -119,7 +119,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         return this.hasCollection(fixed, name);
     };
     TTRPGSystemGraphModel.prototype.hasNode = function (group, col, name) {
-        var grp = this._getGroup(group);
+        var grp = this.getGroup(group);
         if (!grp) {
             this.out.outError("No group existed by name ".concat(group));
             return false;
@@ -145,7 +145,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
     TTRPGSystemGraphModel.prototype.getCollectionNames = function (group) {
         var grp;
         if (typeof group == 'string') {
-            grp = this._getGroup(group);
+            grp = this.getGroup(group);
         }
         else {
             grp = group;
@@ -159,7 +159,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
     TTRPGSystemGraphModel.prototype.getCollection = function (group, name) {
         var grp;
         if (typeof group == 'string') {
-            grp = this._getGroup(group);
+            grp = this.getGroup(group);
         }
         else {
             grp = group;
@@ -182,7 +182,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         return this.getCollection(fixed, name);
     };
     TTRPGSystemGraphModel.prototype.getNode = function (group, col, name) {
-        var grp = this._getGroup(group);
+        var grp = this.getGroup(group);
         if (!grp) {
             this.out.outError("No group existed by name ".concat(group));
             return null;
@@ -220,7 +220,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         return this.getNode(fixed, col, name);
     };
     TTRPGSystemGraphModel.prototype.getNodeNames = function (group, col) {
-        var grp = this._getGroup(group);
+        var grp = this.getGroup(group);
         if (!grp) {
             this.out.outError("No group existed by name ".concat(group));
             return null;
@@ -238,7 +238,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
     TTRPGSystemGraphModel.prototype._deleteGroup = function (group) {
         if (typeof group == 'string') {
             var name = group;
-            group = this._getGroup(group);
+            group = this.getGroup(group);
             if (!group) {
                 this.out.outError('No Collection by name ' + name);
                 return false;
@@ -247,7 +247,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         _super.prototype._deleteGroup.call(this, group);
     };
     TTRPGSystemGraphModel.prototype.deleteCollection = function (group, col) {
-        var grp = this._getGroup(group);
+        var grp = this.getGroup(group);
         if (!grp) {
             this.out.outError("No group existed by name ".concat(group));
             return false;
@@ -267,7 +267,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         return this.deleteCollection(fixed, col);
     };
     TTRPGSystemGraphModel.prototype.deleteNode = function (group, col, name) {
-        var grp = this._getGroup(group);
+        var grp = this.getGroup(group);
         if (!grp) {
             this.out.outError("No group existed by name ".concat(group));
             return false;
@@ -295,7 +295,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         var grpName;
         if (typeof group == 'string') {
             grpName = group;
-            grp = this._getGroup(group);
+            grp = this.getGroup(group);
         }
         else {
             grpName = group.getName();
@@ -332,7 +332,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         var grpName;
         if (typeof group == 'string') {
             grpName = group;
-            grp = this._getGroup(group);
+            grp = this.getGroup(group);
         }
         else {
             grpName = group.getName();
@@ -398,7 +398,7 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         }
         return errorMessages.length == 0;
     };
-    TTRPGSystemGraphModel.prototype._getGroup = function (name) {
+    TTRPGSystemGraphModel.prototype.getGroup = function (name) {
         var grp = this.data[name];
         return grp !== null && grp !== void 0 ? grp : null;
     };

@@ -15,9 +15,9 @@ var TTRPGSystemGraphAbstractModel = /** @class */ (function () {
     TTRPGSystemGraphAbstractModel.prototype.setOut = function (out) {
         this.out = out ? out : (0, IOutputHandler_1.newOutputHandler)();
     };
-    TTRPGSystemGraphAbstractModel.prototype._deleteGroup = function (group) {
+    TTRPGSystemGraphAbstractModel.prototype.deleteGroup = function (group) {
         if (typeof group == 'string') {
-            var g_1 = this._getGroup(group);
+            var g_1 = this.getGroup(group);
             if (!g_1)
                 return false;
             group = g_1;
@@ -51,7 +51,7 @@ var TTRPGSystemGraphAbstractModel = /** @class */ (function () {
     TTRPGSystemGraphAbstractModel.prototype._getGroup_key = function (key) {
         return this.data[key];
     };
-    TTRPGSystemGraphAbstractModel.prototype._getGroup = function (name) {
+    TTRPGSystemGraphAbstractModel.prototype.getGroup = function (name) {
         for (var key in this.data) {
             if (this.data[key].getName() == name) {
                 return this.data[key];

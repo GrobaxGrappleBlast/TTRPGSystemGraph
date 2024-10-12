@@ -45,7 +45,7 @@ export declare class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel
         msg: string;
         key: string[];
     }[]): boolean;
-    protected _getGroup(name: any): import("../GrobGroup").GrobGroup<GrobNodeType | import("../Nodes/IGrobNode").IGrobNode>;
+    getGroup(name: any): import("../GrobGroup").GrobGroup<GrobNodeType | import("../Nodes/IGrobNode").IGrobNode>;
     addNodeDependency(node: GrobDerivedNode, dep: GrobNodeType): void;
     removeNodeDependency(node: GrobDerivedNode, dep: GrobNodeType): void;
 }

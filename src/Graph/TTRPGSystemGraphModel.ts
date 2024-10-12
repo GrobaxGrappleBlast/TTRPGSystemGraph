@@ -42,7 +42,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 			this.out.outError(`No group existed by name ${group}`)
 		}
 		
-		let grp : GrobGroupType | null = this._getGroup(group);
+		let grp : GrobGroupType | null = this.getGroup(group);
 		if(!grp)
 			return null;
 
@@ -79,7 +79,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		
 		let colName = col;
 		if( typeof col == 'string'){
-			let grp = this._getGroup(derived);
+			let grp = this.getGroup(derived);
 			if(!grp)
 				return null;
 			col = grp.getCollection(col) as GrobCollection<GrobDerivedNode> ;
@@ -99,7 +99,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 	}
 	public createFixedNode( col : GrobCollection<GrobFixedNode> | string  , name : string){
 		
-		let grp = this._getGroup(fixed);
+		let grp = this.getGroup(fixed);
 		if(!grp)
 			return null;
 
@@ -128,7 +128,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 	// has Statements 
 	public hasCollection( group : groupKeyType , name : string):boolean{
 		
-		const grp = this._getGroup(group);
+		const grp = this.getGroup(group);
 		if(!grp){
 			this.out.outError(`No group existed by name ${group}`)
 			return false;
@@ -143,7 +143,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		return this.hasCollection(fixed,name);
 	}
 	public hasNode( group : groupKeyType , col : GrobCollection<GrobNodeType> | string , name : string){
-		const grp = this._getGroup(group);
+		const grp = this.getGroup(group);
 		if(!grp){
 			this.out.outError(`No group existed by name ${group}`)
 			return false;
@@ -174,7 +174,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 	public getCollectionNames( group : groupKeyType | GrobGroupType ){
 		let grp : GrobGroupType;
 		if( typeof group == 'string'){
-			grp = this._getGroup(group) as GrobGroupType;
+			grp = this.getGroup(group) as GrobGroupType;
 		}else{
 			grp = group;
 		}
@@ -190,7 +190,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		
 		let grp : GrobGroupType;
 		if( typeof group == 'string'){
-			grp = this._getGroup(group) as GrobGroupType;
+			grp = this.getGroup(group) as GrobGroupType;
 		}else{
 			grp = group;
 		}
@@ -216,7 +216,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 	}
 	public getNode( group : groupKeyType , col : GrobCollection<GrobNodeType> | string , name : string){
 		
-		const grp = this._getGroup(group);
+		const grp = this.getGroup(group);
 		if(!grp){
 			this.out.outError(`No group existed by name ${group}`)
 			return null;
@@ -264,7 +264,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 
 	}
 	public getNodeNames(  group : groupKeyType , col : GrobCollection<GrobNodeType> | string  ){
-		const grp = this._getGroup(group);
+		const grp = this.getGroup(group);
 		if(!grp){
 			this.out.outError(`No group existed by name ${group}`)
 			return null;
@@ -287,7 +287,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 
 		if(typeof group == 'string'){
 			const name = group;
-			group = this._getGroup(group) as GrobGroupType;
+			group = this.getGroup(group) as GrobGroupType;
 			if(!group){
 				this.out.outError('No Collection by name ' + name);
 				return false;
@@ -297,7 +297,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		super._deleteGroup(group);
 	}
 	public deleteCollection( group : groupKeyType , col : string | GrobCollection<GrobNodeType>){
-		const grp = this._getGroup(group);
+		const grp = this.getGroup(group);
 		if(!grp){
 			this.out.outError(`No group existed by name ${group}`)
 			return false;
@@ -320,7 +320,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 	}
 	public deleteNode( group : groupKeyType , col : GrobCollection<GrobNodeType> | string , name : string){
 		
-		const grp = this._getGroup(group);
+		const grp = this.getGroup(group);
 		if(!grp){
 			this.out.outError(`No group existed by name ${group}`)
 			return false;
@@ -354,7 +354,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		let grpName;
 		if( typeof group == 'string'){
 			grpName = group;
-			grp = this._getGroup(group) as GrobGroupType;
+			grp = this.getGroup(group) as GrobGroupType;
 		}else{
 			grpName = group.getName();
 			grp = group;
@@ -395,7 +395,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		let grpName;
 		if( typeof group == 'string'){
 			grpName = group;
-			grp = this._getGroup(group) as GrobGroupType;
+			grp = this.getGroup(group) as GrobGroupType;
 		}else{
 			grpName = group.getName();
 			grp = group;
@@ -469,7 +469,7 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		}
 		return errorMessages.length == 0;
 	} 
-	protected _getGroup( name ){
+	public getGroup( name ){
 		let grp = this.data[name]
 		return grp ?? null ;
 	}
