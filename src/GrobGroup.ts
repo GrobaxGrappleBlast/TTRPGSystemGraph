@@ -88,6 +88,11 @@ export class GrobGroup<T extends IGrobNode > extends AGraphItem implements IGrob
 	}
 	
 
+	public update(){
+		this.callUpdateListeners();	
+	}
+
+
 	public updateListeners = {};
 	private callUpdateListeners(){
 		( Object.keys(this.updateListeners) ).forEach( key => {
