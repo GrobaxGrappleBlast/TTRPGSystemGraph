@@ -95,6 +95,9 @@ var GrobCollection = /** @class */ (function (_super) {
         }
         this.colType = colType;
     };
+    GrobCollection.prototype.update = function () {
+        this.callUpdateListeners();
+    };
     GrobCollection.prototype.callUpdateListeners = function () {
         var _this = this;
         (Object.keys(this.updateListeners)).forEach(function (key) {

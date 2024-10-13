@@ -122,6 +122,9 @@ export class GrobCollection<T extends IGrobNode > extends AGraphItem implements 
 		this.colType = colType;
 	}
 
+	public update(){
+		this.callUpdateListeners();
+	}
 
 
 	public updateListeners = {};
