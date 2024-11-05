@@ -77,8 +77,7 @@ test('Tarjan - Succes ', () => {
 			
 			const nodes = Object.values(col.nodes_names);
 			for (let n = 0; n < nodes.length; n++) {
-				const node = nodes[n];
-				
+				const node = nodes[n] as GrobNode;
 				arr.push(node);
 			}
 		}
@@ -100,10 +99,10 @@ test('Tarjan - Failure ', () => {
 	const groups = Object.values(sys.data);
 
 	// create a circular dependency
-	let n1 : GrobDerivedNode = sys.getNode('derived','1c','1n');
-	let n2 : GrobDerivedNode = sys.getNode('derived','2c','3n');
-	let n3 : GrobDerivedNode = sys.getNode('derived','4c','2n');
-	let n4 : GrobDerivedNode = sys.getNode('derived','5c','4n');
+	let n1 : GrobDerivedNode = sys.getNode('derived','1c','1n') as GrobDerivedNode;
+	let n2 : GrobDerivedNode = sys.getNode('derived','2c','3n') as GrobDerivedNode;
+	let n3 : GrobDerivedNode = sys.getNode('derived','4c','2n') as GrobDerivedNode;
+	let n4 : GrobDerivedNode = sys.getNode('derived','5c','4n') as GrobDerivedNode;
 	n1.addDependency(n2);
 	n2.addDependency(n3);
 	n3.addDependency(n4);
@@ -119,8 +118,7 @@ test('Tarjan - Failure ', () => {
 			
 			const nodes = Object.values(col.nodes_names);
 			for (let n = 0; n < nodes.length; n++) {
-				const node = nodes[n];
-				
+				const node = nodes[n] as GrobNode;
 				arr.push(node);
 			}
 		}

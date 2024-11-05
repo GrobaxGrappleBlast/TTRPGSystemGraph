@@ -50,7 +50,7 @@ interface IGraphAbstractModel {
 	_createGroup			( name:string ) :  GrobGroup<GrobNodeType> 
 	_hasGroup				( name:string ) : boolean
 	_getGroup_key 			( key:string ) : GrobGroupType
-	_getGroup( name ) : GrobGroupType
+	getGroup( name ) : GrobGroupType
 	 _deleteCollection		( collection:GrobCollectionType ) : boolean  
 	_createCollection		( group:GrobGroupType , name:string   ) :GrobCollection<GrobNodeType>
 	_deleteNode				( node: GrobNodeType ) : boolean
@@ -64,7 +64,7 @@ test('Try to Get Groups and Collections and nodes that does not exist', () => {
 	//@ts-ignore
 	let asys :IGraphAbstractModel 	= sys as IGraphAbstractModel;
 
-	let group = asys._getGroup('TryGroup');
+	let group = asys.getGroup('TryGroup');
 	expect(group).toBeFalsy();
 
 	let col = sys.getCollection('derived','TryCol')

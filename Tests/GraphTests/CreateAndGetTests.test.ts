@@ -604,7 +604,7 @@ test(' graph Create and Get And Delete And Get', () => {
 		expect(sys.hasDerivedCollection	  ('2c')).toBe(false);
 
 		//@ts-ignore
-		let derived = sys._getGroup('derived')
+		let derived = sys.getGroup('derived')
 
 		names 	 = Object.values(derived.collections_names) 
 		nameKeys = Object.keys	(derived.collections_names)

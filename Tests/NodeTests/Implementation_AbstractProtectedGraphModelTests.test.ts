@@ -183,7 +183,7 @@ test('Test Group Deletion', () => {
 	let fc1 = sys.getFixedCollection('c1')
 	
 	//@ts-ignore
-	let fg1 = (sys  as IGraphAbstractModel)._getGroup('fixed');
+	let fg1 = (sys  as IGraphAbstractModel).getGroup('fixed');
 
 	// set Node dependency
 	dn1.setCalc('@a');
@@ -230,7 +230,7 @@ test('Test Group Deletion', () => {
 		expect(Object.keys(fg1.collections_names).length).toBe(0)
 
 		// @ts-ignore
-		let fixedGroupTry = (sys as IGraphAbstractModel)._getGroup('fixed') ;
+		let fixedGroupTry = (sys as IGraphAbstractModel).getGroup('fixed') ;
 		expect(fixedGroupTry ).toBeFalsy()
 	
 });
