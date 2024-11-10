@@ -17,64 +17,8 @@ export interface TarjanAlgorithmLink {
 export class GrobAlgorithms{ 
 
 	public static algLevel = 1;
-	public static TarjAlgo( nodes : GrobNode[] , strongComponents : Record<string,GrobNode> = {}){
-		/*	
-			const derived = 'derived';
-			function createGraph(  ) : Record<string,dependencyNode>{
-
-				// creating the data we need to work with. 
-				// first we Get the nodes with their names 
-				var graph 		: Record<string,AGrobNode<any>> = {}; 
-				data.forEach( Collection => {  
-					Collection.data.forEach( stat => {
-						const name = `${derived}.${Collection.name}.${stat.name}`;
-						const node = new dependencyNode( name ); 
-						graph[ name ] = node; 
-					}) 
-				}); 
-			
-				// We add the dependencies to the nodes as outgoing edges. 
-				// While Doing so when we find an edge, we also add it as ingoing to its target. 
-				for ( const key in graph ) {
-
-					const node = graph[key];
-					const item = dict[key];
-						
-
-					// get the edges 
-					const edges = item.data.map(p => p.origin);
-					edges.forEach( edge => {
-						const target = graph[edge];
-						
-						// if item
-						if( !target )
-							return;
-
-						// add outgoing
-						node.dependencies.push( target );
-		
-						// add ingoing
-						target.dependents.push(node);
-
-					});
-				}
-					
-				return graph;
-			}
-
-			// We need a dictionary where the names match the names in the pointers
-			// where the pointers are the references to our objct.
-			const dict: Record<string, IDerivedStat<T>> = {};
-			for (let c = 0; c < data.length; c++) {
-				const collection = data[c];
-				for (let s = 0; s < collection.data.length; s++) {
-					const stat = collection.data[s];
-					dict[`derived.${collection.name}.${stat.name}`]	= stat;
-				}
-			} 
-			var graph: Record<string,dependencyNode>  = createGraph(data,dict);  
-		*/
-
+	public static TarjAlgo( nodes : GrobNode[] ){
+	 
 		//  --- --- --- --- --- --- --- ---  --- --- --- --- --- ---
 		// Tarjans Algorithm
 		//  --- --- --- --- --- --- --- ---  --- --- --- --- --- ---
@@ -87,10 +31,7 @@ export class GrobAlgorithms{
 		});
 		let algLevel = GrobAlgorithms.algLevel++;
 		let counter = 0;
-		//let cyclicCounter = 0;
-		//let islands : GrobNode[][] = [];
-		//let tracker = new  NameValueTracker<GrobNode>(); 
-
+		 
 		let stack : GrobNode[] = [];
 		// We create our stack, a list of all nodes where every node has a link and LowLink value.
 		// BFS Searching to asign link values;
@@ -103,9 +44,6 @@ export class GrobAlgorithms{
 				que.push(...Object.values(curr.dependencies));
 			}
 			stack.push(curr);
-
-			// add tracking for this location. 
-			//tracker.nameToNumber( curr.getLocationKey() , curr.LowLinkValue , curr );
 		}
 
 		que = [];
@@ -113,38 +51,69 @@ export class GrobAlgorithms{
 			que.push(node);
 		});
 		algLevel = GrobAlgorithms.algLevel++; 
+		let lowlinkMapper :Record<number,GrobNode[]> = {};
+		let NodeVistCounter : {num:number } = { num : 0 };
 		while ( que.length > 0){	
 			const curr = que.pop() as GrobNode;
-			tarjanNodeVisit(algLevel,curr,strongComponents);
+			tarjanNodeVisit(algLevel,curr, lowlinkMapper, NodeVistCounter);
 		}
 
-		function tarjanNodeVisit( algLevel, node : GrobNode , strongComponents : Record<string,GrobNode> ){
+		let strongComponents = Object.values(lowlinkMapper).filter( p => p.length > 1);
+
+		function tarjanNodeVisit( algLevel, node : GrobNode , lowlinkMapper : Record<number,GrobNode[]>, nodeVistCounter : {num:number }  ){
+			
 			// Stop The algorithm if the node has already been visited
 			if( node.tarjanAlgorithmAlgorithmIndex == algLevel ){
 				return node.LowLinkValue;
 			}
-			let que : GrobNode[] = Object.values(node.dependencies);
-			let lowLinkValue = node.LowLinkValue;
+			
+			// first if this node has not been visited before we give it a VisitCounter
+			if (node.LowLinkValue == Number.MAX_SAFE_INTEGER){
+				node.LowLinkValue = nodeVistCounter.num++;
+			}
+
+			// we set the algortihm level 
 			node.tarjanAlgorithmAlgorithmIndex = algLevel;
+
+			// we aquire our low link value as a variable
+			let lowLinkValue = node.LowLinkValue;
+			
+			// for debuggign we get the location key of the node. 
+			//let src = node.getLocationKey();
+
+			// we go through each of this nodes dependencies
+			let que : GrobNode[] = Object.values(node.dependencies);
 			while ( que.length > 0){	
+
+				// get the current item
 				const curr = que.pop() as GrobNode;
-				const lowLinkCandidate = tarjanNodeVisit(algLevel,curr,strongComponents);
 				
-				if( curr.LowLinkValue == lowLinkCandidate){
-					strongComponents[curr.getLocationKey()] = curr;
-				}
- 
-				else if ( curr.LowLinkValue < lowLinkCandidate){
+				// for debugging we get the current locationkey
+				//let srci = curr.getLocationKey();
+
+				// now we visit the node with this algorithm and get the lowest link it can get
+				const lowLinkCandidate = tarjanNodeVisit(algLevel,curr,lowlinkMapper, nodeVistCounter  );
+			
+				// if the new lowlink value is lower than ours, we register it as our new lowlink value
+				if ( lowLinkValue > lowLinkCandidate){
 					lowLinkValue = lowLinkCandidate;
 				}  
 
 			}
+
+			// ! Here we register the link value. ! this is how we know of stronglyBoundComponents.
+			// we mark this lowlink value for our node. and apply it to the node
+			if(!lowlinkMapper[lowLinkValue])
+				lowlinkMapper[lowLinkValue] = []
+			lowlinkMapper[lowLinkValue].push(node);
 			node.LowLinkValue = lowLinkValue;
+
+			// we return the lowlink value.
 			return lowLinkValue;
 		}
 
-
-		return [Object.keys(strongComponents).length == 0, strongComponents];
-
+		// apply the object result, to the output obj.
+		let hasStrongComponents = strongComponents.length != 0;
+		return [ hasStrongComponents ,  strongComponents];
 	} 
 }

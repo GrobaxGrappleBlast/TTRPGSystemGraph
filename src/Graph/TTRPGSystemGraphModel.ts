@@ -1,10 +1,11 @@
 import { GrobCollection } from "../GrobCollection";
 import { type GrobGroupType } from "../GrobGroup";
 import { newOutputHandler } from "../Abstractions/IOutputHandler"; 
-import type { GrobNodeType } from "./TTRPGSystemsGraphDependencies"; 
-import { TTRPGSystemGraphAbstractModel } from "./TTRPGSystemGraphAbstractModel"; 
+import type { GrobNodeType } from "./TTRPGSystemsGraphDependencies";  
 import { GrobFixedNode } from 	"../index";
 import { GrobDerivedNode } from "../index";
+import { TTRPGSystemGraphAbstractModel } from ".";
+
 
 const derived 	= 'derived';
 const fixed 	= 'fixed';
@@ -18,6 +19,9 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 
 	public constructor(){
 		super();
+		this._createGroup( 'fixed' )	;
+		this._createGroup( 'derived' )	;
+		this._createGroup( 'extra' )	;
 		this.setOut( newOutputHandler() );
 	}
 
@@ -166,7 +170,6 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 	public hasFixedNode( col : GrobCollection<GrobFixedNode> | string  , name : string){
 		return this.hasNode(fixed,col,name);
 	}
-	
 
 
 
@@ -483,3 +486,6 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 		this._removeNodeDependency(node,dep);
 	}
 }
+
+
+

@@ -2,7 +2,8 @@
 
 
 import { keyManagerInstance } from './Abstractions/KeyManager';
-import { TTRPGSystemGraphModel, type groupKeyType } from './Graph/TTRPGSystemGraphModel';
+import { TTRPGSystemFeatureIndex } from './Graph';
+import { type groupKeyType } from './Graph/TTRPGSystemGraphModel';
 import type { GrobNodeType } from './Graph/TTRPGSystemsGraphDependencies';
 import { GrobCollection, type GrobCollectionType } from './GrobCollection';
 import { GrobGroup, type GrobGroupType } from './GrobGroup'; 
@@ -30,7 +31,7 @@ export {
 	ADataRow			,
 	ADataTable			, 
 	
-	TTRPGSystemGraphModel as TTRPGSystem, 
+	TTRPGSystemFeatureIndex as TTRPGSystem, 
 	TTRPGSystemBonusDesigner as TTRPGSystemHelper,
 }
 	

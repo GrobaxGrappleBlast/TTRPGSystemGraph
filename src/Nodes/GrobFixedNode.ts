@@ -33,10 +33,6 @@ export class GrobFixedNode extends AGrobNode<GrobFixedNode>{
 	public getTypeString(){
 		return GrobFixedNode.getTypeString();
 	}
-
-	public addDependency(node:GrobNodeType){ return false } 
-	public removeDependency(node:GrobNodeType){ return false  }
-	public nullifyDependency(node:GrobNodeType){return false}
 	
 	public _update(){
 		for( const k in this.dependents ){

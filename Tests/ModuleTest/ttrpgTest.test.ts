@@ -1,12 +1,12 @@
  
-import { GrobCollection , GrobGroup , type GrobNodeType , GrobDerivedNode, GrobDerivedOrigin, GrobFixedNode, TTRPGSystem , uuidv4 } from "../../src/index";
-import { JsonObject, JsonMappingRecordInArrayOut, JsonClassTyped, JsonString, JsonNumber, JsonArrayClassTyped } from "grobax-json-handler";
+import { GrobCollection , GrobGroup , type GrobNodeType , GrobDerivedNode, GrobDerivedOrigin, GrobFixedNode, TTRPGSystem , uuidv4, GrobBonusNode } from "../../src/index";
+import { JsonObject, JsonMappingRecordInArrayOut, JsonClassTyped, JsonString, JsonNumber, JsonArrayClassTyped, JsonMapping } from "grobax-json-handler";
 import { BASE_SCHEME } from "grobax-json-handler";
 import { JSONHandler } from "grobax-json-handler";
 import { DerivedCollectionController } from "./derivedController.test";
+import { Feature } from "../../src/Tables/Features";
 
-
- 
+  
 	// origins
 	export class GrobJDerivedOrigin extends GrobDerivedOrigin { 
 
@@ -37,6 +37,28 @@ import { DerivedCollectionController } from "./derivedController.test";
 		@JsonNumber({name : 'standardValue'})
 		declare public ___value:number
 	}
+	export class GrobJBonusNode extends GrobBonusNode {
+
+		@JsonString() 
+		declare public name ;
+
+		@JsonNumber({name : 'standardValue'})
+		declare public ___value:number
+
+		@JsonString({
+			name : 'featureName',
+			mappingFunctions:{
+				in 	: ( o : any , serialize		: (o:any) => any ) => {
+					
+					return {};
+				},
+				out : ( o : Feature , deserialize	: (o:any) => any ) => {
+					return  { name: o.name , src : ""};
+				}
+			}
+		})
+		declare public featureSrc : Feature;
+	}
 	export type GrobJNodeType = GrobJDerivedNode | GrobJFixedNode;
 
 	
@@ -57,6 +79,16 @@ import { DerivedCollectionController } from "./derivedController.test";
 		@JsonMappingRecordInArrayOut({KeyPropertyName:'getName', name:'data',type:GrobJFixedNode  })
 		nodes_names: Record<string, GrobJFixedNode> = {}
 	}
+	export class GrobCollectionExtra extends GrobCollection<GrobJBonusNode>{
+
+		@JsonString() 
+		declare public name ;
+
+		@JsonMappingRecordInArrayOut({KeyPropertyName:'getName', name:'data',type:GrobJBonusNode  })
+		nodes_names: Record<string, GrobJBonusNode> = {}
+	}
+	
+	
 
 	//  GROUPS 
 	export class GrobGroupDerived extends GrobGroup<GrobDerivedNode>{
@@ -75,6 +107,15 @@ import { DerivedCollectionController } from "./derivedController.test";
 
 		@JsonMappingRecordInArrayOut({KeyPropertyName:'getName', name:'data', type :GrobCollectionFixed  })
 		collections_names: Record<string,GrobCollectionFixed> = {};
+
+	} 
+	export class GrobGroupExtra extends GrobGroup<GrobBonusNode>{
+		
+		@JsonString() 
+		declare public name :string  ;
+
+		@JsonMappingRecordInArrayOut({KeyPropertyName:'getName', name:'data', type :GrobCollectionExtra  })
+		collections_names: Record<string,GrobCollectionExtra> = {};
 
 	} 
 	export class TTRPG_SCHEMES { 
@@ -103,7 +144,7 @@ import { DerivedCollectionController } from "./derivedController.test";
 				self.data['derived'] = self.derived;
 			}
 
-			// For all groups 
+			// For all groups ensure that dependencies are located. 
 			for(const group_key in (self as any).data ){
 				const group = (self as any).data[group_key];
 				group.parent = self;
@@ -131,6 +172,8 @@ import { DerivedCollectionController } from "./derivedController.test";
 			}
 			const groups = Object.values((self as any).data); 
 		}
+
+
 	})
 	export class TTRPGSystemJSONFormatting extends TTRPGSystem {
 		

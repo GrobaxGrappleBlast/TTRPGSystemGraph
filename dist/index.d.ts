@@ -3,12 +3,11 @@ import { TTRPGSystemGraphModel, type groupKeyType } from './Graph/TTRPGSystemGra
 import type { GrobNodeType } from './Graph/TTRPGSystemsGraphDependencies';
 import { GrobCollection, type GrobCollectionType } from './GrobCollection';
 import { GrobGroup, type GrobGroupType } from './GrobGroup';
-import { TTRPGSystemBonusDesigner } from './Helpers/TTRPGSystemBonusDesigner';
 import { GrobBonusNode } from './Nodes/GrobBonusNode';
 import { GrobDerivedNode } from './Nodes/GrobDerivedNode';
 import { GrobFixedNode } from './Nodes/GrobFixedNode';
 import { GrobOrigin } from './Nodes/GrobOrigin';
 import { ADataRow, ADataTable } from './Tables/DataTable';
 export { keyManagerInstance };
-export { GrobFixedNode, GrobOrigin as GrobDerivedOrigin, GrobDerivedNode, GrobBonusNode, GrobNodeType, GrobCollection, GrobCollectionType, GrobGroup, GrobGroupType, groupKeyType, ADataRow, ADataTable, TTRPGSystemGraphModel as TTRPGSystem, TTRPGSystemBonusDesigner as TTRPGSystemHelper, };
+export { GrobFixedNode, GrobOrigin as GrobDerivedOrigin, GrobDerivedNode, GrobBonusNode, GrobNodeType, GrobCollection, GrobCollectionType, GrobGroup, GrobGroupType, groupKeyType, ADataRow, ADataTable, TTRPGSystemGraphModel as TTRPGSystem };
 export declare function uuidv4(): string;

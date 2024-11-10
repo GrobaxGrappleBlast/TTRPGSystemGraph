@@ -658,10 +658,10 @@ test('try to add dependency to a Fixed Node', () => {
 	let node1 = sys.getFixedNode('1c','1n');
 	let node2 = sys.getFixedNode('1c','2n');
 	let add = node1.addDependency(node2)
-	expect(add).toBe(false);
+	expect(add).toBe(true);
 
 	let rem = node1.removeDependency(node2)
-	expect(rem).toBe(false);
+	expect(rem).toBe(true);
 
 })
 

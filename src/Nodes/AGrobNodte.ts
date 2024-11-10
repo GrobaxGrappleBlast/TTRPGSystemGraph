@@ -30,40 +30,80 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 		bonus.update();
 		
 		// first see if there is a circular dependency, if there already is dont do a thing. 
-		let preStrongComponents = {};
-		let alreadyHadStrongComps = GrobAlgorithms.TarjAlgo( [this] , preStrongComponents );
-		if (alreadyHadStrongComps[0]){
+		let tarAlgoRequest = GrobAlgorithms.TarjAlgo( [this] );
+		if (tarAlgoRequest[0]){
 			errors.push({key:'Pre-AddBonusError',msg:'this node already had circular dependencies, before adding another node. Added Bonus is therefore refused'});
 			return false;
 		}
 
 		if(this.bonuses[bonusIndex]){
-			this.remBonus(bonusIndex);
+			this.remBonusIndex(bonusIndex);
 		}
 		this.bonuses[bonusIndex] = bonus;
 		this.addDependency( bonus );
 		
 
 		// first see if there is a circular dependency, if there already is dont do a thing. 
-		let StrongComponents = {};
-		let StrongComps = GrobAlgorithms.TarjAlgo( [this] , StrongComponents );
+		let StrongComps = GrobAlgorithms.TarjAlgo( [this] );
 		if (StrongComps[0]){
 			errors.push({key:'Pre-AddBonusError',msg:'this node already had circular dependencies, before adding another node. Added Bonus is therefore refused'});
-			this.remBonus(bonusIndex); 
+			this.remBonusIndex(bonusIndex); 
 			return false;
 		}
 		return true;
 	}
-	public remBonus( bonusIndex:string ){
+	
+	public remBonus( bonus : GrobDerivedNode ){
+
+		const indicies = this.hasBonus(bonus);
+		if(!indicies)
+			return false;
+
+		for (let i in indicies) {
+			const index = indicies[i];
+			delete this.bonuses[index];
+			
+		}
+		this.removeDependency( bonus );
+		return true;
+
+	}
+	public hasBonus( bonus : GrobDerivedNode ){
+		let keys : string []= [];
+		for ( const key in this.bonuses ){
+			const value = this.bonuses[key];
+			if (value._key == bonus._key){
+				keys.push(key);
+			}
+		}
+
+		if (keys.length == 0)
+			return null;
+		return keys;
+	}
+
+	public remBonusIndex( bonusIndex:string ){
 
 		if(!this.bonuses[bonusIndex])
 			return true;
 
-		const node = this.bonuses[bonusIndex];
+		const node : GrobDerivedNode= this.bonuses[bonusIndex] as GrobDerivedNode;
+		this.removeDependency(node);
 		delete this.bonuses[bonusIndex];
-		this.removeDependency( node );
+		
+		if (!this.hasBonus(node)){
+			this.removeDependency( node );
+			return true;
+		}
 		return true;
+		
 	}
+	public hasBonusIndex( key : string ){
+		if (this.bonuses[key])
+			return true;
+		return false;
+	}
+
 
 	public static getTypeString(): string{
 		return 'Nodte<T extends Nodte<T>>';
@@ -87,13 +127,26 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 		return Object.values( this.dependents ) as GrobNodeType[] ?? [];
 	}
 
-	public addDependency( node:GrobNodeType) : boolean 		{
-		return false;
+
+	public addDependency(node:GrobNodeType){
+		const key = node.getKey()
+		this.dependencies[key] = node; 
+
+		node.addDependent(this as any);
+		return true;
 	}
-	public removeDependency( node:GrobNodeType)  : boolean 	{
-		return false;
+	public removeDependency(node:GrobNodeType){
+		 
+		// delete the dependency
+		const key = node.getKey()
+		if(this.dependencies[key]){
+			delete this.dependencies[key];
+			node.removeDependent(this as any);
+		}
+
+		return this.dependencies[key] == null ;
 	}
-	public nullifyDependency( node:GrobNodeType ): boolean 	{
+	public nullifyDependency( node:GrobNodeType ){
 		return false;
 	}
 

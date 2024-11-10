@@ -84,7 +84,7 @@ test('Tarjan - Succes ', () => {
 	}
 
 	const res = GrobAlgorithms.TarjAlgo(arr);
-	expect(res[0]).toBe(true);
+	expect(res[0]).toBe(false);
 	expect(Object.keys(res[1]).length).toBe(0);
  
 });
@@ -100,8 +100,8 @@ test('Tarjan - Failure ', () => {
 
 	// create a circular dependency
 	let n1 : GrobDerivedNode = sys.getNode('derived','1c','1n') as GrobDerivedNode;
-	let n2 : GrobDerivedNode = sys.getNode('derived','2c','3n') as GrobDerivedNode;
-	let n3 : GrobDerivedNode = sys.getNode('derived','4c','2n') as GrobDerivedNode;
+	let n2 : GrobDerivedNode = sys.getNode('derived','2c','2n') as GrobDerivedNode;
+	let n3 : GrobDerivedNode = sys.getNode('derived','4c','3n') as GrobDerivedNode;
 	let n4 : GrobDerivedNode = sys.getNode('derived','5c','4n') as GrobDerivedNode;
 	n1.addDependency(n2);
 	n2.addDependency(n3);
@@ -125,11 +125,35 @@ test('Tarjan - Failure ', () => {
 	}
 
 	const res = GrobAlgorithms.TarjAlgo(arr);
-	expect(res[0]).toBe(false);
+	expect(res[0]).toBe(true);
 	expect(Object.keys(res[1]).length).toBeGreaterThan(0);
- 
+
+	let o = Object.values(res[1]);
+	expect(o.length).toBeGreaterThan(0);
+	expect(o[0].length).toBe(4);
+
+	let ob = res[1][0].map(p=>p.name);
+	expect(ob).toContain(n1.name);
+	expect(ob).toContain(n2.name);
+	expect(ob).toContain(n3.name);
+	expect(ob).toContain(n4.name);
 });
 
+
+test('Test Singular Node', () => {
+
+	//  
+	let sys = startTest();
+
+	// create the node.
+	const node = GrobBonusNode.CreateNodeChain(sys, '_target_' )
+	.addCalculation( '1' )
+	.getNode();
+
+	let res = GrobAlgorithms.TarjAlgo( [node]  );
+	expect(res[0]).toBe(false);
+	expect(res[1]).toEqual([]);
+})
 
 
 

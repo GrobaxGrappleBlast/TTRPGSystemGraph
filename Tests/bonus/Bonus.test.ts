@@ -132,7 +132,7 @@ test('Try To Add a Bonus', () => {
 	let v2 = node.getValue();
   
 	expect(v2).toBe(v1 + 2);
-	node.remBonus('myBonusIndex');
+	node.remBonusIndex('myBonusIndex');
 	let depCount3= Object.keys(node.dependencies).length
 	let v3 = node.getValue();
 

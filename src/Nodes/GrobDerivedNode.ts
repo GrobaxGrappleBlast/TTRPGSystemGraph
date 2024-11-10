@@ -35,21 +35,11 @@ export class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
 		return GrobDerivedNode.getTypeString();
 	}
 
-	public addDependency(node:GrobNodeType){
-		const key = node.getKey()
-		this.dependencies[key] = node; 
-
-		node.addDependent(this);
-		return true;
-	}
+	 
 	public removeDependency(node:GrobNodeType){
 		 
-		// delete the dependency
+		super.removeDependency(node);
 		const key = node.getKey()
-		if(this.dependencies[key]){
-			delete this.dependencies[key];
-			node.removeDependent(this);
-		}
 
 		// remove origin dependency 
 		// we find the origin, with the key value, and remove it.
