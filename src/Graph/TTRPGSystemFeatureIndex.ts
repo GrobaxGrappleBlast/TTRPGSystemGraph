@@ -1,6 +1,6 @@
 import { GrobCollection } from "../GrobCollection";
 import { type GrobGroupType } from "../GrobGroup";
-import { newOutputHandler } from "../Abstractions/IOutputHandler"; 
+import { IOutputHandler, newOutputHandler } from "../Abstractions/IOutputHandler"; 
 import type { GrobNodeType } from "./TTRPGSystemsGraphDependencies"; 
 
 import { GrobBonusNode, GrobFixedNode } from 	"../index";
@@ -11,7 +11,7 @@ import { Feature, FeatureSource } from "src/Tables/Features";
  
 type featureSourceToNode =  { src:FeatureSource , node : GrobBonusNode };
 export interface IFeatureLoader {
-	loadFeatures () : Promise<{str:string, feature : Feature}[]>;
+	loadFeatures ( source:string ) : Promise<Feature[]>;
 }
 
 /**
@@ -20,14 +20,15 @@ export interface IFeatureLoader {
 */ 
 export  class TTRPGSystemFeatureIndex extends TTRPGSystemGraphModel {
 
-	protected	featureLoader	: IFeatureLoader;
-	protected	featureQue		: featureSourceToNode[] = []; 
-	public		loadedFeatures	: Record<string,Feature> = {};
+	protected	static featureLoader		: IFeatureLoader;
+	protected	static featureQue			: featureSourceToNode[] = []; 
+	public		static loadedFeatures		: Record<string,Feature[]> = {};
+	public		static loadedNameFeatures	: Record<string,Record<string,Feature>> = {};
 	
-	public async processFeatureQue_getSources ( iterative : boolean = false ){
+	public static async processFeatureQue_getSources ( iterative : boolean = false ){
 		
 		// ensure that there is a Feature loader Module.
-		if (!this.featureLoader){
+		if (!TTRPGSystemFeatureIndex.featureLoader){
 			console.warn('Attempted to load features without Adding a FeatureLoader first');
 			return;
 		}
@@ -36,26 +37,26 @@ export  class TTRPGSystemFeatureIndex extends TTRPGSystemGraphModel {
 		let sources : string [] = [];
 		
 		// go through all items in the que. and ensure that 
-		for (let i = 0; i < this.featureQue.length; i++) {
+		for (let i = 0; i < TTRPGSystemFeatureIndex.featureQue.length; i++) {
 			
 			// get source from each item.
-			const src = this.featureQue[i].src.source;
+			const src = TTRPGSystemFeatureIndex.featureQue[i].src.source;
 			sources.push(src);
 			
 		}
 
 		// call the implemented loed function. 
-		await this.loadFeaturesFromSources(sources);
+		await this.loadFeatureSources(sources);
  
 		// in case that things have changed in the meantime
 		// we create a list of unfetched Features
 		let unfetchedSources : featureSourceToNode[] = [];
 
 		// for each feature in the que 
-		while ( this.featureQue.length != 0 ){
+		while ( TTRPGSystemFeatureIndex.featureQue.length != 0 ){
 			
 			// get the next item.
-			let source = this.featureQue.pop()
+			let source = TTRPGSystemFeatureIndex.featureQue.pop()
 			if( !source ){ 
 				continue;
 			}
@@ -67,36 +68,135 @@ export  class TTRPGSystemFeatureIndex extends TTRPGSystemGraphModel {
 			}
 
 			// if this source is not loaded yet, add it to unloaded. 
-			if ( this.loadedFeatures[ src.source ?? ''] == null ){
+			if ( TTRPGSystemFeatureIndex.loadedFeatures[ src.source ?? ''] == null ){
 				unfetchedSources.push( source );
 				continue;
 			}
-			else if ( this.loadedFeatures[src.source][src.name] == null ){
+			else if ( TTRPGSystemFeatureIndex.loadedFeatures[src.source][src.name] == null ){
 				console.error('No Feature at ' + src.source + ' with the name ' + src.name );
 				continue;
 			}
 
 			// get Feature and add it to the node.
-			let feature = this.loadedFeatures[src.source][src.name]; 
+			let feature = TTRPGSystemFeatureIndex.loadedFeatures[src.source][src.name]; 
 			let node = source.node;
 			node.featureSrc = feature;
 
 		}
 
 		// add all to this process que
-		this.featureQue.push(...unfetchedSources);
+		TTRPGSystemFeatureIndex.featureQue.push(...unfetchedSources);
 		if (iterative){
 			return this.processFeatureQue_getSources();
 		}
 		return ;
 	}
 
-	protected async loadFeaturesFromSources( sources : string [] ){}
+	public static async loadFeatureSources ( sources : string [] ){
+		
+		// if the feature loader is not added, then return
+		if ( !TTRPGSystemFeatureIndex.featureLoader ){
+			console.error('Tried to load features, but no feature loader was installed');
+			return false;
+		}
 
-	public setfeatureLoader(featureLoader	: IFeatureLoader){
-		this.featureLoader = featureLoader;
+		for (let i = 0; i < sources.length; i++) {
+			const source = sources[i];
+			await this.loadFeatureSource(source);	
+		}
+		
+	}
+
+	public static async loadFeatureSource ( source : string , reload : boolean = false , out : IOutputHandler = newOutputHandler() ){
+		
+		// if the feature loader is not added, then return
+		if ( !TTRPGSystemFeatureIndex.featureLoader ){
+			console.error('Tried to load feature, but no feature loader was installed');
+			return false;
+		}
+
+		// if it is already loaded, and reload is off, then return true.
+		if (TTRPGSystemFeatureIndex.loadedFeatures[source])
+			return true;
+
+		// load the source
+		let features = await TTRPGSystemFeatureIndex.featureLoader.loadFeatures(source);
+
+		// finding the missing features. 
+		let newNames = features.map( p => p.name ); 
+		let _loadedFeatures : Feature[] = TTRPGSystemFeatureIndex.loadedFeatures[source] ?? [];
+		let nonShared_missing	= _loadedFeatures.filter( p => !newNames.includes(p.name) )
+
+		// remove the missing features 
+		nonShared_missing.forEach( p => p.dispose() )
+
+		// add or update 
+		for (let i = 0; i < features.length; i++) {
+			const curr = features[i];
+			
+			// if it already exist, either reload or remove and replace
+			if ( TTRPGSystemFeatureIndex.loadedNameFeatures[source] && TTRPGSystemFeatureIndex.loadedNameFeatures[source][curr.name] ){
+				
+				// Get old feature and the matching new feature
+				let oldFeature = TTRPGSystemFeatureIndex.loadedNameFeatures[source][curr.name];
+				let newFeature = curr;
+
+				// if reload, reload
+				if ( reload ){
+					oldFeature.updateTo( newFeature , out );
+				}
+
+				// else remove and replace
+				else {
+					oldFeature.dispose();
+					oldFeature.updateTo(newFeature, out );
+				}
+			}
+			else { 
+
+				// ensure no null indices
+				if (!this.loadedFeatures[source]){
+					this.loadedFeatures[source] = [];
+				}
+				if(!this.loadedNameFeatures[source]){
+					this.loadedNameFeatures[source] = {};
+				}
+
+				// register the new feature
+				this.loadedFeatures[source].push(curr)
+				this.loadedNameFeatures[source][curr.name] = curr;
+
+			}
+			
+			
+		}
+			
+		// if the features are not already loaded, then just load em. 
+	}
+
+	public static setfeatureLoader(featureLoader	: IFeatureLoader){
+		TTRPGSystemFeatureIndex.featureLoader = featureLoader;
 	}
 	
+	public static getFeature( source : string , name : string ){
+		
+		const src = TTRPGSystemFeatureIndex.loadedNameFeatures[source];
+		if (!src)
+			return null;
+
+		const feat = src[name];
+		if (!feat)
+			return null;
+		
+		return feat;
+	}
+	public static getFeatures( source : string ){
+		
+		const features = TTRPGSystemFeatureIndex.loadedFeatures[source];
+		if (!features)
+			return null;
+		return features;
+	}
 }
 
 

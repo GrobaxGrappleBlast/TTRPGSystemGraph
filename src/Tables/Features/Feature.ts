@@ -1,5 +1,6 @@
 import { GrobBonusNode, TTRPGSystem } from "src";
 import {Mutex} from 'async-mutex';
+import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler' ;
 
 export class FeatureSource {
     public name     :string;
@@ -12,6 +13,12 @@ export abstract class Feature {
     public name     :string;
     public source   :string;
     public text     :string;
+
+	public async dispose(){
+	
+	}
+
+	abstract updateTo ( feature : Feature , out: IOutputHandler);
 }
 
 
@@ -21,7 +28,16 @@ export abstract class Feature {
 export abstract class Feature_BonusNodes extends Feature{
  
     public bonusNodes : GrobBonusNode[] = [];
+	public systems: TTRPGSystem[] = [];
+	public systemsNodechoices : Record<string,string[]> = {}
     private mutex : Mutex = new Mutex();
+
+	protected registerNodeToSys( system:TTRPGSystem, nodeStr : string  ){
+		if ( !this.systemsNodechoices[system._key] ){
+			this.systemsNodechoices[system._key] = [];
+		}
+		this.systemsNodechoices[system._key].push(nodeStr);
+	}
 
     public async remove( sys : TTRPGSystem ) {
         
@@ -43,6 +59,11 @@ export abstract class Feature_BonusNodes extends Feature{
             collection?.removeNode(node);
 		} 
 
+		// remove system from references 
+		this.systems = this.systems.filter( p => p._key != sys._key );
+		delete this.systemsNodechoices[sys._key];
+
+
 		// now all the bonus' instance from this feature ought be gone
         release();
 		return true
@@ -56,10 +77,21 @@ export abstract class Feature_BonusNodes extends Feature{
 
         // remove the node reference from this feature
         const _n = this.bonusNodes.findIndex( p => p._key == node._key );
-        let test = [... this.bonusNodes];
-        
         if(_n != -1){
             this.bonusNodes = this.bonusNodes.filter(p=> p._key != node._key)
         }   
     }
+
+	public async dispose(){
+
+		const promises : Promise<any>[] = [];
+		for (let i = 0; i < this.systems.length; i++) {
+			const sys = this.systems[i];
+			promises.push( this.remove(sys) );
+		}
+		await Promise.all(promises); 
+		await super.dispose();
+
+	}
+	
 }
