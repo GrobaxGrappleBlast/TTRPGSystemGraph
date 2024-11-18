@@ -61,7 +61,7 @@ export class Feature_StatIncrease_apply extends Feature_BonusNodes {
 		for (let i = 0; i < this.increaseNumTargets; i++) {
 			
 			// create the node.
-			const node = GrobBonusNode.CreateNodeChain(sys,this.name + '_target_' + i,'bonus')
+			const node = GrobBonusNode.CreateNodeChain(sys,this.name + '_target_' + i)
 			.addCalculation( this.increaseSize + '' )
 			.addFeatureAsFeatureSrc( this )
 			.getNode();

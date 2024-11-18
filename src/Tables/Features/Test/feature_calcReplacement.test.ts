@@ -185,7 +185,6 @@ test('Have Several Armors ', () => {
 })
 
 
- 
 test(' Serialize unserialize then use ' , () => {
 	
 	// get system and define the feature
@@ -225,5 +224,45 @@ test(' Serialize unserialize then use ' , () => {
 	expect(ac1?.getValue()).toEqual(11)
 	expect(ac2?.getValue()).toEqual(11)
 
+	
+})
+
+
+test('remove all', async () => {
+	 
+	// get system and define the feature
+	const sys1 = startTest();
+	const sys2 = startTest();
+	const featureOrig = new JsonFeature_calcreplace();
+	
+	featureOrig.name = 'Armor'
+	featureOrig.calc = '12 + @d'
+	var o1 = new Feature_Origin_Node();
+	o1.sourceString="derived.modifiers.dexterity";
+	o1.symbol = "@d";
+	featureOrig.sources = [];
+	featureOrig.sources.push(o1); 
+	featureOrig.text = " Tjubah !!!!! ";
+	featureOrig.source = "adssadasdadasdadad";
+	
+	// set the dex of the characters to 12
+	var dex1 = sys1.getNode('fixed','stats','dexterity');
+	var dex2 = sys2.getNode('fixed','stats','dexterity');
+	dex1?.setValue(12);
+	dex2?.setValue(12);
+
+	var ac1 = sys1.getNode('derived','generic','armor class');
+	var ac2 = sys2.getNode('derived','generic','armor class');
+	expect(ac1?.getValue()).toEqual(11)
+	expect(ac2?.getValue()).toEqual(11)
+	
+	featureOrig.apply(sys1, 'derived.generic.armor class' )
+	featureOrig.apply(sys2, 'derived.generic.armor class' )
+	expect(ac1?.getValue()).toEqual(13)
+	expect(ac2?.getValue()).toEqual(13)
+
+	await featureOrig.remove();
+	expect(ac1?.getValue()).toEqual(11)
+	expect(ac2?.getValue()).toEqual(11)
 	
 })

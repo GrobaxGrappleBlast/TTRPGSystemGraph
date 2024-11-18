@@ -25,9 +25,15 @@ export abstract class Feature {
 	
 	}
 
+	/**
+	 * 
+	 * When reloaded we want to reload a feature with the reloaded data. 
+	 * @param feature The reloaded feature
+	 * @param out  outputhandler
+	 */
 	abstract updateTo ( feature : Feature , out: IOutputHandler);
 
-	abstract remove(sys:TTRPGSystem) : Promise<boolean>;
+	abstract remove(sys:TTRPGSystem | null) : Promise<boolean>;
 
 	abstract apply(sys:TTRPGSystem , ...args ) : Promise<boolean>;
 
@@ -50,8 +56,18 @@ export abstract class Feature_BonusNodes extends Feature{
 		this.systemsNodechoices[system._key].push(nodeStr);
 	}
 
-    public async remove( sys : TTRPGSystem ) {
+    public async remove( sys : TTRPGSystem | null = null ) {
         
+		// if there is no system supplied remove from all. 
+		if ( !sys ){
+			// loop through all and call this remove.
+			for (let i = 0; i < this.systems.length; i++) {
+				const _sys = this.systems[i];
+				await this.remove(_sys);
+			}
+			return true;
+		}
+
         // await all clear
         const release = await this.mutex.acquire();
 

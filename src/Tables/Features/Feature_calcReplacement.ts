@@ -23,8 +23,21 @@ export class Feature_calcReplacement extends Feature {
 	protected getNodeFeatureName(){
 		return this.name;
 	}
-	async remove(sys: TTRPGSystem): Promise<boolean> {
+	async remove(sys: TTRPGSystem | null = null , level = 0): Promise<boolean> {
 		
+		// if there is no system supplied remove from all. 
+		if ( !sys ){
+
+			// loop through all and call this remove.
+			var length = this.systems.length;
+			for (let i = 0; i < length; i++) {
+				const _sys = this.systems[0];
+				await this.remove(_sys, level +1 );
+			}
+			return true;
+		}
+
+
 		// fisrt if this system is not in the feature
 		if (!this.systems.find( p => p._key == sys._key )){
 			return false;
@@ -47,6 +60,9 @@ export class Feature_calcReplacement extends Feature {
 				node?.remReplacement(curr);
 			}
 
+			// clean up reference
+			delete this.systemsNodechoices[sys._key];
+			
 		});
 
 		// remove system from systems

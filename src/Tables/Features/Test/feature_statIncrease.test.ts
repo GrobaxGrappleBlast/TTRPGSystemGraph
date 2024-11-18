@@ -44,7 +44,7 @@ test('StatIncrease Feature', async () => {
 
 })
 
-test('StatIncrease Feature Rwo Systems At the same time', async () => {
+test('StatIncrease Feature Two Systems At the same time', async () => {
     
 	const sys = startTest();
 	const sys2 = startTest();
@@ -180,4 +180,54 @@ test('Load And Save as Json', () => {
 	expect(obj.sourceCollections)	.toEqual(org.sourceCollections);
 	expect(obj.increaseSize)		.toEqual(org.increaseSize);
 	expect(obj.increaseNumTargets)	.toEqual(org.increaseNumTargets);
+})
+
+
+test('Remove All used ', async () => {
+    
+	const sys = startTest();
+	const sys2 = startTest();
+
+
+	// Create 
+	const mod = new Feature_StatIncrease_apply();
+
+	// Create Normal Stat_increase
+	mod.name = "My Feature Name";
+	mod.text = "text asdasdad asdada sda";
+	mod.sourceCollections = [
+		{
+			sourceString	: 'fixed.stats'
+		}
+	];
+	mod.increaseSize = 1;
+	mod.increaseNumTargets = 2;
+	
+	// get the nodes 
+	const node11 = sys.getNode('fixed','stats','strength')	as GrobNodeType;
+	const node12 = sys.getNode('fixed','stats','dexterity')	as GrobNodeType;
+	const node21 = sys2.getNode('fixed','stats','strength')	as GrobNodeType;
+	const node22 = sys2.getNode('fixed','stats','dexterity')as GrobNodeType;
+
+	// apply this mod.
+	mod.apply(sys , [node11.getLocationKey() , node12.getLocationKey()]);
+	mod.apply(sys2, [node21.getLocationKey() , node22.getLocationKey()]);
+
+	node11.setValue(1);
+	node12.setValue(2);
+	expect(node11.getValue()).toBe(2);
+	expect(node12.getValue()).toBe(3);
+	node21.setValue(1);
+	node22.setValue(2);
+	expect(node21.getValue()).toBe(2);
+	expect(node22.getValue()).toBe(3);
+
+	// remove the feature. 
+	await mod.remove();
+	
+	expect(node11.getValue()).toBe(1);
+	expect(node12.getValue()).toBe(2);
+	expect(node21.getValue()).toBe(1);
+	expect(node22.getValue()).toBe(2);
+
 })
