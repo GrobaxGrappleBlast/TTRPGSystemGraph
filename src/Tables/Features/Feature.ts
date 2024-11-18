@@ -33,9 +33,9 @@ export abstract class Feature {
 	 */
 	abstract updateTo ( feature : Feature , out: IOutputHandler);
 
-	abstract remove(sys:TTRPGSystem | null) : Promise<boolean>;
+	abstract remove(sys:TTRPGSystem | null) : boolean;
 
-	abstract apply(sys:TTRPGSystem , ...args ) : Promise<boolean>;
+	abstract apply(sys:TTRPGSystem , ...args ) : boolean;
 
 	abstract disposeNode_fromNode( node:GrobBonusNode )
 }
@@ -47,7 +47,7 @@ export abstract class Feature {
 export abstract class Feature_BonusNodes extends Feature{
  
     public bonusNodes : GrobBonusNode[] = []; 
-    private mutex : Mutex = new Mutex();
+    private lock : boolean = false;
 
 	protected registerNodeToSys( system:TTRPGSystem, nodeStr : string  ){
 		if ( !this.systemsNodechoices[system._key] ){
@@ -56,20 +56,22 @@ export abstract class Feature_BonusNodes extends Feature{
 		this.systemsNodechoices[system._key].push(nodeStr);
 	}
 
-    public async remove( sys : TTRPGSystem | null = null ) {
+    public remove( sys : TTRPGSystem | null = null ) {
         
 		// if there is no system supplied remove from all. 
 		if ( !sys ){
+
 			// loop through all and call this remove.
-			for (let i = 0; i < this.systems.length; i++) {
-				const _sys = this.systems[i];
-				await this.remove(_sys);
+			var length = this.systems.length;
+			for (let i = 0; i < length; i++) {
+				const _sys = this.systems[0];
+				this.remove(_sys );
 			}
 			return true;
 		}
 
-        // await all clear
-        const release = await this.mutex.acquire();
+        // set the lock
+		this.lock = true;
 
 		// get the bonus collection.
 		let collection = ( sys.getCollection('extra','bonus') );
@@ -92,7 +94,7 @@ export abstract class Feature_BonusNodes extends Feature{
 
 
 		// now all the bonus' instance from this feature ought be gone
-        release();
+        this.lock = false;
 		return true
     }
 
@@ -111,13 +113,11 @@ export abstract class Feature_BonusNodes extends Feature{
 
 	public async dispose(){
 
-		const promises : Promise<any>[] = [];
 		for (let i = 0; i < this.systems.length; i++) {
 			const sys = this.systems[i];
-			promises.push( this.remove(sys) );
+			this.remove(sys);
 		}
-		await Promise.all(promises); 
-		await super.dispose();
+		super.dispose();
 
 	}
 	

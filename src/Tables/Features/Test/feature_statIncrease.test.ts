@@ -183,7 +183,7 @@ test('Load And Save as Json', () => {
 })
 
 
-test('Remove All used ', async () => {
+test('Remove All used ', () => {
     
 	const sys = startTest();
 	const sys2 = startTest();
@@ -223,7 +223,7 @@ test('Remove All used ', async () => {
 	expect(node22.getValue()).toBe(3);
 
 	// remove the feature. 
-	await mod.remove();
+	mod.remove();
 	
 	expect(node11.getValue()).toBe(1);
 	expect(node12.getValue()).toBe(2);

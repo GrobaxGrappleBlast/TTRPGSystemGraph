@@ -43,7 +43,7 @@ export class Feature_StatIncrease_apply extends Feature_BonusNodes {
 	 * @returns 
 	 */
 	
-    public async apply (sys:TTRPGSystem , targets : string[] , ...args ) : Promise<boolean>{
+    public apply (sys:TTRPGSystem , targets : string[] , ...args ) : boolean{
 		
 		// ensure that the targets either are in its sourceItems or Collection
 		this.validateTargets(targets);

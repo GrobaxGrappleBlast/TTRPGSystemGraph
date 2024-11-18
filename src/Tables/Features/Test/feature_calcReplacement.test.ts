@@ -261,7 +261,7 @@ test('remove all', async () => {
 	expect(ac1?.getValue()).toEqual(13)
 	expect(ac2?.getValue()).toEqual(13)
 
-	await featureOrig.remove();
+	featureOrig.remove();
 	expect(ac1?.getValue()).toEqual(11)
 	expect(ac2?.getValue()).toEqual(11)
 	

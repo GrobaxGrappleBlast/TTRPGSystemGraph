@@ -15,10 +15,10 @@ export class Feature_Choice extends Feature {
             oldActiveName = this.activeChoice.name;
         }
     }
-    remove(sys: TTRPGSystem): Promise<boolean> {
+    remove(sys: TTRPGSystem): boolean {
         throw new Error("Method not implemented.");
     }
-    apply(sys: TTRPGSystem, ...args: any[]): Promise<boolean> {
+    apply(sys: TTRPGSystem, ...args: any[]): boolean {
         throw new Error("Method not implemented.");
     }
     disposeNode_fromNode(node: GrobBonusNode) {

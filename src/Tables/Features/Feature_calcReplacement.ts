@@ -23,7 +23,7 @@ export class Feature_calcReplacement extends Feature {
 	protected getNodeFeatureName(){
 		return this.name;
 	}
-	async remove(sys: TTRPGSystem | null = null , level = 0): Promise<boolean> {
+	remove(sys: TTRPGSystem | null = null ): boolean {
 		
 		// if there is no system supplied remove from all. 
 		if ( !sys ){
@@ -32,7 +32,7 @@ export class Feature_calcReplacement extends Feature {
 			var length = this.systems.length;
 			for (let i = 0; i < length; i++) {
 				const _sys = this.systems[0];
-				await this.remove(_sys, level +1 );
+				this.remove(_sys);
 			}
 			return true;
 		}
@@ -62,7 +62,7 @@ export class Feature_calcReplacement extends Feature {
 
 			// clean up reference
 			delete this.systemsNodechoices[sys._key];
-			
+
 		});
 
 		// remove system from systems
@@ -71,7 +71,7 @@ export class Feature_calcReplacement extends Feature {
 		return true;
 
 	}
-	async apply(sys: TTRPGSystem , target : string ): Promise<boolean> {
+	apply(sys: TTRPGSystem , target : string ): boolean {
 		
 		// first get target , then add to list of systems and targets.
 		const targetNode = sys.getNodeLocString(target);
@@ -124,13 +124,11 @@ export class Feature_calcReplacement extends Feature {
 
 	public async dispose(){
 
-		const promises : Promise<any>[] = [];
 		for (let i = 0; i < this.systems.length; i++) {
 			const sys = this.systems[i];
-			promises.push( this.remove(sys) );
+			this.remove(sys);
 		}
-		await Promise.all(promises); 
-		await super.dispose();
+		super.dispose();
 
 	}
 }
