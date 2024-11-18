@@ -25,8 +25,6 @@ export class GrobFixedNode extends AGrobNode<GrobFixedNode>{
 	} 
 	
 
-
-
 	public static  getTypeString(): string {
 		return 'fixedNode';
 	}  
@@ -34,11 +32,6 @@ export class GrobFixedNode extends AGrobNode<GrobFixedNode>{
 		return GrobFixedNode.getTypeString();
 	}
 	
-	public _update(){
-		for( const k in this.dependents ){
-			const dep = this.dependents[k] as GrobDerivedNode;
-			dep.update();
-		} 
-	}
+	public _update(){}
 }
  

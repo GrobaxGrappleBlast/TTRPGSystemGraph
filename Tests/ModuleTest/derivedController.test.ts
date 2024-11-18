@@ -1,7 +1,8 @@
 
 
  
-import { GrobJDerivedNode, GrobJNodeType, TTRPGSystemJSONFormatting } from './ttrpgTest.test';
+import { GrobJDerivedNode, GrobJNodeType, TTRPGSystemJSONFormatting } from "./testDependencies.test";
+
  
 
 type Subscriber<T> = (value: T) => void;
@@ -496,5 +497,4 @@ export class DerivedCollectionController {
 		}
 	}
 }  
-
  

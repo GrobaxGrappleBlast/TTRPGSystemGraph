@@ -1,6 +1,5 @@
 import { JsonArrayClassTyped, JsonClassTyped, JSONHandler, JsonNumber, JsonObject, JsonString } from "grobax-json-handler";
 import { Feature , Feature_Origin_Collection, Feature_Origin_Node, Feature_StatIncrease_apply } from "..";
-import { TTRPGSystemJSONFormatting } from "../../../../Tests/ModuleTest/ttrpgTest.test";
 import { IOutputHandler } from "../../../Abstractions/IOutputHandler";
 import { GrobBonusNode } from "../../../Nodes/GrobBonusNode";
 import { GrobNodeType, TTRPGSystem } from "../../..";
@@ -9,7 +8,7 @@ import { JsonFeature, JsonFeature_StatIncrease_apply, startTest } from "./depend
  
 
  
-test('StatIncrease Feature', async () => {
+test('StatIncrease Feature', () => {
     
 	const sys = startTest();
 
@@ -36,7 +35,7 @@ test('StatIncrease Feature', async () => {
 	expect(node2.getValue()).toBe(3);
 
 	// remove the feature. 
-	await mod.remove( sys );
+	mod.remove( sys );
 	let v = node2.getValue();
 	expect(node1.getValue()).toBe(1);
 	expect(node2.getValue()).toBe(2);

@@ -161,6 +161,8 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 			this.remBonusIndex(bonusIndex); 
 			return false;
 		}
+
+		this.update();
 		return true;
 	}
 	public remBonus( bonus : GrobDerivedNode ){
@@ -306,13 +308,14 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 			this.updateListeners[key]();
 		})
 
-		// then call update for all dependents 
+		// call all dependents and return success state.
 		let success = true;
 		for( const k in this.dependents ){
 			const dep = this.dependents[k] as GrobDerivedNode;
 			success = success && dep.update();
 		} 
 		return success;
+		
 	}
 	abstract _update(); 
 	dispose () {

@@ -71,7 +71,7 @@ export class Feature_calcReplacement extends Feature {
 		return true;
 
 	}
-	apply(sys: TTRPGSystem , target : string ): boolean {
+	apply(sys: TTRPGSystem , target : string , ...args ): boolean {
 		
 		// first get target , then add to list of systems and targets.
 		const targetNode = sys.getNodeLocString(target);
@@ -116,7 +116,7 @@ export class Feature_calcReplacement extends Feature {
 		return true;
 	}
 	updateTo(feature: Feature, out: IOutputHandler) {
-		throw new Error("Method not implemented.");
+		return false;
 	}
 	disposeNode_fromNode(node: GrobBonusNode) {
 		throw new Error("Method not implemented.");

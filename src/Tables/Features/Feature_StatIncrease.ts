@@ -101,7 +101,7 @@ export class Feature_StatIncrease_apply extends Feature_BonusNodes {
 		
 		// if trying to project a wrong type. 
 		if(feature.type != this.type){
-			throw new Error('Could not project feature of different type. ');
+			return false;
 		}
 
 		// Update this feature
@@ -133,7 +133,6 @@ export class Feature_StatIncrease_apply extends Feature_BonusNodes {
 				out.outError(`Character ${sys._key} has outdated feature ${this.name} unapplied, and must be reapplied, manually due to feature rules `);
 			}
 		}
-		
-
+		return true
 	}
 }

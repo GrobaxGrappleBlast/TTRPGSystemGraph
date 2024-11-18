@@ -1,11 +1,11 @@
 import { JsonArrayClassTyped, JsonClassTyped, JSONHandler, JsonNumber, JsonObject, JsonString } from "grobax-json-handler";
 import { Feature , Feature_Origin_Collection, Feature_Origin_Node, Feature_calcReplacement , Feature_StatIncrease_apply } from "..";
-import { TTRPGSystemJSONFormatting } from "../../../../Tests/ModuleTest/ttrpgTest.test";
 import { IOutputHandler } from "../../../Abstractions/IOutputHandler";
 import { GrobBonusNode } from "../../../Nodes/GrobBonusNode";
 import { GrobNodeType, TTRPGSystem } from "../../..";
 import { IFeatureLoader, TTRPGSystemFeatureIndex } from "../../../Graph";
 import exp from "constants";
+import { TTRPGSystemJSONFormatting } from "../../../../Tests/ModuleTest/testDependencies.test";
  
 
 
@@ -57,17 +57,18 @@ export function startTest() : TTRPGSystemJSONFormatting{
 })
 export class JsonFeature extends Feature{
 	
-	remove(sys: TTRPGSystem): Promise<boolean> {
+	remove(sys: TTRPGSystem): boolean {
 		throw new Error("Method not implemented.");
 	}
-	apply(sys: TTRPGSystem, ...args: any[]): Promise<boolean> {
+	apply(sys: TTRPGSystem, ...args: any[]): boolean {
 		throw new Error("Method not implemented.");
 	}
 	disposeNode_fromNode(node: GrobBonusNode) {
 		throw new Error("Method not implemented.");
 	}
-	updateTo(feature: Feature, out: IOutputHandler) {
+	updateTo(feature: Feature, out: IOutputHandler) : boolean{
 		throw new Error("Method not implemented.");
+
 	}
     public type: string = "TEST"; 
 }

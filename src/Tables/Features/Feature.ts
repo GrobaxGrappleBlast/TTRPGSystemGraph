@@ -1,6 +1,7 @@
-import { GrobBonusNode, keyManagerInstance, TTRPGSystem } from "../../../src";
+import { GrobBonusNode, GrobNodeType, keyManagerInstance, TTRPGSystem } from "../../../src";
 import {Mutex} from 'async-mutex';
 import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler' ;
+import { AGrobNode } from "../../../src/Nodes/AGrobNodte";
 
 
 
@@ -26,14 +27,33 @@ export abstract class Feature {
 	}
 
 	/**
+	 * get a structure that explains where this feature is applied. 
+	 * @returns { sys:string , nodes : GrobNodeType[] }[]
+	 */
+	public getAppliancesStructure() : { sys:string , nodes : GrobNodeType[] }[] {
+		
+		var objs : any[] = [];
+		for (let i = 0; i < this.systems.length; i++) {
+			const sys = this.systems[i];
+			var obj = {};
+			obj['sys'] = sys;
+			obj['nodes'] = this.systemsNodechoices[sys._key];
+			objs.push(obj);
+		}
+
+		return objs;
+	}
+
+	/**
 	 * 
 	 * When reloaded we want to reload a feature with the reloaded data. 
 	 * @param feature The reloaded feature
 	 * @param out  outputhandler
+	 * @returns true if it managed to update. false if not.
 	 */
-	abstract updateTo ( feature : Feature , out: IOutputHandler);
+	abstract updateTo ( feature : Feature , out: IOutputHandler) : boolean ;
 
-	abstract remove(sys:TTRPGSystem | null) : boolean;
+	abstract remove(sys?:TTRPGSystem | null) : boolean;
 
 	abstract apply(sys:TTRPGSystem , ...args ) : boolean;
 
@@ -47,7 +67,6 @@ export abstract class Feature {
 export abstract class Feature_BonusNodes extends Feature{
  
     public bonusNodes : GrobBonusNode[] = []; 
-    private lock : boolean = false;
 
 	protected registerNodeToSys( system:TTRPGSystem, nodeStr : string  ){
 		if ( !this.systemsNodechoices[system._key] ){
@@ -70,8 +89,6 @@ export abstract class Feature_BonusNodes extends Feature{
 			return true;
 		}
 
-        // set the lock
-		this.lock = true;
 
 		// get the bonus collection.
 		let collection = ( sys.getCollection('extra','bonus') );
@@ -93,8 +110,6 @@ export abstract class Feature_BonusNodes extends Feature{
 		delete this.systemsNodechoices[sys._key];
 
 
-		// now all the bonus' instance from this feature ought be gone
-        this.lock = false;
 		return true
     }
 
