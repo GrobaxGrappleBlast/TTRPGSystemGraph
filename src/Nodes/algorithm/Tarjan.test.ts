@@ -146,7 +146,7 @@ test('Test Singular Node', () => {
 	let sys = startTest();
 
 	// create the node.
-	const node = GrobBonusNode.CreateNodeChain(sys, '_target_' )
+	const node = GrobBonusNode.CreateNodeChain(sys, '_target_' , 'bonus' )
 	.addCalculation( '1' )
 	.getNode();
 
@@ -251,7 +251,7 @@ test('Tarjan Test Where it failed before', () => {
 	node = sys.getNode('derived','Spell Bonus','charisma') as GrobDerivedNode;
 
 	const bonus = GrobBonusNode
-	.CreateNodeChain(sys,'bonus1')
+	.CreateNodeChain(sys,'bonus1','bonus')
 	.addCalculation('2')
 	.update()
 	.getNode();

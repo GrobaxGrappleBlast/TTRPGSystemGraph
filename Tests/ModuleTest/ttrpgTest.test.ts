@@ -115,7 +115,7 @@ import { Feature } from "../../src/Tables/Features";
 		declare public name :string  ;
 
 		@JsonMappingRecordInArrayOut({KeyPropertyName:'getName', name:'data', type :GrobCollectionExtra  })
-		collections_names: Record<string,GrobCollectionExtra> = {};
+		declare collections_names: Record<string,GrobCollectionExtra> ;
 
 	} 
 	export class TTRPG_SCHEMES { 

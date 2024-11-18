@@ -1,6 +1,7 @@
-import { Feature, Feature_BonusNodes as Feature_BonusNode, FeatureSource } from "../../src/Tables/Features";
-import { GrobCollection, TTRPGSystem } from "../";
+import { Feature, Feature_BonusNodes as Feature_BonusNode, FeatureSource } from "../Tables/Features";
+import { GrobCollection, GrobNodeType, TTRPGSystem } from "..";
 import { GrobBonusNode } from "../Nodes/GrobBonusNode";
+import { GrobNode } from "src/Nodes/algorithm/TarjanNode";
 
 export class TTRPGSystemBonusDesigner{
 
@@ -10,12 +11,12 @@ export class TTRPGSystemBonusDesigner{
 	 * @param name The UniqueName for the Bonus, Wich is Also its uniqueKey
 	 * @returns 
 	 */
-	public static createBonusNodeChain( sys:TTRPGSystem , name:string ){
+	public static createBonusNodeChain( sys:TTRPGSystem , name:string , colectionName:string = 'bonus'){
 		const instance = new TTRPGSystemBonusDesigner();
-		if (!sys.hasCollection( 'extra' , 'bonus')){
-			sys.createCollection( 'extra' , 'bonus' );
+		if (!sys.hasCollection( 'extra' , colectionName)){
+			sys.createCollection( 'extra' , colectionName );
 		}
-		const col = sys.getCollection('extra','bonus') as GrobCollection<GrobBonusNode>;
+		const col = sys.getCollection('extra',colectionName) as GrobCollection<GrobBonusNode>;
 
 		// Create the Node.
 		instance.activeNode = instance.createNewNode(name, col);
@@ -40,14 +41,14 @@ export class TTRPGSystemBonusDesigner{
 		this.activeNode.featureSrc = feature;
 		return this;
 	}
-	public addFeatureAsFeatureSrc( feature:Feature_BonusNode ){
+	public addFeatureAsFeatureSrc( feature:Feature ){
 		this.activeNode.featureSrc = new FeatureSource()
 		this.activeNode.featureSrc.name		= feature.name;
 		this.activeNode.featureSrc.source	= feature.source;
 		this.activeNode.featureSrc.feature	= feature;
 		return this;
 	}
-	public addOrigin		( symbol : string, node : GrobBonusNode){
+	public addOrigin		( symbol : string, node : GrobNodeType ){
 		this.activeNode.setOrigin(symbol,node);
 		return this;
 	}

@@ -7,7 +7,7 @@ import { type groupKeyType } from './Graph/TTRPGSystemGraphModel';
 import type { GrobNodeType } from './Graph/TTRPGSystemsGraphDependencies';
 import { GrobCollection, type GrobCollectionType } from './GrobCollection';
 import { GrobGroup, type GrobGroupType } from './GrobGroup'; 
-import { TTRPGSystemBonusDesigner } from './Helpers/TTRPGSystemBonusDesigner';
+import { TTRPGSystemBonusDesigner } from './Helpers/TTRPGSystemReplacementDesigner';
 import { GrobBonusNode } from './Nodes/GrobBonusNode';
 import { GrobDerivedNode } from './Nodes/GrobDerivedNode';
 import { GrobFixedNode } from './Nodes/GrobFixedNode';

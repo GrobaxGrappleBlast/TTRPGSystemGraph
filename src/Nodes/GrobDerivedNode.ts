@@ -22,12 +22,6 @@ export class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
 		this._value = value;
 	}
 
-
-	
-	
-
-
-
 	public static getTypeString(): string {
 		return 'derivedNode';
 	}	
@@ -291,15 +285,7 @@ export class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
 		}
 
 		// first recalculate
-		this.recalculate();
-
-		// then call update for all dependents 
-		let success = true;
-		for( const k in this.dependents ){
-			const dep = this.dependents[k] as GrobDerivedNode;
-			success = success && dep.update();
-		} 
-		return success;
+		this.recalculate();	
 	}
 	public updateDependecysLocation( dependency ){
 		let orig = this.origins.find( p => p.origin?.getName() == dependency.getName() );

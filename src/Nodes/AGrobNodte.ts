@@ -18,12 +18,123 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 	// @ts-ignore
  	parent: GrobCollection<GrobNodeType>;
 
-	public dependencies :Record<any,GrobNodeType> = {};
-	public dependents : Record<any,GrobNodeType> = {};
-
+	public dependencies : Record<any,GrobNodeType> = {};
+	public dependents	: Record<any,GrobNodeType> = {};
 	public updateListeners = {};
 
-	
+
+
+	protected replacementsRec		: Record<string,GrobNodeType> = {}
+	protected replacementsActive	: GrobNodeType | null = null
+	protected _addReplacement( repl : GrobNodeType ){
+		this.replacementsRec[repl._key] = repl;
+		if ( !this.replacementsActive ){
+			this.replacementsActive = repl;
+		}
+	}
+	protected _remReplacement( key : string )		{
+
+		// if the item does not exist, then just return
+		const exists = !!this.replacementsRec[key];
+		if(!exists)
+			return false;
+
+		// delete item, and if this is the active, nullify it.
+		delete this.replacementsRec[key];
+		if (this.replacementsActive?._key == key){
+			this.replacementsActive = null;
+		}
+
+		// return if it exists, after a succesfull delete. 
+		if( !this.replacementsRec[key] ){
+			return true
+		}
+		return false;
+		
+	}
+	protected _setActiveReplacement( key : string )	{
+
+		// if we do not have this key return.
+		if (!this.replacementsRec[key]){
+			throw new Error('No Replacement with key ' + key );
+		}
+
+		// get and set active obj. 
+		const obj = this.replacementsRec[key];
+		this.replacementsActive = obj;
+	}
+	public addReplacement( repl : GrobNodeType )		{
+		
+		// update
+		this._addReplacement(repl);
+		
+		// if this selected a new Active node, trigger update
+		if (this.replacementsActive?._key == repl._key){
+			this.update();
+		}
+
+	}
+	public remReplacement( repl : GrobNodeType )		{
+		this.remReplacementByKey(repl._key);
+	}
+	public remReplacementByKey( key : string )			{
+
+		// remove node.
+		const removedWasActiveNode = this.replacementsActive?._key == key;
+		this._remReplacement(key);
+		
+		// if this removed the active node.
+		if (this.replacementsActive == null){
+
+			//rule, when removing a replacement take on of the next.
+			const keys = Object.keys(this.replacementsRec);
+			if ( keys.length != 0){
+				this._setActiveReplacement(keys[0]);
+			}
+		}
+
+		// update
+		if (removedWasActiveNode){
+			this.update();
+		}
+	}
+	public activateReplacement( repl:GrobNodeType )		{
+		
+		// if this replacement is not in the list add it. 
+		if (!this.replacementsRec[repl._key]){
+			this.addReplacement(repl);
+		}
+
+		// activate by key;
+		const key = repl._key;
+		const hasChanged = this.replacementsActive?._key == key;
+		this._setActiveReplacement(key);
+
+		// if we have changed call update
+		if (hasChanged){
+			this.update();
+		}
+		
+	}
+	public activateReplacementByKey( key:string )		{
+
+		// note if we have changed, and call activate.
+		const hasChanged = this.replacementsActive?._key != key;
+		this._setActiveReplacement(key);
+
+		// if we have changed call update
+		if (hasChanged){
+			this.update();
+		}
+	}
+	public getReplacements()							{
+		return Object.values(this.replacementsRec);
+	}
+	public getReplacementNames()							{
+		return Object.keys(this.replacementsRec);
+	}
+
+
 	public bonuses : Record<any,GrobNodeType> = {};
 	public addBonus( bonusIndex:string , bonus : GrobDerivedNode, errors:{msg: string,key: string}[] = [] ){
 		
@@ -52,7 +163,6 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 		}
 		return true;
 	}
-	
 	public remBonus( bonus : GrobDerivedNode ){
 
 		const indicies = this.hasBonus(bonus);
@@ -81,7 +191,6 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 			return null;
 		return keys;
 	}
-
 	public remBonusIndex( bonusIndex:string ){
 
 		if(!this.bonuses[bonusIndex])
@@ -154,10 +263,17 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 		//@ts-ignore
 		return Object.values( this.dependencies ) as GrobNodeType[] ?? [];
 	}
-
 	public getValue() : number  {
 
+		// get initial value
 		var initialValue = this._getValue();
+
+		// if this has an active replacement, 
+		if ( this.replacementsActive ){
+			initialValue = this.replacementsActive.getValue();
+		}
+
+		// add bonuses 
 		for(const key in this.bonuses){
 			const bonus = this.bonuses[key];
 			const value = bonus._getValue();
@@ -181,11 +297,22 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 		return seg;
 	}
 	public update( ){
+		
+		// call implemented update
 		this._update();
+
+		// update all of update listeners. 
 		( Object.keys(this.updateListeners) ).forEach( key => {
 			this.updateListeners[key]();
 		})
-		return true;
+
+		// then call update for all dependents 
+		let success = true;
+		for( const k in this.dependents ){
+			const dep = this.dependents[k] as GrobDerivedNode;
+			success = success && dep.update();
+		} 
+		return success;
 	}
 	abstract _update(); 
 	dispose () {

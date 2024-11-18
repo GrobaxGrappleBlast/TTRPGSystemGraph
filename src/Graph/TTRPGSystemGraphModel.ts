@@ -217,6 +217,23 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 	public getFixedCollection(name:string){
 		return this.getCollection(fixed,name) as  GrobCollection<GrobFixedNode> ;
 	}
+	public getNodeLocString( location : string ){
+
+		// if falsey
+		if (!location){
+			throw new Error(' getNodeLocString : invalid location string, nodestring was '+ location) ;
+		}
+
+		// Get segments 
+		const segs = location.split('.');
+		if (segs.length != 3 ){ 
+			throw new Error('invalid source string. Source string must be three names seperated by a . , namely group.collection.node , location string was ' + location ) ;
+		}
+
+		// get node
+		return this.getNode(segs[0],segs[1],segs[2]);
+
+	}
 	public getNode( group : groupKeyType , col : GrobCollection<GrobNodeType> | string , name : string){
 		
 		const grp = this.getGroup(group);

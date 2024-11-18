@@ -1,4 +1,4 @@
-import { newOutputHandler } from "src/Abstractions/IOutputHandler";
+import { newOutputHandler } from "../../../src/Abstractions/IOutputHandler";
 import { Feature, Feature_BonusNodes, Feature_Origin_Collection, Feature_Origin_Node } from ".";
 import { GrobBonusNode, GrobCollection, TTRPGSystem } from "../../../src";  
 import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler' ;
@@ -10,6 +10,7 @@ type IncreaseMethod =  'countDown' | 'apply' ;
  * apply X at a time to Y targets 
  */
 export class Feature_StatIncrease_apply extends Feature_BonusNodes {
+	 
 	
     public type = "Feature_StatIncrease_apply";
     public sourceItems		:Feature_Origin_Node[]			= [];
@@ -41,7 +42,8 @@ export class Feature_StatIncrease_apply extends Feature_BonusNodes {
 	 * @param targets The targets in that system to apply this feature to.
 	 * @returns 
 	 */
-    public apply ( sys : TTRPGSystem , targets : string[] ) {
+	
+    public async apply (sys:TTRPGSystem , targets : string[] , ...args ) : Promise<boolean>{
 		
 		// ensure that the targets either are in its sourceItems or Collection
 		this.validateTargets(targets);
@@ -59,7 +61,7 @@ export class Feature_StatIncrease_apply extends Feature_BonusNodes {
 		for (let i = 0; i < this.increaseNumTargets; i++) {
 			
 			// create the node.
-			const node = GrobBonusNode.CreateNodeChain(sys,this.name + '_target_' + i)
+			const node = GrobBonusNode.CreateNodeChain(sys,this.name + '_target_' + i,'bonus')
 			.addCalculation( this.increaseSize + '' )
 			.addFeatureAsFeatureSrc( this )
 			.getNode();

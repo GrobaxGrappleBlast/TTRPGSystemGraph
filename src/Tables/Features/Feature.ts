@@ -1,11 +1,14 @@
-import { GrobBonusNode, TTRPGSystem } from "src";
+import { GrobBonusNode, keyManagerInstance, TTRPGSystem } from "../../../src";
 import {Mutex} from 'async-mutex';
 import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler' ;
+
+
 
 export class FeatureSource {
     public name     :string;
     public source   :string;
-    public feature  :Feature_BonusNodes | null = null; 
+    public feature  :Feature | null = null; 
+	
 }   
 
 export abstract class Feature {
@@ -13,12 +16,22 @@ export abstract class Feature {
     public name     :string;
     public source   :string;
     public text     :string;
+	public _key : string = keyManagerInstance.getNewKey();
+	
+	protected systems: TTRPGSystem[] = [];
+	protected systemsNodechoices : Record<string,string[]> = {}
 
 	public async dispose(){
 	
 	}
 
 	abstract updateTo ( feature : Feature , out: IOutputHandler);
+
+	abstract remove(sys:TTRPGSystem) : Promise<boolean>;
+
+	abstract apply(sys:TTRPGSystem , ...args ) : Promise<boolean>;
+
+	abstract disposeNode_fromNode( node:GrobBonusNode )
 }
 
 
@@ -27,9 +40,7 @@ export abstract class Feature {
  */
 export abstract class Feature_BonusNodes extends Feature{
  
-    public bonusNodes : GrobBonusNode[] = [];
-	public systems: TTRPGSystem[] = [];
-	public systemsNodechoices : Record<string,string[]> = {}
+    public bonusNodes : GrobBonusNode[] = []; 
     private mutex : Mutex = new Mutex();
 
 	protected registerNodeToSys( system:TTRPGSystem, nodeStr : string  ){
