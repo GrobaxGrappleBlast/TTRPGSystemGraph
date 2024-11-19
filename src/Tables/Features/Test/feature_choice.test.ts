@@ -37,7 +37,7 @@ function createChoiceFeature(){
 	return c;
 }
 
-test('StatIncrease Feature', () => {
+test('choose - StatIncrease Feature', () => {
 	
 	const sys = startTest();
 	const fet = createChoiceFeature();
@@ -69,5 +69,24 @@ test('StatIncrease Feature', () => {
 	expect(n2?.getValue()).toBe(1)
 	expect(n3?.getValue()).toBe(0)
 
+	fet.remove(sys)
+	expect(n1?.getValue()).toBe(0)
+	expect(n2?.getValue()).toBe(0)
+	expect(n3?.getValue()).toBe(0)
+
+	fet.apply(
+		sys,
+		choice,
+		choiceArgs
+	)
+
+	expect(n1?.getValue()).toBe(1)
+	expect(n2?.getValue()).toBe(1)
+	expect(n3?.getValue()).toBe(0)
+
+	fet.remove()
+	expect(n1?.getValue()).toBe(0)
+	expect(n2?.getValue()).toBe(0)
+	expect(n3?.getValue()).toBe(0)
 
 });

@@ -177,6 +177,7 @@ export abstract class AGrobNode<T extends AGrobNode<T>> extends AGraphItem imple
 			
 		}
 		this.removeDependency( bonus );
+		this.update();
 		return true;
 
 	}

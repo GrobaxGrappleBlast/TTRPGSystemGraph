@@ -27,14 +27,36 @@ export class Feature_Choice extends Feature {
 
 		// for each of the systems, remove the reference to the choices 
 		for (let i = 0; i < systems.length; i++) {
-			const sys = systems[i];
-			this.appliedChoices[sys] = this.appliedChoices[sys].filter( p => p != o_choice._key);
+			const syskey = systems[i];
+			this.appliedChoices[syskey] = this.appliedChoices[syskey].filter( p => p != o_choice._key);
+
+
+			// if applied choices array has length of 0 remove it
+			if (this.appliedChoices[syskey].length == 0){
+				delete this.appliedChoices[syskey];
+			}
 		}
+
+
+		// delete from applied sources reversed
+		delete this.appliedChoices_r[o_choice._key];
 
 		// then remove the feature
 		o_choice.remove();	
 	}
 	protected _addFeatureFromAppliedRecord ( sys: TTRPGSystem , o_choice : Feature ){
+
+		// add to Applied choices "reversed"
+		if (!this.appliedChoices_r[o_choice._key]) {
+			this.appliedChoices_r[o_choice._key] = [];
+		}
+		this.appliedChoices_r[o_choice._key].push(sys._key);
+
+		// add the applied choices 
+		if (!this.appliedChoices[sys._key]){
+			this.appliedChoices[sys._key] = [];
+		}
+		this.appliedChoices[sys._key].push(o_choice._key);
 
 	}
 
@@ -98,13 +120,19 @@ export class Feature_Choice extends Feature {
 		// remove choices 
 		for (let i = 0; i < this.choices.length; i++) {
 			const choice = this.choices[i];
+			
+			// if this is not in the applied record skip it.
+			if (!this.appliedChoices_r[choice._key]){
+				continue;
+			}
+			
+			// Remove it
 			choice.remove(sys);
 			this._removeFeatureFromAppliedRecord(choice);
 		}
 
 		// de register this system from extended class
-		this.systems = this.systems.filter( p => p._key == sys._key );
-		delete this.systemsNodechoices[sys._key];
+		this.systems = this.systems.filter( p => p._key != sys._key );
 		
 		return true;
 	}
