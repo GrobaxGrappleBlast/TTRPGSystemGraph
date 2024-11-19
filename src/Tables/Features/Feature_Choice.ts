@@ -15,7 +15,9 @@ export class Feature_Choice extends AFeature_Multi {
 			return false;
 		}
 
-		for (let i = 0; i < args.length; i++) {
+		var len = args.length;
+		len = len < this.maxChoices ? len : this.maxChoices;
+		for (let i = 0; i < len; i++) {
 			const arg =  args[i];
 			const feature = this.features.find(p => p.name == arg.featureName );
 			if (!feature){

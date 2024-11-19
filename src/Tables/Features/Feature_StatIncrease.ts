@@ -46,6 +46,10 @@ export class Feature_StatIncrease_apply extends AFeature_BonusNodes {
 	
     public apply (sys:TTRPGSystem , targets : string[] , ...args ) : boolean{
 		
+		if (targets.length != this.increaseNumTargets){
+			console.error('Different number of targets provided than increase numtargets');
+		}
+
 		// ensure that the targets either are in its sourceItems or Collection
 		this.validateTargets(targets);
 
