@@ -1,7 +1,8 @@
 import { newOutputHandler } from "../../../src/Abstractions/IOutputHandler";
-import { Feature, Feature_BonusNodes, Feature_Origin_Collection, Feature_Origin_Node } from ".";
+import { Feature, Feature_Origin_Collection, Feature_Origin_Node } from ".";
 import { GrobBonusNode, GrobCollection, TTRPGSystem } from "../../../src";  
 import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler' ;
+import { AFeature_BonusNodes } from "./AFeature_BonusNodes";
 
 type IncreaseMethod =  'countDown' | 'apply' ;
 
@@ -9,7 +10,7 @@ type IncreaseMethod =  'countDown' | 'apply' ;
 /**
  * apply X at a time to Y targets 
  */
-export class Feature_StatIncrease_apply extends Feature_BonusNodes {
+export class Feature_StatIncrease_apply extends AFeature_BonusNodes {
 	 
 	
     public type = "Feature_StatIncrease_apply";

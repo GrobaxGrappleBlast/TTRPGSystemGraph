@@ -1,8 +1,8 @@
-import { newOutputHandler } from "../../../src/Abstractions/IOutputHandler";
+import { newOutputHandler } from "../../Abstractions/IOutputHandler";
 import { Feature, Feature_BonusNodes, Feature_Origin_Collection, Feature_Origin_Node, Feature_StatIncrease_apply } from ".";
 import { GrobBonusNode, GrobCollection, GrobNodeType, TTRPGSystem } from "../..";  
 import { IOutputHandler } from '../../Abstractions/IOutputHandler' ;
-import { GrobOrigin } from "../../../src/Nodes/GrobOrigin";
+import { GrobOrigin } from "../../Nodes/GrobOrigin";
 import { AGrobNode } from "src/Nodes/AGrobNodte";
 import { GrobNode } from "src/Nodes/algorithm/TarjanNode";
 
@@ -14,7 +14,7 @@ interface CalcOriginSrc {
 /**
  * apply X at a time to Y targets 
  */
-export class Feature_calcReplacement extends Feature {
+export class Feature_CalcReplacement extends Feature {
 
 	public type: string = 'Feature_calcReplacement';
 	public calc:string;
