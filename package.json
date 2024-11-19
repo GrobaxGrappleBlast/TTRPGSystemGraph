@@ -1,7 +1,7 @@
 {
     "name": "ttrpg-system-graph",
-    "version": "0.0.1",
-    "description": "A plugin development template for devs who want to use svelte in Obsidian.",
+    "version": "0.0.2",
+    "description": "a Graph System to Design TTrpg Systems in ",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
