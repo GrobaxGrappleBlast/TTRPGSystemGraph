@@ -2,9 +2,9 @@ import { TTRPGSystem, GrobBonusNode } from "src";
 import { IOutputHandler } from "src/Abstractions/IOutputHandler";
 import { Feature } from "./Feature";
 import { Feature_Choice } from "./Feature_Choice";
-import { AFeature_Multi } from "./AFeature_Multi";
+import { AFeature_Multi, FeatureMultiArgs } from "./AFeature_Multi";
 
-type featureMultiArgs = { featureName : string , args : any[] }
+
 export class Feature_Multi extends AFeature_Multi {
 	
 	public type: string = 'Feature_Multi';
@@ -19,11 +19,11 @@ export class Feature_Multi extends AFeature_Multi {
 		
 
 		// loop through choices and update
-		for (let i = 0; i < this.choices.length; i++) {
+		for (let i = 0; i < this.features.length; i++) {
 
 			// map oold and incoming 
-			const o_choice = this.choices[i];
-			const i_choice = (feature as Feature_Choice).choices.find(p=>p.name == o_choice.name);
+			const o_choice = this.features[i];
+			const i_choice = (feature as Feature_Choice).features.find(p=>p.name == o_choice.name);
 			
 			// if there is incoming choice, then remove the old.
 			if (!i_choice){
@@ -47,10 +47,10 @@ export class Feature_Multi extends AFeature_Multi {
 
 	}
 
-	apply(sys: TTRPGSystem, args : featureMultiArgs[] ): boolean {
+	apply(sys: TTRPGSystem, args : FeatureMultiArgs[] ): boolean {
 		
 		// if we KNOW before hand that they do not have the right amount, just error out. 
-		if(args.length >= this.choices.length){
+		if(args.length < this.features.length){
 			throw new Error('Supplied arguments did not have the same length as number of arguments ');
 		}
 
@@ -60,7 +60,7 @@ export class Feature_Multi extends AFeature_Multi {
 	
 		// create lists
 		let fromListMap = {};
-		this.choices.forEach( p => fromListMap[p.name] = p );
+		this.features.forEach( p => fromListMap[p.name] = p );
 		let toListMap 		: Record<string,{feature:Feature, args : any[]}>= {};
 
 		// sort arguments by name. 
@@ -74,6 +74,7 @@ export class Feature_Multi extends AFeature_Multi {
 			}
 
 			// add to list
+			toListMap[arg.featureName] = {} as any;
 			toListMap[arg.featureName]['feature'] 	= feature;
 			toListMap[arg.featureName]['args'] 		= arg.args;
 
@@ -95,12 +96,16 @@ export class Feature_Multi extends AFeature_Multi {
 			const key = keys[i];
 			const set = toListMap[key];
 			const succes = set.feature.apply( sys , set.args);
+
+			this._addFeatureFromAppliedRecord(sys,set.feature);
+			
 			if (!succes){
 				this.remove();
 				throw new Error('Error Happend trying to apply feature ' + key );
 			}
 
 		}
+		this.systems.push(sys);
 		
 		return true;
 	}

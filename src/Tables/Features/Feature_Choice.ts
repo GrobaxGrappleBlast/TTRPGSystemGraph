@@ -1,36 +1,37 @@
 import { TTRPGSystem, GrobBonusNode } from "src";
 import { IOutputHandler } from "src/Abstractions/IOutputHandler";
 import { Feature } from "./Feature";
-import { AFeature_Multi } from "./AFeature_Multi";
+import { AFeature_Multi, FeatureMultiArgs } from "./AFeature_Multi";
 
 export class Feature_Choice extends AFeature_Multi {
 
 	public type: string = 'Feature_Choice';
 	public maxChoices: number;
 
-	apply(sys: TTRPGSystem, choice: string , ...args ): boolean {
+	apply(sys: TTRPGSystem, args : FeatureMultiArgs[] ): boolean {
 		
 		// check if this has already been apllied to Max number of choices in this system
 		if (this.appliedChoices && this.appliedChoices[sys._key]?.length > this.maxChoices){
 			return false;
 		}
 
-		// get the feature in question
-		var feature = this.choices.find(p => p.name == choice);
-		
-		// said feature is not in the choices
-		if (!feature){
-			return false;
-		}
+		for (let i = 0; i < args.length; i++) {
+			const arg =  args[i];
+			const feature = this.features.find(p => p.name == arg.featureName );
+			if (!feature){
+				throw new Error('provided arguments for non existant feature by name "' + arg.featureName + '"');
+			}
+			
+			const succes = feature.apply( sys , arg.args );
+			if (!succes){
+				this.remove();
+				throw new Error('Error Happend trying to apply feature ' + arg.featureName );
+			}
 
-		// try to apply the feature
-		var wasApplied = feature.apply( sys , ...args );
-		if (!wasApplied){
-			return false
+			this._addFeatureFromAppliedRecord( sys , feature );
 		}
-
+	
 		// register the system and the node and the choice
-		this._addFeatureFromAppliedRecord( sys , feature );
 		this.systems.push(sys);
 		return true;
 

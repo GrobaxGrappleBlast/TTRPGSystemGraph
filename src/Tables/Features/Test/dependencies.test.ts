@@ -1,5 +1,5 @@
 import { JsonArrayClassTyped, JsonClassTyped, JSONHandler, JsonNumber, JsonObject, JsonString } from "grobax-json-handler";
-import { Feature , Feature_Origin_Collection, Feature_Origin_Node, Feature_calcReplacement , Feature_StatIncrease_apply } from "..";
+import { Feature , Feature_CalcReplacement, Feature_Origin_Collection, Feature_Origin_Node, Feature_StatIncrease_apply } from "..";
 import { IOutputHandler } from "../../../Abstractions/IOutputHandler";
 import { GrobBonusNode } from "../../../Nodes/GrobBonusNode";
 import { GrobNodeType, TTRPGSystem } from "../../..";
@@ -72,7 +72,7 @@ export class JsonFeature extends Feature{
 	}
     public type: string = "TEST"; 
 }
-export class JsonFeature_calcreplace extends Feature_calcReplacement{
+export class JsonFeature_calcreplace extends Feature_CalcReplacement{
 	
 	@JsonString()
 	declare public type: string ;

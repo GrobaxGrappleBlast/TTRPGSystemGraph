@@ -2,9 +2,10 @@ import { TTRPGSystem, GrobBonusNode } from "src";
 import { IOutputHandler } from "src/Abstractions/IOutputHandler";
 import { Feature } from "./Feature";
 
+export type FeatureMultiArgs = { featureName : string , args : any }
 export abstract class AFeature_Multi extends Feature {
 
-	public choices : Feature[] = []; 
+	public features : Feature[] = []; 
 
 	/**
 	 * Maps the system keys to Feature keys.
@@ -68,11 +69,11 @@ export abstract class AFeature_Multi extends Feature {
 		
 
 		// loop through choices and update
-		for (let i = 0; i < this.choices.length; i++) {
+		for (let i = 0; i < this.features.length; i++) {
 
 			// map oold and incoming 
-			const o_choice = this.choices[i];
-			const i_choice = (feature as AFeature_Multi).choices.find(p=>p.name == o_choice.name);
+			const o_choice = this.features[i];
+			const i_choice = (feature as AFeature_Multi).features.find(p=>p.name == o_choice.name);
 			
 			// if there is incoming choice, then remove the old.
 			if (!i_choice){
@@ -116,8 +117,8 @@ export abstract class AFeature_Multi extends Feature {
 		}
 
 		// remove choices 
-		for (let i = 0; i < this.choices.length; i++) {
-			const choice = this.choices[i];
+		for (let i = 0; i < this.features.length; i++) {
+			const choice = this.features[i];
 			
 			// if this is not in the applied record skip it.
 			if (!this.appliedChoices_r[choice._key]){
