@@ -5,7 +5,14 @@ import { AFeature_Multi, FeatureMultiArgs } from "./AFeature_Multi";
 
 export class Feature_Choice extends AFeature_Multi {
 
-	public type: string = 'Feature_Choice';
+	public getType(): string {
+		return Feature_Choice.getType();
+	}
+	public static getType(): string {
+		return 'Feature_Choice';
+	}
+
+	//public type: string = 'Feature_Choice';
 	public maxChoices: number;
 
 	apply(sys: TTRPGSystem, args : FeatureMultiArgs[] ): boolean {

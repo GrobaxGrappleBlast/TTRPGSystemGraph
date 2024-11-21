@@ -15,8 +15,15 @@ interface CalcOriginSrc {
  * apply X at a time to Y targets 
  */
 export class Feature_CalcReplacement extends Feature {
-
-	public type: string = 'Feature_calcReplacement';
+	
+	
+	public getType(): string {
+		return Feature_CalcReplacement.getType();
+	}
+	public static getType(): string {
+		return 'Feature_calcReplacement';
+	}
+	//public type: string = 'Feature_calcReplacement';
 	public calc:string;
 	public sources : Feature_Origin_Node[];
 

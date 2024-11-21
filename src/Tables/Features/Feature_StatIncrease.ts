@@ -12,8 +12,14 @@ type IncreaseMethod =  'countDown' | 'apply' ;
  */
 export class Feature_StatIncrease_apply extends AFeature_BonusNodes {
 	 
-	
-    public type = "Feature_StatIncrease_apply";
+	public getType(): string {
+		return Feature_StatIncrease_apply.getType();
+	}
+	public static getType(): string {
+		return 'Feature_StatIncrease_apply';
+	}
+
+    //public type = "Feature_StatIncrease_apply";
     public sourceItems		:Feature_Origin_Node[]			= [];
     public sourceCollections:Feature_Origin_Collection[]	= [];
     public increaseSize		: number;

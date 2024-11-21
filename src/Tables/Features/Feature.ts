@@ -13,7 +13,12 @@ export class FeatureSource {
 }   
 
 export abstract class Feature {
-    public abstract type: string;
+
+	public getType (){
+		return 'Feature';
+	};
+
+    public type: string = this.getType();
     public name     :string;
     public source   :string;
     public text     :string;
