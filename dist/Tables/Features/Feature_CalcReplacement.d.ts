@@ -5,7 +5,8 @@ import { IOutputHandler } from '../../Abstractions/IOutputHandler';
  * apply X at a time to Y targets
  */
 export declare class Feature_CalcReplacement extends Feature {
-    type: string;
+    getType(): string;
+    static getType(): string;
     calc: string;
     sources: Feature_Origin_Node[];
     protected getNodeFeatureName(): string;

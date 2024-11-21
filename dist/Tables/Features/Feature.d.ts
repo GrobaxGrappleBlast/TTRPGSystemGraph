@@ -6,7 +6,8 @@ export declare class FeatureSource {
     feature: Feature | null;
 }
 export declare abstract class Feature {
-    abstract type: string;
+    getType(): string;
+    type: string;
     name: string;
     source: string;
     text: string;

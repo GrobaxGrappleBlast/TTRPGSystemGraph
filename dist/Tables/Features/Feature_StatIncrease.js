@@ -11,11 +11,17 @@ var Feature_StatIncrease_apply = /** @class */ (function (_super) {
     tslib_1.__extends(Feature_StatIncrease_apply, _super);
     function Feature_StatIncrease_apply() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.type = "Feature_StatIncrease_apply";
+        //public type = "Feature_StatIncrease_apply";
         _this.sourceItems = [];
         _this.sourceCollections = [];
         return _this;
     }
+    Feature_StatIncrease_apply.prototype.getType = function () {
+        return Feature_StatIncrease_apply.getType();
+    };
+    Feature_StatIncrease_apply.getType = function () {
+        return 'Feature_StatIncrease_apply';
+    };
     Feature_StatIncrease_apply.prototype.validateTargets = function (targets) {
         var ownSrcStrings = this.sourceItems.map(function (p) { return p.sourceString; });
         var ownSrcColStrings = this.sourceCollections.map(function (p) { return p.sourceString; });

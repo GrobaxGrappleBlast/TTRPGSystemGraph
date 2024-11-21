@@ -10,10 +10,14 @@ var __1 = require("../..");
 var Feature_CalcReplacement = /** @class */ (function (_super) {
     tslib_1.__extends(Feature_CalcReplacement, _super);
     function Feature_CalcReplacement() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.type = 'Feature_calcReplacement';
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
+    Feature_CalcReplacement.prototype.getType = function () {
+        return Feature_CalcReplacement.getType();
+    };
+    Feature_CalcReplacement.getType = function () {
+        return 'Feature_calcReplacement';
+    };
     Feature_CalcReplacement.prototype.getNodeFeatureName = function () {
         return this.name;
     };

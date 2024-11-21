@@ -2,14 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Feature_Multi = void 0;
 var tslib_1 = require("tslib");
+var Feature_Choice_1 = require("./Feature_Choice");
 var AFeature_Multi_1 = require("./AFeature_Multi");
 var Feature_Multi = /** @class */ (function (_super) {
     tslib_1.__extends(Feature_Multi, _super);
     function Feature_Multi() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.type = 'Feature_Multi';
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
+    Feature_Multi.prototype.getType = function () {
+        return Feature_Choice_1.Feature_Choice.getType();
+    };
+    Feature_Multi.getType = function () {
+        return 'Feature_Multi';
+    };
+    //public type: string = 'Feature_Multi';
     Feature_Multi.prototype.updateTo = function (feature, out) {
         // if this is the wrong type then we return false
         if (feature.type != this.type) {

@@ -6,7 +6,8 @@ import { AFeature_BonusNodes } from "./AFeature_BonusNodes";
  * apply X at a time to Y targets
  */
 export declare class Feature_StatIncrease_apply extends AFeature_BonusNodes {
-    type: string;
+    getType(): string;
+    static getType(): string;
     sourceItems: Feature_Origin_Node[];
     sourceCollections: Feature_Origin_Collection[];
     increaseSize: number;

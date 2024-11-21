@@ -12,10 +12,15 @@ var FeatureSource = /** @class */ (function () {
 exports.FeatureSource = FeatureSource;
 var Feature = /** @class */ (function () {
     function Feature() {
+        this.type = this.getType();
         this._key = src_1.keyManagerInstance.getNewKey();
         this.systems = [];
         this.systemsNodechoices = {};
     }
+    Feature.prototype.getType = function () {
+        return 'Feature';
+    };
+    ;
     Feature.prototype.dispose = function () {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             return tslib_1.__generator(this, function (_a) {

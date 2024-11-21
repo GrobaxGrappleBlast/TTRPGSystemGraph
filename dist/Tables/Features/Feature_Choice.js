@@ -6,10 +6,14 @@ var AFeature_Multi_1 = require("./AFeature_Multi");
 var Feature_Choice = /** @class */ (function (_super) {
     tslib_1.__extends(Feature_Choice, _super);
     function Feature_Choice() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.type = 'Feature_Choice';
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
+    Feature_Choice.prototype.getType = function () {
+        return Feature_Choice.getType();
+    };
+    Feature_Choice.getType = function () {
+        return 'Feature_Choice';
+    };
     Feature_Choice.prototype.apply = function (sys, args) {
         var _a;
         // check if this has already been apllied to Max number of choices in this system
