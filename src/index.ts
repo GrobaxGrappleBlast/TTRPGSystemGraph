@@ -13,6 +13,7 @@ import { GrobDerivedNode } from './Nodes/GrobDerivedNode';
 import { GrobFixedNode } from './Nodes/GrobFixedNode';
 import { GrobOrigin } from './Nodes/GrobOrigin';
 import { ADataRow, ADataTable } from './Tables/DataTable';
+import { Feature, Feature_CalcReplacement, Feature_Choice, Feature_Multi, Feature_Origin_Collection, Feature_Origin_Node, Feature_StatIncrease_apply, FeatureMultiArgs, FeatureSource } from './Tables/Features';
 
 export {keyManagerInstance}
 export { 
@@ -33,7 +34,23 @@ export {
 	
 	TTRPGSystemFeatureIndex as TTRPGSystem, 
 	TTRPGSystemBonusDesigner as TTRPGSystemHelper,
+
+	
+	// specifik feature types 
+	Feature,
+	Feature_StatIncrease_apply,
+	Feature_CalcReplacement,
+	Feature_Choice,
+	Feature_Multi,
+	
+	
+	// feature dependencies.
+	Feature_Origin_Node,
+	Feature_Origin_Collection,
+	type FeatureMultiArgs,
+	FeatureSource
 }
+	
 	
 
 export function uuidv4() {
