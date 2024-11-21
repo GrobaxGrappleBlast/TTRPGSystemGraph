@@ -1,9 +1,9 @@
 import { GrobCollection } from "../GrobCollection";
 import { type GrobGroupType } from "../GrobGroup";
 import type { GrobNodeType } from "./TTRPGSystemsGraphDependencies";
-import { TTRPGSystemGraphAbstractModel } from "./TTRPGSystemGraphAbstractModel";
 import { GrobFixedNode } from "../index";
 import { GrobDerivedNode } from "../index";
+import { TTRPGSystemGraphAbstractModel } from ".";
 export type groupKeyType = 'fixed' | 'derived' | string;
 /**
  *  handles Model operations and Data Containment,
@@ -28,6 +28,7 @@ export declare class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel
     getCollection(group: groupKeyType | GrobGroupType, name: string): GrobCollection<GrobNodeType> | null;
     getDerivedCollection(name: string): GrobCollection<GrobDerivedNode>;
     getFixedCollection(name: string): GrobCollection<GrobFixedNode>;
+    getNodeLocString(location: string): GrobFixedNode | GrobDerivedNode | null;
     getNode(group: groupKeyType, col: GrobCollection<GrobNodeType> | string, name: string): GrobFixedNode | GrobDerivedNode | null;
     getDerivedNode(col: GrobCollection<GrobDerivedNode> | string, name: string): GrobDerivedNode;
     getFixedNode(col: GrobCollection<GrobFixedNode> | string, name: string): GrobFixedNode;

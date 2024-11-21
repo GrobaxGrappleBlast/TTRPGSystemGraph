@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Feature_OriginCollection = exports.Feature_OriginNode = void 0;
-var Feature_OriginNode = /** @class */ (function () {
-    function Feature_OriginNode() {
+exports.Feature_Origin_Collection = exports.Feature_Origin_Node = void 0;
+var Feature_Origin_Node = /** @class */ (function () {
+    function Feature_Origin_Node() {
     }
-    return Feature_OriginNode;
+    return Feature_Origin_Node;
 }());
-exports.Feature_OriginNode = Feature_OriginNode;
-var Feature_OriginCollection = /** @class */ (function () {
-    function Feature_OriginCollection() {
+exports.Feature_Origin_Node = Feature_Origin_Node;
+var Feature_Origin_Collection = /** @class */ (function () {
+    function Feature_Origin_Collection() {
     }
-    return Feature_OriginCollection;
+    return Feature_Origin_Collection;
 }());
-exports.Feature_OriginCollection = Feature_OriginCollection;
+exports.Feature_Origin_Collection = Feature_Origin_Collection;

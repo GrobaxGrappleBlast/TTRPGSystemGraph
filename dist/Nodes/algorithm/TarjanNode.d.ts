@@ -8,5 +8,5 @@ export interface TarjanAlgorithmLink {
 }
 export declare class GrobAlgorithms {
     static algLevel: number;
-    static TarjAlgo(nodes: GrobNode[], strongComponents?: Record<string, GrobNode>): (boolean | Record<string, GrobNode>)[];
+    static TarjAlgo(nodes: GrobNode[]): (boolean | GrobNode[][])[];
 }

@@ -1,4 +1,4 @@
-import { Feature, Feature_BonusNodes as Feature_BonusNode, FeatureSource } from "../Tables/Features";
+import { Feature, FeatureSource } from "../Tables/Features";
 import { GrobCollection, GrobNodeType, TTRPGSystem } from "..";
 import { GrobBonusNode } from "../Nodes/GrobBonusNode";
 import { GrobNode } from "src/Nodes/algorithm/TarjanNode";

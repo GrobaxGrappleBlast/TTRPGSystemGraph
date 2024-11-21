@@ -26,19 +26,9 @@ var GrobDerivedNode = /** @class */ (function (_super) {
     GrobDerivedNode.prototype.getTypeString = function () {
         return GrobDerivedNode.getTypeString();
     };
-    GrobDerivedNode.prototype.addDependency = function (node) {
-        var key = node.getKey();
-        this.dependencies[key] = node;
-        node.addDependent(this);
-        return true;
-    };
     GrobDerivedNode.prototype.removeDependency = function (node) {
-        // delete the dependency
+        _super.prototype.removeDependency.call(this, node);
         var key = node.getKey();
-        if (this.dependencies[key]) {
-            delete this.dependencies[key];
-            node.removeDependent(this);
-        }
         // remove origin dependency 
         // we find the origin, with the key value, and remove it.
         for (var i = 0; i < this.origins.length; i++) {
@@ -259,13 +249,6 @@ var GrobDerivedNode = /** @class */ (function (_super) {
         }
         // first recalculate
         this.recalculate();
-        // then call update for all dependents 
-        var success = true;
-        for (var k in this.dependents) {
-            var dep = this.dependents[k];
-            success = success && dep.update();
-        }
-        return success;
     };
     GrobDerivedNode.prototype.updateDependecysLocation = function (dependency) {
         var orig = this.origins.find(function (p) { var _a; return ((_a = p.origin) === null || _a === void 0 ? void 0 : _a.getName()) == dependency.getName(); });

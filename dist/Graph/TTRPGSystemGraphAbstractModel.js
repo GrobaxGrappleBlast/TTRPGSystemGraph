@@ -4,12 +4,14 @@ exports.TTRPGSystemGraphAbstractModel = void 0;
 var GrobCollection_1 = require("../GrobCollection");
 var GrobGroup_1 = require("../GrobGroup");
 var IOutputHandler_1 = require("../Abstractions/IOutputHandler");
+var KeyManager_1 = require("../../src/Abstractions/KeyManager");
 /**
 * a general and flexible implementation of TTRPG system. it focusses on not diskrimination or sorting data.
 * simply having logic that is the same for everything.
 */
 var TTRPGSystemGraphAbstractModel = /** @class */ (function () {
     function TTRPGSystemGraphAbstractModel() {
+        this._key = KeyManager_1.keyManagerInstance.getNewKey();
         this.data = {};
     }
     TTRPGSystemGraphAbstractModel.prototype.setOut = function (out) {

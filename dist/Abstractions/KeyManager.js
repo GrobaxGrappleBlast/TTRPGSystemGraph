@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.keyManagerInstance = exports.KeyManager = void 0;
 var KeyManager = /** @class */ (function () {
     function KeyManager() {
-        this.keyCounter = 0;
+        this.keyCounter = 12;
     }
     KeyManager.prototype.getNewKey = function () {
         var num = this.keyCounter++;

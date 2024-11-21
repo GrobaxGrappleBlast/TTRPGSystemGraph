@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.newOutputHandler = void 0;
+exports.newOutputHandler = newOutputHandler;
 function newOutputHandler() {
     var a = {
         outError: function (msg) {
@@ -12,4 +12,3 @@ function newOutputHandler() {
     };
     return a;
 }
-exports.newOutputHandler = newOutputHandler;

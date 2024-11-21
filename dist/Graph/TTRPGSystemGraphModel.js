@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TTRPGSystemGraphModel = void 0;
 var tslib_1 = require("tslib");
 var IOutputHandler_1 = require("../Abstractions/IOutputHandler");
-var TTRPGSystemGraphAbstractModel_1 = require("./TTRPGSystemGraphAbstractModel");
 var index_1 = require("../index");
 var index_2 = require("../index");
+var _1 = require(".");
 var derived = 'derived';
 var fixed = 'fixed';
 /**
@@ -16,6 +16,9 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
     tslib_1.__extends(TTRPGSystemGraphModel, _super);
     function TTRPGSystemGraphModel() {
         var _this = _super.call(this) || this;
+        _this._createGroup('fixed');
+        _this._createGroup('derived');
+        _this._createGroup('extra');
         _this.setOut((0, IOutputHandler_1.newOutputHandler)());
         return _this;
     }
@@ -180,6 +183,19 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
     };
     TTRPGSystemGraphModel.prototype.getFixedCollection = function (name) {
         return this.getCollection(fixed, name);
+    };
+    TTRPGSystemGraphModel.prototype.getNodeLocString = function (location) {
+        // if falsey
+        if (!location) {
+            throw new Error(' getNodeLocString : invalid location string, nodestring was ' + location);
+        }
+        // Get segments 
+        var segs = location.split('.');
+        if (segs.length != 3) {
+            throw new Error('invalid source string. Source string must be three names seperated by a . , namely group.collection.node , location string was ' + location);
+        }
+        // get node
+        return this.getNode(segs[0], segs[1], segs[2]);
     };
     TTRPGSystemGraphModel.prototype.getNode = function (group, col, name) {
         var grp = this.getGroup(group);
@@ -410,5 +426,5 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         this._removeNodeDependency(node, dep);
     };
     return TTRPGSystemGraphModel;
-}(TTRPGSystemGraphAbstractModel_1.TTRPGSystemGraphAbstractModel));
+}(_1.TTRPGSystemGraphAbstractModel));
 exports.TTRPGSystemGraphModel = TTRPGSystemGraphModel;

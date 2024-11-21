@@ -10,6 +10,7 @@ import { IGrobNode } from "../Nodes/IGrobNode";
 * simply having logic that is the same for everything.
 */
 export declare abstract class TTRPGSystemGraphAbstractModel {
+    _key: string;
     data: Record<string, GrobGroup<GrobNodeType | IGrobNode>>;
     protected out: IOutputHandler;
     setOut(out: IOutputHandler | null): void;

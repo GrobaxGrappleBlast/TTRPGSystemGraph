@@ -11,7 +11,6 @@ export declare class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
     setValue(value: number): void;
     static getTypeString(): string;
     getTypeString(): string;
-    addDependency(node: GrobNodeType): boolean;
     removeDependency(node: GrobNodeType): boolean;
     nullifyDependency(node: GrobNodeType): boolean;
     setOrigin(symbol: any, node: GrobNodeType, standardValue?: number | null): boolean;
@@ -51,6 +50,6 @@ export declare class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
         success: boolean;
         value: number;
     };
-    _update(): boolean;
+    _update(): false | undefined;
     updateDependecysLocation(dependency: any): void;
 }
