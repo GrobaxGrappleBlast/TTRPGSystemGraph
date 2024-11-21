@@ -1,6 +1,7 @@
 
 
 
+import { IOutputHandler } from './Abstractions/IOutputHandler';
 import { keyManagerInstance } from './Abstractions/KeyManager';
 import { TTRPGSystemFeatureIndex } from './Graph';
 import { type groupKeyType } from './Graph/TTRPGSystemGraphModel';
@@ -48,6 +49,7 @@ export {
 	Feature_Origin_Node,
 	Feature_Origin_Collection,
 	type FeatureMultiArgs,
+	type IOutputHandler,
 	FeatureSource
 }
 	
