@@ -1,5 +1,5 @@
 import { Feature_Origin_Collection, Feature_Origin_Node } from ".";
-import { TTRPGSystem } from "../../../src";
+import { TTRPGSystem } from "../../../src/index";
 import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler';
 import { AFeature_BonusNodes } from "./AFeature_BonusNodes";
 /**

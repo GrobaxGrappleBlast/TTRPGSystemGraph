@@ -1,4 +1,4 @@
-import { GrobBonusNode, GrobNodeType, TTRPGSystem } from "../../../src";
+import { GrobBonusNode, GrobNodeType, TTRPGSystem } from "../../../src/index";
 import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler';
 export declare class FeatureSource {
     name: string;

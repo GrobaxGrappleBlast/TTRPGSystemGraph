@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Feature_StatIncrease_apply = void 0;
 var tslib_1 = require("tslib");
-var src_1 = require("../../../src");
+var index_1 = require("../../../src/index");
 var AFeature_BonusNodes_1 = require("./AFeature_BonusNodes");
 /**
  * apply X at a time to Y targets
@@ -62,7 +62,7 @@ var Feature_StatIncrease_apply = /** @class */ (function (_super) {
         this.systems.push(sys);
         for (var i = 0; i < this.increaseNumTargets; i++) {
             // create the node.
-            var node = src_1.GrobBonusNode.CreateNodeChain(sys, this.name + '_target_' + i)
+            var node = index_1.GrobBonusNode.CreateNodeChain(sys, this.name + '_target_' + i)
                 .addCalculation(this.increaseSize + '')
                 .addFeatureAsFeatureSrc(this)
                 .getNode();

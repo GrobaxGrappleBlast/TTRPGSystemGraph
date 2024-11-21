@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Feature = exports.FeatureSource = void 0;
 var tslib_1 = require("tslib");
-var src_1 = require("../../../src");
+var index_1 = require("../../../src/index");
 var FeatureSource = /** @class */ (function () {
     function FeatureSource() {
         this.feature = null;
@@ -13,7 +13,7 @@ exports.FeatureSource = FeatureSource;
 var Feature = /** @class */ (function () {
     function Feature() {
         this.type = this.getType();
-        this._key = src_1.keyManagerInstance.getNewKey();
+        this._key = index_1.keyManagerInstance.getNewKey();
         this.systems = [];
         this.systemsNodechoices = {};
     }
