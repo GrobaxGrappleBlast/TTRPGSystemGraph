@@ -5,7 +5,7 @@ import type { GrobNodeType } from "./TTRPGSystemsGraphDependencies";
 import { GrobDerivedNode } 	from "../Nodes/GrobDerivedNode";
 import { ADataTable }		from "../Tables/DataTable";
 import { IGrobNode } 		from "../Nodes/IGrobNode";
-import { keyManagerInstance } from "../../src/Abstractions/KeyManager";
+import { keyManagerInstance } from "../Abstractions/KeyManager";
 
 /**
 * a general and flexible implementation of TTRPG system. it focusses on not diskrimination or sorting data. 

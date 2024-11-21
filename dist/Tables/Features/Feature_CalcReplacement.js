@@ -1,71 +1,61 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Feature_CalcReplacement = void 0;
-var tslib_1 = require("tslib");
-var _1 = require(".");
-var __1 = require("../..");
+const tslib_1 = require("tslib");
+const _1 = require(".");
+const __1 = require("../..");
 /**
  * apply X at a time to Y targets
  */
-var Feature_CalcReplacement = /** @class */ (function (_super) {
-    tslib_1.__extends(Feature_CalcReplacement, _super);
-    function Feature_CalcReplacement() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Feature_CalcReplacement.prototype.getType = function () {
+class Feature_CalcReplacement extends _1.Feature {
+    getType() {
         return Feature_CalcReplacement.getType();
-    };
-    Feature_CalcReplacement.getType = function () {
+    }
+    static getType() {
         return 'Feature_calcReplacement';
-    };
-    Feature_CalcReplacement.prototype.getNodeFeatureName = function () {
+    }
+    getNodeFeatureName() {
         return this.name;
-    };
-    Feature_CalcReplacement.prototype.remove = function (sys) {
-        var _this = this;
-        if (sys === void 0) { sys = null; }
+    }
+    remove(sys = null) {
         // if there is no system supplied remove from all. 
         if (!sys) {
             // loop through all and call this remove.
             var length = this.systems.length;
-            for (var i = 0; i < length; i++) {
-                var _sys = this.systems[0];
+            for (let i = 0; i < length; i++) {
+                const _sys = this.systems[0];
                 this.remove(_sys);
             }
             return true;
         }
         // fisrt if this system is not in the feature
-        if (!this.systems.find(function (p) { return p._key == sys._key; })) {
+        if (!this.systems.find(p => p._key == sys._key)) {
             return false;
         }
-        var selfKey = this._key;
+        let selfKey = this._key;
         // get all the nodes in that system with this replacementfeatureon
-        this.systemsNodechoices[sys._key].forEach(function (loc) {
+        this.systemsNodechoices[sys._key].forEach((loc) => {
             var _a, _b, _c;
             // Get the node and the node's replacement
-            var node = sys.getNodeLocString(loc);
+            const node = sys.getNodeLocString(loc);
             var a = ((_a = node === null || node === void 0 ? void 0 : node.getReplacements()) !== null && _a !== void 0 ? _a : []);
-            var b = a.map(function (p) { var _a, _b; return (_b = (_a = p['featureSrc']) === null || _a === void 0 ? void 0 : _a.feature) === null || _b === void 0 ? void 0 : _b._key; });
-            var replacements = (_c = ((_b = node === null || node === void 0 ? void 0 : node.getReplacements()) !== null && _b !== void 0 ? _b : []).filter(function (p) { return p.featureSrc.feature._key == selfKey; })) !== null && _c !== void 0 ? _c : [];
+            var b = a.map(p => { var _a, _b; return (_b = (_a = p['featureSrc']) === null || _a === void 0 ? void 0 : _a.feature) === null || _b === void 0 ? void 0 : _b._key; });
+            var replacements = (_c = ((_b = node === null || node === void 0 ? void 0 : node.getReplacements()) !== null && _b !== void 0 ? _b : []).filter(p => p.featureSrc.feature._key == selfKey)) !== null && _c !== void 0 ? _c : [];
             // remove the replacement
-            for (var i = 0; i < replacements.length; i++) {
-                var curr = replacements[i];
+            for (let i = 0; i < replacements.length; i++) {
+                const curr = replacements[i];
                 node === null || node === void 0 ? void 0 : node.remReplacement(curr);
             }
             // clean up reference
-            delete _this.systemsNodechoices[sys._key];
+            delete this.systemsNodechoices[sys._key];
         });
         // remove system from systems
-        this.systems = this.systems.filter(function (p) { return p._key != sys._key; });
+        this.systems = this.systems.filter(p => p._key != sys._key);
         return true;
-    };
-    Feature_CalcReplacement.prototype.apply = function (sys, target) {
-        var args = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            args[_i - 2] = arguments[_i];
-        }
+    }
+    apply(sys, target, ...args) {
         // first get target , then add to list of systems and targets.
-        var targetNode = sys.getNodeLocString(target);
+        const targetNode = sys.getNodeLocString(target);
         if (!targetNode) {
             throw new Error('Invalid Target string, must be a location string of a node');
         }
@@ -79,13 +69,13 @@ var Feature_CalcReplacement = /** @class */ (function (_super) {
             .CreateNodeChain(sys, this.getNodeFeatureName())
             .addCalculation(this.calc)
             .addFeatureAsFeatureSrc(this);
-        for (var i = 0; i < this.sources.length; i++) {
+        for (let i = 0; i < this.sources.length; i++) {
             // get the source node. 
-            var src = this.sources[i];
+            const src = this.sources[i];
             if (!src.symbol) {
                 throw new Error('invalid src symbol provided :' + src.symbol + ' ; for ' + src.sourceString);
             }
-            var nod = sys.getNodeLocString(src.sourceString);
+            const nod = sys.getNodeLocString(src.sourceString);
             // if the node is missing
             if (!nod) {
                 throw new Error('No Node at ' + src.sourceString);
@@ -98,26 +88,24 @@ var Feature_CalcReplacement = /** @class */ (function (_super) {
         resNode.update();
         targetNode.addReplacement(resNode);
         return true;
-    };
-    Feature_CalcReplacement.prototype.updateTo = function (feature, out) {
+    }
+    updateTo(feature, out) {
         return false;
-    };
-    Feature_CalcReplacement.prototype.disposeNode_fromNode = function (node) {
+    }
+    disposeNode_fromNode(node) {
         throw new Error("Method not implemented.");
-    };
-    Feature_CalcReplacement.prototype.dispose = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var i, sys;
-            return tslib_1.__generator(this, function (_a) {
-                for (i = 0; i < this.systems.length; i++) {
-                    sys = this.systems[i];
-                    this.remove(sys);
-                }
-                _super.prototype.dispose.call(this);
-                return [2 /*return*/];
-            });
+    }
+    dispose() {
+        const _super = Object.create(null, {
+            dispose: { get: () => super.dispose }
         });
-    };
-    return Feature_CalcReplacement;
-}(_1.Feature));
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < this.systems.length; i++) {
+                const sys = this.systems[i];
+                this.remove(sys);
+            }
+            _super.dispose.call(this);
+        });
+    }
+}
 exports.Feature_CalcReplacement = Feature_CalcReplacement;

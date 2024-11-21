@@ -1,8 +1,8 @@
 import { GrobCollection } from "../GrobCollection";
 import { GrobDerivedNode } from "./GrobDerivedNode";
 import { TTRPGSystem } from "../";
-import { FeatureSource } from "../../src/Tables/Features";
-import { TTRPGSystemBonusDesigner } from "../../src/Helpers/TTRPGSystemReplacementDesigner";
+import { FeatureSource } from "../Tables/Features";
+import { TTRPGSystemBonusDesigner } from "../Helpers/TTRPGSystemReplacementDesigner";
 export declare class GrobBonusNode extends GrobDerivedNode {
     constructor(name?: any, parent?: GrobCollection<GrobBonusNode>);
     featureSrc: FeatureSource;

@@ -1,48 +1,44 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Feature = exports.FeatureSource = void 0;
-var tslib_1 = require("tslib");
-var index_1 = require("../../../src/index");
-var FeatureSource = /** @class */ (function () {
-    function FeatureSource() {
+const tslib_1 = require("tslib");
+//import { GrobBonusNode, GrobNodeType, keyManagerInstance, TTRPGSystem } from "../../../src/index";
+const KeyManager_1 = require("../../Abstractions/KeyManager");
+class FeatureSource {
+    constructor() {
         this.feature = null;
     }
-    return FeatureSource;
-}());
+}
 exports.FeatureSource = FeatureSource;
-var Feature = /** @class */ (function () {
-    function Feature() {
+class Feature {
+    constructor() {
         this.type = this.getType();
-        this._key = index_1.keyManagerInstance.getNewKey();
+        this._key = KeyManager_1.keyManagerInstance.getNewKey();
         this.systems = [];
         this.systemsNodechoices = {};
     }
-    Feature.prototype.getType = function () {
+    getType() {
         return 'Feature';
-    };
+    }
     ;
-    Feature.prototype.dispose = function () {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
-            return tslib_1.__generator(this, function (_a) {
-                return [2 /*return*/];
-            });
+    dispose() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
         });
-    };
+    }
     /**
      * get a structure that explains where this feature is applied.
      * @returns { sys:string , nodes : GrobNodeType[] }[]
      */
-    Feature.prototype.getAppliancesStructure = function () {
+    getAppliancesStructure() {
         var objs = [];
-        for (var i = 0; i < this.systems.length; i++) {
-            var sys = this.systems[i];
+        for (let i = 0; i < this.systems.length; i++) {
+            const sys = this.systems[i];
             var obj = {};
             obj['sys'] = sys;
             obj['nodes'] = this.systemsNodechoices[sys._key];
             objs.push(obj);
         }
         return objs;
-    };
-    return Feature;
-}());
+    }
+}
 exports.Feature = Feature;

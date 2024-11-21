@@ -1,52 +1,43 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Feature_Multi = void 0;
-var tslib_1 = require("tslib");
-var Feature_Choice_1 = require("./Feature_Choice");
-var AFeature_Multi_1 = require("./AFeature_Multi");
-var Feature_Multi = /** @class */ (function (_super) {
-    tslib_1.__extends(Feature_Multi, _super);
-    function Feature_Multi() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Feature_Multi.prototype.getType = function () {
+const Feature_Choice_1 = require("./Feature_Choice");
+const AFeature_Multi_1 = require("./AFeature_Multi");
+class Feature_Multi extends AFeature_Multi_1.AFeature_Multi {
+    getType() {
         return Feature_Choice_1.Feature_Choice.getType();
-    };
-    Feature_Multi.getType = function () {
+    }
+    static getType() {
         return 'Feature_Multi';
-    };
+    }
     //public type: string = 'Feature_Multi';
-    Feature_Multi.prototype.updateTo = function (feature, out) {
+    updateTo(feature, out) {
         // if this is the wrong type then we return false
         if (feature.type != this.type) {
             return false;
         }
-        var _loop_1 = function (i) {
+        // loop through choices and update
+        for (let i = 0; i < this.features.length; i++) {
             // map oold and incoming 
-            var o_choice = this_1.features[i];
-            var i_choice = feature.features.find(function (p) { return p.name == o_choice.name; });
+            const o_choice = this.features[i];
+            const i_choice = feature.features.find(p => p.name == o_choice.name);
             // if there is incoming choice, then remove the old.
             if (!i_choice) {
-                this_1._removeFeatureFromAppliedRecord(o_choice);
-                return "continue";
+                this._removeFeatureFromAppliedRecord(o_choice);
+                continue;
             }
             // call update and save if it could update
-            could_update = o_choice.updateTo(i_choice, out);
+            var could_update = o_choice.updateTo(i_choice, out);
             // if this could not update then remove the old.
             if (!could_update) {
-                this_1._removeFeatureFromAppliedRecord(o_choice);
-                return "continue";
+                this._removeFeatureFromAppliedRecord(o_choice);
+                continue;
             }
-        };
-        var this_1 = this, could_update;
-        // loop through choices and update
-        for (var i = 0; i < this.features.length; i++) {
-            _loop_1(i);
         }
         // return succes
         return true;
-    };
-    Feature_Multi.prototype.apply = function (sys, args) {
+    }
+    apply(sys, args) {
         var _a;
         // if we KNOW before hand that they do not have the right amount, just error out. 
         if (args.length < this.features.length) {
@@ -56,18 +47,18 @@ var Feature_Multi = /** @class */ (function (_super) {
         // we track for each feature where arguments are suppliedm 
         // And wich have not.
         // create lists
-        var fromListMap = {};
-        this.features.forEach(function (p) { return fromListMap[p.name] = p; });
-        var toListMap = {};
+        let fromListMap = {};
+        this.features.forEach(p => fromListMap[p.name] = p);
+        let toListMap = {};
         // sort arguments by name. 
-        args.sort(function (a, b) { if (a.featureName < b.featureName) {
+        args.sort((a, b) => { if (a.featureName < b.featureName) {
             return -1;
         }
         else {
             return 1;
         } });
-        for (var i = 0; i < args.length; i++) {
-            var arg = args[i];
+        for (let i = 0; i < args.length; i++) {
+            const arg = args[i];
             var feature = fromListMap[arg.featureName];
             if (!feature) {
                 throw new Error('provided arguments for non existant feature by name "' + arg.featureName + '"');
@@ -87,10 +78,10 @@ var Feature_Multi = /** @class */ (function (_super) {
         // now All arguments are ensured to have been provided.
         // now we loop through all of our features, but if even one fails to apply we remove 
         var keys = Object.keys(toListMap);
-        for (var i = 0; i < keys.length; i++) {
-            var key = keys[i];
-            var set = toListMap[key];
-            var succes = set.feature.apply(sys, set.args);
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            const set = toListMap[key];
+            const succes = set.feature.apply(sys, set.args);
             this._addFeatureFromAppliedRecord(sys, set.feature);
             if (!succes) {
                 this.remove();
@@ -99,8 +90,7 @@ var Feature_Multi = /** @class */ (function (_super) {
         }
         this.systems.push(sys);
         return true;
-    };
-    Feature_Multi.prototype.disposeNode_fromNode = function (node) { };
-    return Feature_Multi;
-}(AFeature_Multi_1.AFeature_Multi));
+    }
+    disposeNode_fromNode(node) { }
+}
 exports.Feature_Multi = Feature_Multi;

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.newOutputHandler = newOutputHandler;
 function newOutputHandler() {
-    var a = {
+    let a = {
         outError: function (msg) {
             console.error(msg);
         },

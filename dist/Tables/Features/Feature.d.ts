@@ -1,5 +1,7 @@
-import { GrobBonusNode, GrobNodeType, TTRPGSystem } from "../../../src/index";
-import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler';
+import { IOutputHandler } from '../../Abstractions/IOutputHandler';
+import { GrobNodeType } from '../../Graph/TTRPGSystemsGraphDependencies';
+import { GrobBonusNode } from '../../Nodes/GrobBonusNode';
+import { TTRPGSystemFeatureIndex } from '../../Graph/TTRPGSystemFeatureIndex';
 export declare class FeatureSource {
     name: string;
     source: string;
@@ -12,7 +14,7 @@ export declare abstract class Feature {
     source: string;
     text: string;
     _key: string;
-    protected systems: TTRPGSystem[];
+    protected systems: TTRPGSystemFeatureIndex[];
     protected systemsNodechoices: Record<string, string[]>;
     dispose(): Promise<void>;
     /**
@@ -31,7 +33,7 @@ export declare abstract class Feature {
      * @returns true if it managed to update. false if not.
      */
     abstract updateTo(feature: Feature, out: IOutputHandler): boolean;
-    abstract remove(sys?: TTRPGSystem | null): boolean;
-    abstract apply(sys: TTRPGSystem, ...args: any[]): boolean;
+    abstract remove(sys?: TTRPGSystemFeatureIndex | null): boolean;
+    abstract apply(sys: TTRPGSystemFeatureIndex, ...args: any[]): boolean;
     abstract disposeNode_fromNode(node: GrobBonusNode): any;
 }

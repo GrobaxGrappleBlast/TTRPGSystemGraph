@@ -1,32 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GrobFixedNode = void 0;
-var tslib_1 = require("tslib");
-var AGrobNodte_1 = require("./AGrobNodte");
-var GrobFixedNode = /** @class */ (function (_super) {
-    tslib_1.__extends(GrobFixedNode, _super);
-    function GrobFixedNode(name, parent) {
-        var _this = _super.call(this, name, 'NF', parent) || this;
-        _this.___value = 1;
-        return _this;
+const AGrobNodte_1 = require("./AGrobNodte");
+class GrobFixedNode extends AGrobNodte_1.AGrobNode {
+    constructor(name, parent) {
+        super(name, 'NF', parent);
+        this.___value = 1;
     }
-    GrobFixedNode.prototype._getValue = function () {
+    _getValue() {
         return this.___value;
-    };
-    GrobFixedNode.prototype.setValue = function (value) {
+    }
+    setValue(value) {
         this.___value = value;
-        for (var key in this.dependents) {
-            var curr = this.dependents[key];
+        for (const key in this.dependents) {
+            const curr = this.dependents[key];
             curr.update();
         }
-    };
-    GrobFixedNode.getTypeString = function () {
+    }
+    static getTypeString() {
         return 'fixedNode';
-    };
-    GrobFixedNode.prototype.getTypeString = function () {
+    }
+    getTypeString() {
         return GrobFixedNode.getTypeString();
-    };
-    GrobFixedNode.prototype._update = function () { };
-    return GrobFixedNode;
-}(AGrobNodte_1.AGrobNode));
+    }
+    _update() { }
+}
 exports.GrobFixedNode = GrobFixedNode;

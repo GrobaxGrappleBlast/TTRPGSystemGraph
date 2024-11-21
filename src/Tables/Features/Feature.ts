@@ -1,5 +1,9 @@
-import { GrobBonusNode, GrobNodeType, keyManagerInstance, TTRPGSystem } from "../../../src/index";
-import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler' ;
+//import { GrobBonusNode, GrobNodeType, keyManagerInstance, TTRPGSystem } from "../../../src/index";
+import { keyManagerInstance } 		from '../../Abstractions/KeyManager';
+import { IOutputHandler } 			from '../../Abstractions/IOutputHandler' ;
+import { GrobNodeType } 			from '../../Graph/TTRPGSystemsGraphDependencies';
+import { GrobBonusNode } 			from '../../Nodes/GrobBonusNode';
+import { TTRPGSystemFeatureIndex } 	from '../../Graph/TTRPGSystemFeatureIndex';
 
 
 
@@ -22,7 +26,7 @@ export abstract class Feature {
     public text     :string;
 	public _key : string = keyManagerInstance.getNewKey();
 	
-	protected systems: TTRPGSystem[] = [];
+	protected systems: TTRPGSystemFeatureIndex[] = [];
 	protected systemsNodechoices : Record<string,string[]> = {}
 
 	public async dispose(){
@@ -56,9 +60,9 @@ export abstract class Feature {
 	 */
 	abstract updateTo ( feature : Feature , out: IOutputHandler) : boolean ;
 
-	abstract remove(sys?:TTRPGSystem | null) : boolean;
+	abstract remove(sys?:TTRPGSystemFeatureIndex | null) : boolean;
 
-	abstract apply(sys:TTRPGSystem , ...args ) : boolean;
+	abstract apply(sys:TTRPGSystemFeatureIndex , ...args ) : boolean;
 
 	abstract disposeNode_fromNode( node:GrobBonusNode )
 }

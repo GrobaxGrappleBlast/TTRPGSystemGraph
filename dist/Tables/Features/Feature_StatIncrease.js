@@ -1,68 +1,61 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Feature_StatIncrease_apply = void 0;
-var tslib_1 = require("tslib");
-var index_1 = require("../../../src/index");
-var AFeature_BonusNodes_1 = require("./AFeature_BonusNodes");
+const __1 = require("../../");
+const AFeature_BonusNodes_1 = require("./AFeature_BonusNodes");
 /**
  * apply X at a time to Y targets
  */
-var Feature_StatIncrease_apply = /** @class */ (function (_super) {
-    tslib_1.__extends(Feature_StatIncrease_apply, _super);
-    function Feature_StatIncrease_apply() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+class Feature_StatIncrease_apply extends AFeature_BonusNodes_1.AFeature_BonusNodes {
+    constructor() {
+        super(...arguments);
         //public type = "Feature_StatIncrease_apply";
-        _this.sourceItems = [];
-        _this.sourceCollections = [];
-        return _this;
+        this.sourceItems = [];
+        this.sourceCollections = [];
     }
-    Feature_StatIncrease_apply.prototype.getType = function () {
+    getType() {
         return Feature_StatIncrease_apply.getType();
-    };
-    Feature_StatIncrease_apply.getType = function () {
+    }
+    static getType() {
         return 'Feature_StatIncrease_apply';
-    };
-    Feature_StatIncrease_apply.prototype.validateTargets = function (targets) {
-        var ownSrcStrings = this.sourceItems.map(function (p) { return p.sourceString; });
-        var ownSrcColStrings = this.sourceCollections.map(function (p) { return p.sourceString; });
-        targets.forEach(function (target) {
+    }
+    validateTargets(targets) {
+        let ownSrcStrings = this.sourceItems.map(p => p.sourceString);
+        let ownSrcColStrings = this.sourceCollections.map(p => p.sourceString);
+        targets.forEach(target => {
             if (ownSrcStrings.includes(target)) {
                 return;
             }
-            var segs = target.split('.');
+            let segs = target.split('.');
             if (ownSrcColStrings.includes(segs[0] + '.' + segs[1])) {
                 return;
             }
             throw new Error('Un-Allowed target string, string was not in source items , or belonged to any source collections ');
         });
-    };
+    }
     /**
      *
      * @param sys The system to apply this feature to.
      * @param targets The targets in that system to apply this feature to.
      * @returns
      */
-    Feature_StatIncrease_apply.prototype.apply = function (sys, targets) {
-        var args = [];
-        for (var _i = 2; _i < arguments.length; _i++) {
-            args[_i - 2] = arguments[_i];
-        }
+    apply(sys, targets, ...args) {
         if (targets.length != this.increaseNumTargets) {
             console.error('Different number of targets provided than increase numtargets');
         }
         // ensure that the targets either are in its sourceItems or Collection
         this.validateTargets(targets);
         // get the bonus collection.
-        var collection = (sys.getCollection('extra', 'bonus'));
+        let collection = (sys.getCollection('extra', 'bonus'));
         if (!collection) {
             sys.createCollection('extra', 'bonus');
             collection = (sys.getCollection('extra', 'bonus'));
         }
         // add to list of systems register
         this.systems.push(sys);
-        for (var i = 0; i < this.increaseNumTargets; i++) {
+        for (let i = 0; i < this.increaseNumTargets; i++) {
             // create the node.
-            var node = index_1.GrobBonusNode.CreateNodeChain(sys, this.name + '_target_' + i)
+            const node = __1.GrobBonusNode.CreateNodeChain(sys, this.name + '_target_' + i)
                 .addCalculation(this.increaseSize + '')
                 .addFeatureAsFeatureSrc(this)
                 .getNode();
@@ -70,14 +63,14 @@ var Feature_StatIncrease_apply = /** @class */ (function (_super) {
             collection === null || collection === void 0 ? void 0 : collection.addNode(node);
             this.bonusNodes.push(node);
             // get the target strings. 
-            var target = targets[i];
-            var segs = target.split('.');
+            const target = targets[i];
+            const segs = target.split('.');
             // handle wrong input 
             if (segs.length != 3) {
                 throw new Error('target of ' + target + ' did not ahve three segments seperated by "."');
             }
             // get target
-            var targetNode = sys.getNode(segs[0], segs[1], segs[2]);
+            const targetNode = sys.getNode(segs[0], segs[1], segs[2]);
             // Register the node 
             if (targetNode) {
                 this.registerNodeToSys(sys, target);
@@ -86,8 +79,8 @@ var Feature_StatIncrease_apply = /** @class */ (function (_super) {
             targetNode === null || targetNode === void 0 ? void 0 : targetNode.addBonus(node.name, node);
         }
         return true;
-    };
-    Feature_StatIncrease_apply.prototype.updateTo = function (feature, out) {
+    }
+    updateTo(feature, out) {
         // if trying to project a wrong type. 
         if (feature.type != this.type) {
             return false;
@@ -98,11 +91,11 @@ var Feature_StatIncrease_apply = /** @class */ (function (_super) {
         this.increaseSize = feature.increaseSize;
         this.increaseNumTargets = feature.increaseNumTargets;
         // get its targets , From the Feature
-        for (var i = 0; i < this.systems.length; i++) {
+        for (let i = 0; i < this.systems.length; i++) {
             // get parameters 
-            var sys = this.systems[i];
-            var syskey = sys._key;
-            var targets = this.systemsNodechoices[syskey];
+            const sys = this.systems[i];
+            const syskey = sys._key;
+            const targets = this.systemsNodechoices[syskey];
             try {
                 // first validate, this will throw Error if it doesent fit.
                 this.validateTargets(targets);
@@ -111,11 +104,10 @@ var Feature_StatIncrease_apply = /** @class */ (function (_super) {
             catch (e) {
                 // unapply feature on system.
                 this.remove(sys);
-                out.outError("Character ".concat(sys._key, " has outdated feature ").concat(this.name, " unapplied, and must be reapplied, manually due to feature rules "));
+                out.outError(`Character ${sys._key} has outdated feature ${this.name} unapplied, and must be reapplied, manually due to feature rules `);
             }
         }
         return true;
-    };
-    return Feature_StatIncrease_apply;
-}(AFeature_BonusNodes_1.AFeature_BonusNodes));
+    }
+}
 exports.Feature_StatIncrease_apply = Feature_StatIncrease_apply;

@@ -6,8 +6,8 @@ import { GrobOrigin } from "./GrobOrigin";
 import { GrobDerivedNode } from "./GrobDerivedNode";
 
 import { TTRPGSystem } from "../";
-import { Feature, FeatureSource } from 		"../../src/Tables/Features";
-import { TTRPGSystemBonusDesigner } from	"../../src/Helpers/TTRPGSystemReplacementDesigner";
+import { Feature, FeatureSource } from 		"../Tables/Features";
+import { TTRPGSystemBonusDesigner } from	"../Helpers/TTRPGSystemReplacementDesigner";
 
 
 export class GrobBonusNode extends GrobDerivedNode{//AGrobNode<GrobBonusNode> {

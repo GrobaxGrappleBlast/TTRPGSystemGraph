@@ -1,62 +1,59 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TTRPGSystemGraphModel = void 0;
-var tslib_1 = require("tslib");
-var IOutputHandler_1 = require("../Abstractions/IOutputHandler");
-var index_1 = require("../index");
-var index_2 = require("../index");
-var _1 = require(".");
-var derived = 'derived';
-var fixed = 'fixed';
+const IOutputHandler_1 = require("../Abstractions/IOutputHandler");
+const index_1 = require("../index");
+const index_2 = require("../index");
+const _1 = require(".");
+const derived = 'derived';
+const fixed = 'fixed';
 /**
  *  handles Model operations and Data Containment,
  * Ensures that data is maintained, as well as graphlinks
 */
-var TTRPGSystemGraphModel = /** @class */ (function (_super) {
-    tslib_1.__extends(TTRPGSystemGraphModel, _super);
-    function TTRPGSystemGraphModel() {
-        var _this = _super.call(this) || this;
-        _this._createGroup('fixed');
-        _this._createGroup('derived');
-        _this._createGroup('extra');
-        _this.setOut((0, IOutputHandler_1.newOutputHandler)());
-        return _this;
+class TTRPGSystemGraphModel extends _1.TTRPGSystemGraphAbstractModel {
+    constructor() {
+        super();
+        this._createGroup('fixed');
+        this._createGroup('derived');
+        this._createGroup('extra');
+        this.setOut((0, IOutputHandler_1.newOutputHandler)());
     }
     //TODO : find better solution than this.
     // r 
-    TTRPGSystemGraphModel.prototype.initAsNew = function () {
+    initAsNew() {
         this._createGroup('fixed');
         this._createGroup('derived');
         this._createGroup('extra');
         this.data['fixed'].setGroupType('Node');
         this.data['derived'].setGroupType('Node');
         this.data['extra'].setGroupType('Table');
-    };
+    }
     /// Create Statements 
-    TTRPGSystemGraphModel.prototype.createCollection = function (group, name) {
+    createCollection(group, name) {
         // ensure that group exists, same way as the others
         if (!this._hasGroup(group)) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
         }
-        var grp = this.getGroup(group);
+        let grp = this.getGroup(group);
         if (!grp)
             return null;
         return this._createCollection(grp, name);
-    };
-    TTRPGSystemGraphModel.prototype.createDerivedCollection = function (name) {
+    }
+    createDerivedCollection(name) {
         return this.createCollection(derived, name);
-    };
-    TTRPGSystemGraphModel.prototype.createFixedCollection = function (name) {
+    }
+    createFixedCollection(name) {
         return this.createCollection(fixed, name);
-    };
-    TTRPGSystemGraphModel.prototype.createNode = function (group, col, name) {
+    }
+    createNode(group, col, name) {
         // ensure that group exists, same way as the others
         if (!this._hasGroup(group)) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
             return null;
         }
         if (this.hasNode(group, col, name)) {
-            this.out.outError("Node by this name already existed ".concat(group));
+            this.out.outError(`Node by this name already existed ${group}`);
             return null;
         }
         if (group == 'fixed') {
@@ -66,11 +63,11 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             return this.createDerivedNode(col, name);
         }
         return null;
-    };
-    TTRPGSystemGraphModel.prototype.createDerivedNode = function (col, name) {
-        var colName = col;
+    }
+    createDerivedNode(col, name) {
+        let colName = col;
         if (typeof col == 'string') {
-            var grp = this.getGroup(derived);
+            let grp = this.getGroup(derived);
             if (!grp)
                 return null;
             col = grp.getCollection(col);
@@ -79,18 +76,18 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             colName = col.getName();
         }
         if (!col) {
-            this.out.outError("No Derived collection found by name: ".concat(colName, " "));
+            this.out.outError(`No Derived collection found by name: ${colName} `);
             return null;
         }
-        var node = new index_2.GrobDerivedNode(name, col);
+        const node = new index_2.GrobDerivedNode(name, col);
         col.addNode(node);
         return node;
-    };
-    TTRPGSystemGraphModel.prototype.createFixedNode = function (col, name) {
-        var grp = this.getGroup(fixed);
+    }
+    createFixedNode(col, name) {
+        let grp = this.getGroup(fixed);
         if (!grp)
             return null;
-        var colName = col;
+        let colName = col;
         if (typeof col !== 'string') {
             // @ts-ignore
             colName = col.getName();
@@ -99,54 +96,54 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             col = grp.getCollection(colName);
         }
         if (!col) {
-            this.out.outError("No Fixed collection found by name: ".concat(colName, " "));
+            this.out.outError(`No Fixed collection found by name: ${colName} `);
             return null;
         }
-        var node = new index_1.GrobFixedNode(name, col);
+        const node = new index_1.GrobFixedNode(name, col);
         col.addNode(node);
         return node;
-    };
+    }
     // has Statements 
-    TTRPGSystemGraphModel.prototype.hasCollection = function (group, name) {
-        var grp = this.getGroup(group);
+    hasCollection(group, name) {
+        const grp = this.getGroup(group);
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
             return false;
         }
         return grp.hasCollection(name);
-    };
-    TTRPGSystemGraphModel.prototype.hasDerivedCollection = function (name) {
+    }
+    hasDerivedCollection(name) {
         return this.hasCollection(derived, name);
-    };
-    TTRPGSystemGraphModel.prototype.hasFixedCollection = function (name) {
+    }
+    hasFixedCollection(name) {
         return this.hasCollection(fixed, name);
-    };
-    TTRPGSystemGraphModel.prototype.hasNode = function (group, col, name) {
-        var grp = this.getGroup(group);
+    }
+    hasNode(group, col, name) {
+        const grp = this.getGroup(group);
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
             return false;
         }
-        var _col = col;
+        let _col = col;
         if (typeof col === 'string') {
             // @ts-ignore
             _col = this.getCollection(grp, col);
             if (!_col) {
-                this.out.outError("attempted to get ".concat(group, " collection ").concat(name, ", but no collection existed by that name"));
+                this.out.outError(`attempted to get ${group} collection ${name}, but no collection existed by that name`);
                 return false;
             }
         }
         return _col.hasNode(name);
-    };
-    TTRPGSystemGraphModel.prototype.hasDerivedNode = function (col, name) {
+    }
+    hasDerivedNode(col, name) {
         return this.hasNode(derived, col, name);
-    };
-    TTRPGSystemGraphModel.prototype.hasFixedNode = function (col, name) {
+    }
+    hasFixedNode(col, name) {
         return this.hasNode(fixed, col, name);
-    };
+    }
     // get Statements 
-    TTRPGSystemGraphModel.prototype.getCollectionNames = function (group) {
-        var grp;
+    getCollectionNames(group) {
+        let grp;
         if (typeof group == 'string') {
             grp = this.getGroup(group);
         }
@@ -154,13 +151,13 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             grp = group;
         }
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
             return [];
         }
         return grp.getCollectionsNames();
-    };
-    TTRPGSystemGraphModel.prototype.getCollection = function (group, name) {
-        var grp;
+    }
+    getCollection(group, name) {
+        let grp;
         if (typeof group == 'string') {
             grp = this.getGroup(group);
         }
@@ -168,43 +165,43 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             grp = group;
         }
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
             return null;
         }
-        var col = grp.getCollection(name);
+        const col = grp.getCollection(name);
         if (!col) {
-            this.out.outError("attempted to get ".concat(group, " collection ").concat(name, ", but no collection existed by that name"));
+            this.out.outError(`attempted to get ${group} collection ${name}, but no collection existed by that name`);
             return null;
         }
         return col;
-    };
-    TTRPGSystemGraphModel.prototype.getDerivedCollection = function (name) {
+    }
+    getDerivedCollection(name) {
         return this.getCollection(derived, name);
-    };
-    TTRPGSystemGraphModel.prototype.getFixedCollection = function (name) {
+    }
+    getFixedCollection(name) {
         return this.getCollection(fixed, name);
-    };
-    TTRPGSystemGraphModel.prototype.getNodeLocString = function (location) {
+    }
+    getNodeLocString(location) {
         // if falsey
         if (!location) {
             throw new Error(' getNodeLocString : invalid location string, nodestring was ' + location);
         }
         // Get segments 
-        var segs = location.split('.');
+        const segs = location.split('.');
         if (segs.length != 3) {
             throw new Error('invalid source string. Source string must be three names seperated by a . , namely group.collection.node , location string was ' + location);
         }
         // get node
         return this.getNode(segs[0], segs[1], segs[2]);
-    };
-    TTRPGSystemGraphModel.prototype.getNode = function (group, col, name) {
-        var grp = this.getGroup(group);
+    }
+    getNode(group, col, name) {
+        const grp = this.getGroup(group);
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
             return null;
         }
         // define output
-        var node;
+        let node;
         // if this is a collection, just get the node.
         if (typeof col !== 'string') {
             node = col.getNode(name);
@@ -212,11 +209,11 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         // if col is a string, then let it be seen as the name of the collection, and fetch it.
         else {
             // get data
-            var colName = col;
+            const colName = col;
             col = grp.getCollection(col);
             // error handling.
             if (!col) {
-                this.out.outError("attempted to get ".concat(group, " collection ").concat(colName, ", but did not exist"));
+                this.out.outError(`attempted to get ${group} collection ${colName}, but did not exist`);
                 return null;
             }
             // defined output
@@ -224,24 +221,24 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
         }
         // error handling
         if (!node) {
-            this.out.outError("attempted to get ".concat(group, ".").concat(col.getName(), " Node ").concat(name, ", but did not exist"));
+            this.out.outError(`attempted to get ${group}.${col.getName()} Node ${name}, but did not exist`);
             return null;
         }
         return node;
-    };
-    TTRPGSystemGraphModel.prototype.getDerivedNode = function (col, name) {
+    }
+    getDerivedNode(col, name) {
         return this.getNode(derived, col, name);
-    };
-    TTRPGSystemGraphModel.prototype.getFixedNode = function (col, name) {
+    }
+    getFixedNode(col, name) {
         return this.getNode(fixed, col, name);
-    };
-    TTRPGSystemGraphModel.prototype.getNodeNames = function (group, col) {
-        var grp = this.getGroup(group);
+    }
+    getNodeNames(group, col) {
+        const grp = this.getGroup(group);
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
             return null;
         }
-        var _col;
+        let _col;
         if (typeof col === 'string') {
             _col = grp.getCollection(col);
         }
@@ -249,23 +246,23 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             _col = col;
         }
         return _col.getNodeNames();
-    };
+    }
     // delete Statements 
-    TTRPGSystemGraphModel.prototype._deleteGroup = function (group) {
+    _deleteGroup(group) {
         if (typeof group == 'string') {
-            var name = group;
+            const name = group;
             group = this.getGroup(group);
             if (!group) {
                 this.out.outError('No Collection by name ' + name);
                 return false;
             }
         }
-        _super.prototype._deleteGroup.call(this, group);
-    };
-    TTRPGSystemGraphModel.prototype.deleteCollection = function (group, col) {
-        var grp = this.getGroup(group);
+        super._deleteGroup(group);
+    }
+    deleteCollection(group, col) {
+        const grp = this.getGroup(group);
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
             return false;
         }
         if (typeof col === 'string') {
@@ -275,40 +272,40 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
                 return false;
         }
         return this._deleteCollection(col);
-    };
-    TTRPGSystemGraphModel.prototype.deleteDerivedCollection = function (col) {
+    }
+    deleteDerivedCollection(col) {
         return this.deleteCollection(derived, col);
-    };
-    TTRPGSystemGraphModel.prototype.deleteFixedCollection = function (col) {
+    }
+    deleteFixedCollection(col) {
         return this.deleteCollection(fixed, col);
-    };
-    TTRPGSystemGraphModel.prototype.deleteNode = function (group, col, name) {
-        var grp = this.getGroup(group);
+    }
+    deleteNode(group, col, name) {
+        const grp = this.getGroup(group);
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(group));
+            this.out.outError(`No group existed by name ${group}`);
             return false;
         }
         if (typeof col === 'string') {
             col = grp.getCollection(col);
         }
         if (!col) {
-            this.out.outError("attempted to get ".concat(group, " collection ").concat(name, ", but no collection existed by that name"));
+            this.out.outError(`attempted to get ${group} collection ${name}, but no collection existed by that name`);
             return false;
         }
-        var node = col.getNode(name);
+        let node = col.getNode(name);
         return col.removeNode(node);
-    };
-    TTRPGSystemGraphModel.prototype.deleteDerivedNode = function (col, name) {
+    }
+    deleteDerivedNode(col, name) {
         return this.deleteNode(derived, col, name);
-    };
-    TTRPGSystemGraphModel.prototype.deleteFixedNode = function (col, name) {
+    }
+    deleteFixedNode(col, name) {
         return this.deleteNode(fixed, col, name);
-    };
+    }
     // Renaming functions
-    TTRPGSystemGraphModel.prototype.renameCollection = function (group, col, newName) {
+    renameCollection(group, col, newName) {
         // check that group exists, and get the values. 
-        var grp;
-        var grpName;
+        let grp;
+        let grpName;
         if (typeof group == 'string') {
             grpName = group;
             grp = this.getGroup(group);
@@ -318,11 +315,11 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             grp = group;
         }
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(grpName));
+            this.out.outError(`No group existed by name ${grpName}`);
             return null;
         }
         // Check that Collection exists and get the values 
-        var colName = col;
+        let colName = col;
         if (typeof col == 'string') {
             colName = col;
             col = grp.getCollection(col);
@@ -331,21 +328,21 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             colName = col.getName();
         }
         if (!col) {
-            this.out.outError("No Collection existed by name ".concat(colName, " in ").concat(grpName));
+            this.out.outError(`No Collection existed by name ${colName} in ${grpName}`);
             return null;
         }
         // check that the new Name collection doesent already exist.
         if (grp.getCollection(newName)) {
-            this.out.outError("Collection already existed by name ".concat(newName, " in ").concat(grpName));
+            this.out.outError(`Collection already existed by name ${newName} in ${grpName}`);
             return null;
         }
         // update 
         return col.setName(newName);
-    };
-    TTRPGSystemGraphModel.prototype.renameItem = function (group, col, oldName, newName) {
+    }
+    renameItem(group, col, oldName, newName) {
         // check that group exists, and get the values. 
-        var grp;
-        var grpName;
+        let grp;
+        let grpName;
         if (typeof group == 'string') {
             grpName = group;
             grp = this.getGroup(group);
@@ -355,11 +352,11 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             grp = group;
         }
         if (!grp) {
-            this.out.outError("No group existed by name ".concat(grpName));
+            this.out.outError(`No group existed by name ${grpName}`);
             return null;
         }
         // Check that Collection exists and get the values 
-        var colName = col;
+        let colName = col;
         if (typeof col == 'string') {
             colName = col;
             col = grp.getCollection(col);
@@ -368,63 +365,61 @@ var TTRPGSystemGraphModel = /** @class */ (function (_super) {
             colName = col.getName();
         }
         if (!col) {
-            this.out.outError("No Collection existed by name ".concat(colName, " in ").concat(grpName));
+            this.out.outError(`No Collection existed by name ${colName} in ${grpName}`);
             return null;
         }
         // check that the Node exists
         if (!col.hasNode(oldName)) {
-            this.out.outError("No Item existed by name ".concat(oldName, " in ").concat(grpName, ".").concat(colName));
+            this.out.outError(`No Item existed by name ${oldName} in ${grpName}.${colName}`);
             return null;
         }
         // update 
         return col.update_node_name(oldName, newName);
-    };
+    }
     // Validation Functions
-    TTRPGSystemGraphModel.prototype.isValid = function (errorMessages) {
-        if (errorMessages === void 0) { errorMessages = []; }
-        var key_group, key_collection, key_node;
-        var collectionNames, nodeNames;
-        var group, collection, node;
-        var isValid;
+    isValid(errorMessages = []) {
+        let key_group, key_collection, key_node;
+        let collectionNames, nodeNames;
+        let group, collection, node;
+        let isValid;
         // foreach group, get do this for all collections.
         for (key_group in this.data) {
             group = this.data[key_group];
             collectionNames = group.getCollectionsNames();
             // forach collection do this for all nodes 
-            for (var c = 0; c < collectionNames.length; c++) {
-                var colIndex = c;
+            for (let c = 0; c < collectionNames.length; c++) {
+                const colIndex = c;
                 //for ( const colIndex in group.getCollectionsNames() ){
                 key_collection = collectionNames[colIndex];
                 collection = group.getCollection(key_collection);
                 nodeNames = collection.getNodeNames();
                 // do this for each node. 
-                for (var n = 0; n < nodeNames.length; n++) {
-                    var nodeIndex = n;
+                for (let n = 0; n < nodeNames.length; n++) {
+                    const nodeIndex = n;
                     //for ( const nodeIndex in nodeNames ){
                     key_node = nodeNames[nodeIndex];
                     node = collection.getNode(key_node);
                     isValid = node.isValid();
                     if (!isValid) {
-                        var msg = "".concat(key_group, ".").concat(key_collection, ".").concat(key_node, " was invalid");
-                        var keys = [key_group, key_collection, key_node];
+                        let msg = `${key_group}.${key_collection}.${key_node} was invalid`;
+                        let keys = [key_group, key_collection, key_node];
                         errorMessages.push({ msg: msg, key: keys });
                     }
                 }
             }
         }
         return errorMessages.length == 0;
-    };
-    TTRPGSystemGraphModel.prototype.getGroup = function (name) {
-        var grp = this.data[name];
+    }
+    getGroup(name) {
+        let grp = this.data[name];
         return grp !== null && grp !== void 0 ? grp : null;
-    };
+    }
     // add dependency
-    TTRPGSystemGraphModel.prototype.addNodeDependency = function (node, dep) {
+    addNodeDependency(node, dep) {
         this._addNodeDependency(node, dep);
-    };
-    TTRPGSystemGraphModel.prototype.removeNodeDependency = function (node, dep) {
+    }
+    removeNodeDependency(node, dep) {
         this._removeNodeDependency(node, dep);
-    };
-    return TTRPGSystemGraphModel;
-}(_1.TTRPGSystemGraphAbstractModel));
+    }
+}
 exports.TTRPGSystemGraphModel = TTRPGSystemGraphModel;
