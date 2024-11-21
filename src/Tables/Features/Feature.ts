@@ -1,7 +1,5 @@
-import { GrobBonusNode, GrobNodeType, keyManagerInstance, TTRPGSystem } from "../../../src";
-import {Mutex} from 'async-mutex';
+import { GrobBonusNode, GrobNodeType, keyManagerInstance, TTRPGSystem } from "../../../src/index";
 import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler' ;
-import { AGrobNode } from "../../../src/Nodes/AGrobNodte";
 
 
 

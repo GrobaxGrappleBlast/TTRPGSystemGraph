@@ -1,6 +1,5 @@
-import { newOutputHandler } from "../../../src/Abstractions/IOutputHandler";
-import { Feature, Feature_Origin_Collection, Feature_Origin_Node } from ".";
-import { GrobBonusNode, GrobCollection, TTRPGSystem } from "../../../src";  
+import { Feature_Origin_Collection, Feature_Origin_Node } from ".";
+import { GrobBonusNode, TTRPGSystem } from "../../../src/index";  
 import { IOutputHandler } from '../../../src/Abstractions/IOutputHandler' ;
 import { AFeature_BonusNodes } from "./AFeature_BonusNodes";
 

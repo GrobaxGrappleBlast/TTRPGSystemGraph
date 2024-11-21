@@ -38,7 +38,7 @@
         "style": "sass ./modules/styles.scss styles.css",
         "lint": "eslint . --ext .ts",
         "dev": "vite build --watch",
-        "vite": "vite build --watch",
+        "vite": "vite build",
         "build": "npx tsc",
         "test": "jest --coverage"
     },
