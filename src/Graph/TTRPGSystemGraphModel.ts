@@ -189,6 +189,23 @@ export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
 
 		return grp.getCollectionsNames();
 	}
+	public getCollectionLoc( location : string ){
+
+		// if falsey
+		if (!location){
+			throw new Error(' getNodeLocString : invalid location string, nodestring was '+ location) ;
+		}
+
+		// Get segments 
+		const segs = location.split('.');
+		if (segs.length != 2 ){ 
+			throw new Error('invalid source string. Source string must be three names seperated by a . , namely group.collection , location string was ' + location ) ;
+		}
+
+		// get node
+		return this.getCollection(segs[0],segs[1]);
+
+	}
 	public getCollection( group : groupKeyType | GrobGroupType, name : string){
 		
 		let grp : GrobGroupType;

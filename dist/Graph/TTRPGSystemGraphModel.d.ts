@@ -25,6 +25,7 @@ export declare class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel
     hasDerivedNode(col: GrobCollection<GrobDerivedNode> | string, name: string): boolean;
     hasFixedNode(col: GrobCollection<GrobFixedNode> | string, name: string): boolean;
     getCollectionNames(group: groupKeyType | GrobGroupType): string[];
+    getCollectionLoc(location: string): GrobCollection<GrobNodeType> | null;
     getCollection(group: groupKeyType | GrobGroupType, name: string): GrobCollection<GrobNodeType> | null;
     getDerivedCollection(name: string): GrobCollection<GrobDerivedNode>;
     getFixedCollection(name: string): GrobCollection<GrobFixedNode>;
