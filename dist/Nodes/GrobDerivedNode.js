@@ -221,13 +221,16 @@ class GrobDerivedNode extends AGrobNodte_1.AGrobNode {
         let res = this._recalculate(rec, statement);
         return res;
     }
-    static testCalculate(statement, symbolsToValue = {}) {
+    static testCalculate(statement, symbolsToValue = {}, allowDefaultIfMissingDependency = true) {
         const symbols = statement.match(TTRPGSystemsGraphDependencies_1.grobDerivedSymbolRegex);
         function mapValueToSymbol(s, m) {
             if (m[s]) {
                 return m[s];
             }
-            return 1;
+            if (allowDefaultIfMissingDependency) {
+                return 1;
+            }
+            return NaN;
         }
         let rec = symbols ? Object.fromEntries(symbols.map(s => [s, mapValueToSymbol(s, symbolsToValue)])) : {};
         let res = GrobDerivedNode.recalculate(rec, statement);

@@ -264,13 +264,18 @@ export class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
 		let res = this._recalculate(rec,statement); 
 		return res;
 	}
-	public static testCalculate( statement : string  , symbolsToValue : Record<string,number> = {}){
+	public static testCalculate( statement : string  , symbolsToValue : Record<string,number> = {} , allowDefaultIfMissingDependency = true ){
 		const symbols = statement.match( grobDerivedSymbolRegex );  
 		function mapValueToSymbol( s,m ){
 			if (m[s]){
 				return m[s];
 			}
-			return 1;
+
+            if (allowDefaultIfMissingDependency){
+                return 1;
+            }
+
+			return NaN;
 		}
 
 		let rec = symbols ? Object.fromEntries( symbols.map( s => [s,mapValueToSymbol(s,symbolsToValue)])) : {};

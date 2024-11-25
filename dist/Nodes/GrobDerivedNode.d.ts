@@ -46,7 +46,7 @@ export declare class GrobDerivedNode extends AGrobNode<GrobDerivedNode> {
         success: boolean;
         value: number;
     };
-    static testCalculate(statement: string, symbolsToValue?: Record<string, number>): {
+    static testCalculate(statement: string, symbolsToValue?: Record<string, number>, allowDefaultIfMissingDependency?: boolean): {
         success: boolean;
         value: number;
     };
