@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AFeature_Multi = void 0;
-const Feature_1 = require("./Feature");
-class AFeature_Multi extends Feature_1.Feature {
+import { Feature } from "./Feature";
+export class AFeature_Multi extends Feature {
     constructor() {
         super(...arguments);
         this.features = [];
@@ -104,4 +101,3 @@ class AFeature_Multi extends Feature_1.Feature {
         return true;
     }
 }
-exports.AFeature_Multi = AFeature_Multi;

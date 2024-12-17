@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AGrobNode = void 0;
-const AGraphItem_1 = require("../Abstractions/AGraphItem");
-const TarjanNode_1 = require("./algorithm/TarjanNode");
-class AGrobNode extends AGraphItem_1.AGraphItem {
+import { AGraphItem } from "../Abstractions/AGraphItem";
+import { GrobAlgorithms } from "./algorithm/TarjanNode";
+export class AGrobNode extends AGraphItem {
     constructor(name, keystart, parent) {
         super(name, keystart);
         this.dependencies = {};
@@ -117,7 +114,7 @@ class AGrobNode extends AGraphItem_1.AGraphItem {
     addBonus(bonusIndex, bonus, errors = []) {
         bonus.update();
         // first see if there is a circular dependency, if there already is dont do a thing. 
-        let tarAlgoRequest = TarjanNode_1.GrobAlgorithms.TarjAlgo([this]);
+        let tarAlgoRequest = GrobAlgorithms.TarjAlgo([this]);
         if (tarAlgoRequest[0]) {
             errors.push({ key: 'Pre-AddBonusError', msg: 'this node already had circular dependencies, before adding another node. Added Bonus is therefore refused' });
             return false;
@@ -128,7 +125,7 @@ class AGrobNode extends AGraphItem_1.AGraphItem {
         this.bonuses[bonusIndex] = bonus;
         this.addDependency(bonus);
         // first see if there is a circular dependency, if there already is dont do a thing. 
-        let StrongComps = TarjanNode_1.GrobAlgorithms.TarjAlgo([this]);
+        let StrongComps = GrobAlgorithms.TarjAlgo([this]);
         if (StrongComps[0]) {
             errors.push({ key: 'Pre-AddBonusError', msg: 'this node already had circular dependencies, before adding another node. Added Bonus is therefore refused' });
             this.remBonusIndex(bonusIndex);
@@ -317,4 +314,3 @@ class AGrobNode extends AGraphItem_1.AGraphItem {
         this.updateListeners = {};
     }
 }
-exports.AGrobNode = AGrobNode;

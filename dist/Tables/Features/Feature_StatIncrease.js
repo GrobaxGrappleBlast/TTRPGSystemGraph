@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Feature_StatIncrease_apply = void 0;
-const __1 = require("../../");
-const AFeature_BonusNodes_1 = require("./AFeature_BonusNodes");
+import { GrobBonusNode } from "../../";
+import { AFeature_BonusNodes } from "./AFeature_BonusNodes";
 /**
  * apply X at a time to Y targets
  */
-class Feature_StatIncrease_apply extends AFeature_BonusNodes_1.AFeature_BonusNodes {
+export class Feature_StatIncrease_apply extends AFeature_BonusNodes {
     constructor() {
         super(...arguments);
         //public type = "Feature_StatIncrease_apply";
@@ -55,7 +52,7 @@ class Feature_StatIncrease_apply extends AFeature_BonusNodes_1.AFeature_BonusNod
         this.systems.push(sys);
         for (let i = 0; i < this.increaseNumTargets; i++) {
             // create the node.
-            const node = __1.GrobBonusNode.CreateNodeChain(sys, this.name + '_target_' + i)
+            const node = GrobBonusNode.CreateNodeChain(sys, this.name + '_target_' + i)
                 .addCalculation(this.increaseSize + '')
                 .addFeatureAsFeatureSrc(this)
                 .getNode();
@@ -110,4 +107,3 @@ class Feature_StatIncrease_apply extends AFeature_BonusNodes_1.AFeature_BonusNod
         return true;
     }
 }
-exports.Feature_StatIncrease_apply = Feature_StatIncrease_apply;

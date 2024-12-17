@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ADataRow = exports.ADataTable = void 0;
-class ADataTable {
+export class ADataTable {
     constructor() {
         this.data = {};
     }
@@ -31,7 +28,5 @@ class ADataTable {
     }
     update() { }
 }
-exports.ADataTable = ADataTable;
-class ADataRow {
+export class ADataRow {
 }
-exports.ADataRow = ADataRow;

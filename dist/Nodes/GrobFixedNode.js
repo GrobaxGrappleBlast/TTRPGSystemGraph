@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GrobFixedNode = void 0;
-const AGrobNodte_1 = require("./AGrobNodte");
-class GrobFixedNode extends AGrobNodte_1.AGrobNode {
+import { AGrobNode } from "./AGrobNodte";
+export class GrobFixedNode extends AGrobNode {
     constructor(name, parent) {
         super(name, 'NF', parent);
         this.___value = 1;
@@ -25,4 +22,3 @@ class GrobFixedNode extends AGrobNodte_1.AGrobNode {
     }
     _update() { }
 }
-exports.GrobFixedNode = GrobFixedNode;

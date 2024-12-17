@@ -1,23 +1,20 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TTRPGSystemGraphModel = void 0;
-const IOutputHandler_1 = require("../Abstractions/IOutputHandler");
-const index_1 = require("../index");
-const index_2 = require("../index");
-const _1 = require(".");
+import { newOutputHandler } from "../Abstractions/IOutputHandler";
+import { GrobFixedNode } from "../index";
+import { GrobDerivedNode } from "../index";
+import { TTRPGSystemGraphAbstractModel } from ".";
 const derived = 'derived';
 const fixed = 'fixed';
 /**
  *  handles Model operations and Data Containment,
  * Ensures that data is maintained, as well as graphlinks
 */
-class TTRPGSystemGraphModel extends _1.TTRPGSystemGraphAbstractModel {
+export class TTRPGSystemGraphModel extends TTRPGSystemGraphAbstractModel {
     constructor() {
         super();
         this._createGroup('fixed');
         this._createGroup('derived');
         this._createGroup('extra');
-        this.setOut((0, IOutputHandler_1.newOutputHandler)());
+        this.setOut(newOutputHandler());
     }
     //TODO : find better solution than this.
     // r 
@@ -79,7 +76,7 @@ class TTRPGSystemGraphModel extends _1.TTRPGSystemGraphAbstractModel {
             this.out.outError(`No Derived collection found by name: ${colName} `);
             return null;
         }
-        const node = new index_2.GrobDerivedNode(name, col);
+        const node = new GrobDerivedNode(name, col);
         col.addNode(node);
         return node;
     }
@@ -99,7 +96,7 @@ class TTRPGSystemGraphModel extends _1.TTRPGSystemGraphAbstractModel {
             this.out.outError(`No Fixed collection found by name: ${colName} `);
             return null;
         }
-        const node = new index_1.GrobFixedNode(name, col);
+        const node = new GrobFixedNode(name, col);
         col.addNode(node);
         return node;
     }
@@ -435,4 +432,3 @@ class TTRPGSystemGraphModel extends _1.TTRPGSystemGraphAbstractModel {
         this._removeNodeDependency(node, dep);
     }
 }
-exports.TTRPGSystemGraphModel = TTRPGSystemGraphModel;

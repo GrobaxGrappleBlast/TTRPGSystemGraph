@@ -1,21 +1,18 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TTRPGSystemGraphAbstractModel = void 0;
-const GrobCollection_1 = require("../GrobCollection");
-const GrobGroup_1 = require("../GrobGroup");
-const IOutputHandler_1 = require("../Abstractions/IOutputHandler");
-const KeyManager_1 = require("../Abstractions/KeyManager");
+import { GrobCollection } from "../GrobCollection";
+import { GrobGroup } from "../GrobGroup";
+import { newOutputHandler } from "../Abstractions/IOutputHandler";
+import { keyManagerInstance } from "../Abstractions/KeyManager";
 /**
 * a general and flexible implementation of TTRPG system. it focusses on not diskrimination or sorting data.
 * simply having logic that is the same for everything.
 */
-class TTRPGSystemGraphAbstractModel {
+export class TTRPGSystemGraphAbstractModel {
     constructor() {
-        this._key = KeyManager_1.keyManagerInstance.getNewKey();
+        this._key = keyManagerInstance.getNewKey();
         this.data = {};
     }
     setOut(out) {
-        this.out = out ? out : (0, IOutputHandler_1.newOutputHandler)();
+        this.out = out ? out : newOutputHandler();
     }
     _deleteGroup(group) {
         if (typeof group == 'string') {
@@ -38,7 +35,7 @@ class TTRPGSystemGraphAbstractModel {
             this.out.outError('attempted to add new group, however group already existed');
             return null;
         }
-        let gp = new GrobGroup_1.GrobGroup(name, this);
+        let gp = new GrobGroup(name, this);
         this.data[gp.getName()] = gp;
         return gp;
     }
@@ -76,7 +73,7 @@ class TTRPGSystemGraphAbstractModel {
             this.out.outError(`Collection by that name already existed in '${group.getName()}'`);
             return null;
         }
-        const collection = new GrobCollection_1.GrobCollection(name, group);
+        const collection = new GrobCollection(name, group);
         group.addCollection(collection);
         return collection;
     }
@@ -135,4 +132,3 @@ class TTRPGSystemGraphAbstractModel {
         return collection.addNode(table);
     }
 }
-exports.TTRPGSystemGraphAbstractModel = TTRPGSystemGraphAbstractModel;

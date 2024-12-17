@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TTRPGSystemBonusDesigner = void 0;
-const Features_1 = require("../Tables/Features");
-const GrobBonusNode_1 = require("../Nodes/GrobBonusNode");
-class TTRPGSystemBonusDesigner {
+import { FeatureSource } from "../Tables/Features";
+import { GrobBonusNode } from "../Nodes/GrobBonusNode";
+export class TTRPGSystemBonusDesigner {
     /**
      *
      * @param sys The System Where this bonus is applied to
@@ -21,7 +18,7 @@ class TTRPGSystemBonusDesigner {
         return instance;
     }
     createNewNode(name, parent) {
-        return new GrobBonusNode_1.GrobBonusNode(name, parent);
+        return new GrobBonusNode(name, parent);
     }
     /**
      *
@@ -37,7 +34,7 @@ class TTRPGSystemBonusDesigner {
         return this;
     }
     addFeatureAsFeatureSrc(feature) {
-        this.activeNode.featureSrc = new Features_1.FeatureSource();
+        this.activeNode.featureSrc = new FeatureSource();
         this.activeNode.featureSrc.name = feature.name;
         this.activeNode.featureSrc.source = feature.source;
         this.activeNode.featureSrc.feature = feature;
@@ -64,4 +61,3 @@ class TTRPGSystemBonusDesigner {
         return this.activeNode.isValid();
     }
 }
-exports.TTRPGSystemBonusDesigner = TTRPGSystemBonusDesigner;

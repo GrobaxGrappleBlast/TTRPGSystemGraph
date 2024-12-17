@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GrobBonusNode = void 0;
-const GrobDerivedNode_1 = require("./GrobDerivedNode");
-const TTRPGSystemReplacementDesigner_1 = require("../Helpers/TTRPGSystemReplacementDesigner");
-class GrobBonusNode extends GrobDerivedNode_1.GrobDerivedNode {
+import { GrobDerivedNode } from "./GrobDerivedNode";
+import { TTRPGSystemBonusDesigner } from "../Helpers/TTRPGSystemReplacementDesigner";
+export class GrobBonusNode extends GrobDerivedNode {
     constructor(name, parent) {
         super(name, parent);
     }
@@ -14,7 +11,7 @@ class GrobBonusNode extends GrobDerivedNode_1.GrobDerivedNode {
      * @returns
      */
     static CreateNodeChain(sys, name) {
-        return TTRPGSystemReplacementDesigner_1.TTRPGSystemBonusDesigner.createBonusNodeChain(sys, name);
+        return TTRPGSystemBonusDesigner.createBonusNodeChain(sys, name);
     }
     static getTypeString() {
         return 'bonusNode';
@@ -33,4 +30,3 @@ class GrobBonusNode extends GrobDerivedNode_1.GrobDerivedNode {
         super.dispose();
     }
 }
-exports.GrobBonusNode = GrobBonusNode;

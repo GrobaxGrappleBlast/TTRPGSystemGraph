@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GrobGroup = void 0;
-const AGraphItem_1 = require("./Abstractions/AGraphItem");
-class GrobGroup extends AGraphItem_1.AGraphItem {
+import { AGraphItem } from "./Abstractions/AGraphItem";
+export class GrobGroup extends AGraphItem {
     constructor(name, parent) {
         super(name, 'G');
         this.collections_names = {};
@@ -94,4 +91,3 @@ class GrobGroup extends AGraphItem_1.AGraphItem {
         this.updateListeners = {};
     }
 }
-exports.GrobGroup = GrobGroup;

@@ -1,17 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FeatureSource = exports.Feature_Origin_Collection = exports.Feature_Origin_Node = exports.Feature_Multi = exports.Feature_Choice = exports.Feature_CalcReplacement = exports.Feature_StatIncrease_apply = exports.Feature = void 0;
-const Feature_1 = require("./Feature");
-Object.defineProperty(exports, "Feature", { enumerable: true, get: function () { return Feature_1.Feature; } });
-Object.defineProperty(exports, "FeatureSource", { enumerable: true, get: function () { return Feature_1.FeatureSource; } });
-const Feature_Choice_1 = require("./Feature_Choice");
-Object.defineProperty(exports, "Feature_Choice", { enumerable: true, get: function () { return Feature_Choice_1.Feature_Choice; } });
-const Feature_Origin_1 = require("./Feature_Origin");
-Object.defineProperty(exports, "Feature_Origin_Collection", { enumerable: true, get: function () { return Feature_Origin_1.Feature_Origin_Collection; } });
-Object.defineProperty(exports, "Feature_Origin_Node", { enumerable: true, get: function () { return Feature_Origin_1.Feature_Origin_Node; } });
-const Feature_StatIncrease_1 = require("./Feature_StatIncrease");
-Object.defineProperty(exports, "Feature_StatIncrease_apply", { enumerable: true, get: function () { return Feature_StatIncrease_1.Feature_StatIncrease_apply; } });
-const Feature_CalcReplacement_1 = require("./Feature_CalcReplacement");
-Object.defineProperty(exports, "Feature_CalcReplacement", { enumerable: true, get: function () { return Feature_CalcReplacement_1.Feature_CalcReplacement; } });
-const Feature_Multi_1 = require("./Feature_Multi");
-Object.defineProperty(exports, "Feature_Multi", { enumerable: true, get: function () { return Feature_Multi_1.Feature_Multi; } });
+import { Feature, FeatureSource } from "./Feature";
+import { Feature_Choice } from "./Feature_Choice";
+import { Feature_Origin_Collection, Feature_Origin_Node } from "./Feature_Origin";
+import { Feature_StatIncrease_apply } from "./Feature_StatIncrease";
+import { Feature_CalcReplacement } from "./Feature_CalcReplacement";
+import { Feature_Multi } from "./Feature_Multi";
+export { 
+// specifik feature types 
+Feature, Feature_StatIncrease_apply, Feature_CalcReplacement, Feature_Choice, Feature_Multi, 
+// feature dependencies.
+Feature_Origin_Node, Feature_Origin_Collection, FeatureSource };

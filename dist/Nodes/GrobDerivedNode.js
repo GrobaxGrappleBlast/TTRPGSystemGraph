@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GrobDerivedNode = void 0;
-const AGrobNodte_1 = require("./AGrobNodte");
-const TTRPGSystemsGraphDependencies_1 = require("../Graph/TTRPGSystemsGraphDependencies");
-const GrobOrigin_1 = require("./GrobOrigin");
-class GrobDerivedNode extends AGrobNodte_1.AGrobNode {
+import { AGrobNode } from "./AGrobNodte";
+import { grobDerivedSymbolRegex } from "../Graph/TTRPGSystemsGraphDependencies";
+import { GrobOrigin } from "./GrobOrigin";
+export class GrobDerivedNode extends AGrobNode {
     constructor(name, parent) {
         super(name, 'ND', parent);
         this.calc = '@a';
@@ -42,7 +39,7 @@ class GrobDerivedNode extends AGrobNodte_1.AGrobNode {
         let orig = this.origins.find(p => { var _a; return ((_a = p.origin) === null || _a === void 0 ? void 0 : _a.getKey()) == key; });
         if (orig) {
             orig.origin = null;
-            orig.originKey = GrobOrigin_1.GrobOrigin.UnkownLocationKey;
+            orig.originKey = GrobOrigin.UnkownLocationKey;
         }
         // then nulify the dependency
         return this.removeDependency(node);
@@ -102,11 +99,11 @@ class GrobDerivedNode extends AGrobNodte_1.AGrobNode {
             // add items if there is anything to add.  
             if (symbolsToAdd.length != 0) {
                 for (let i = 0; i < symbolsToAdd.length; i++) {
-                    const orig = new GrobOrigin_1.GrobOrigin();
+                    const orig = new GrobOrigin();
                     orig.symbol = symbolsToAdd[i];
                     orig.standardValue = 1;
                     orig.origin = null;
-                    orig.originKey = GrobOrigin_1.GrobOrigin.UnkownLocationKey;
+                    orig.originKey = GrobOrigin.UnkownLocationKey;
                     this.origins.push(orig);
                 }
             }
@@ -155,7 +152,7 @@ class GrobDerivedNode extends AGrobNodte_1.AGrobNode {
         var _a;
         const calcValue = calc;
         // get symbols from the calc. and turn it into an array. important, the array is an array of unique keys.
-        let symbols = (_a = calcValue.match(TTRPGSystemsGraphDependencies_1.grobDerivedSymbolRegex)) !== null && _a !== void 0 ? _a : [];
+        let symbols = (_a = calcValue.match(grobDerivedSymbolRegex)) !== null && _a !== void 0 ? _a : [];
         symbols = Array.from(new Set(symbols));
         // get the keys that are already there.
         let existingKeysArray = this.origins.map(p => p.symbol);
@@ -168,7 +165,7 @@ class GrobDerivedNode extends AGrobNodte_1.AGrobNode {
         var _a;
         const calcValue = calc;
         // get symbols from the calc. and turn it into an array. important, the array is an array of unique keys.
-        let symbols = (_a = calcValue.match(TTRPGSystemsGraphDependencies_1.grobDerivedSymbolRegex)) !== null && _a !== void 0 ? _a : [];
+        let symbols = (_a = calcValue.match(grobDerivedSymbolRegex)) !== null && _a !== void 0 ? _a : [];
         symbols = Array.from(new Set(symbols));
         return symbols;
     }
@@ -186,7 +183,7 @@ class GrobDerivedNode extends AGrobNodte_1.AGrobNode {
         return GrobDerivedNode.recalculate(rec, statement);
     }
     static recalculate(rec = {}, statement) {
-        const symbols = statement.match(TTRPGSystemsGraphDependencies_1.grobDerivedSymbolRegex);
+        const symbols = statement.match(grobDerivedSymbolRegex);
         //let rec = 
         //	useTempValues ?
         //	Object.fromEntries( origins.map(p => [ p.symbol, p.standardValue])):	
@@ -216,13 +213,13 @@ class GrobDerivedNode extends AGrobNodte_1.AGrobNode {
         return { success: recalcSuccess, value: value };
     }
     testCalculate(statement) {
-        const symbols = statement.match(TTRPGSystemsGraphDependencies_1.grobDerivedSymbolRegex);
+        const symbols = statement.match(grobDerivedSymbolRegex);
         let rec = symbols ? Object.fromEntries(symbols.map(s => [s, 1])) : {};
         let res = this._recalculate(rec, statement);
         return res;
     }
     static testCalculate(statement, symbolsToValue = {}, allowDefaultIfMissingDependency = true) {
-        const symbols = statement.match(TTRPGSystemsGraphDependencies_1.grobDerivedSymbolRegex);
+        const symbols = statement.match(grobDerivedSymbolRegex);
         function mapValueToSymbol(s, m) {
             if (m[s]) {
                 return m[s];
@@ -251,4 +248,3 @@ class GrobDerivedNode extends AGrobNodte_1.AGrobNode {
         orig.originKey = dependency.getLocationKey();
     }
 }
-exports.GrobDerivedNode = GrobDerivedNode;

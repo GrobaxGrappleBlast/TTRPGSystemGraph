@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Feature_Choice = void 0;
-const AFeature_Multi_1 = require("./AFeature_Multi");
-class Feature_Choice extends AFeature_Multi_1.AFeature_Multi {
+import { AFeature_Multi } from "./AFeature_Multi";
+export class Feature_Choice extends AFeature_Multi {
     getType() {
         return Feature_Choice.getType();
     }
@@ -36,4 +33,3 @@ class Feature_Choice extends AFeature_Multi_1.AFeature_Multi {
     }
     disposeNode_fromNode(node) { }
 }
-exports.Feature_Choice = Feature_Choice;

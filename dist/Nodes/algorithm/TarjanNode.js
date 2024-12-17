@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GrobAlgorithms = void 0;
-class GrobAlgorithms {
+export class GrobAlgorithms {
     static TarjAlgo(nodes) {
         //  --- --- --- --- --- --- --- ---  --- --- --- --- --- ---
         // Tarjans Algorithm
@@ -82,5 +79,4 @@ class GrobAlgorithms {
         return [hasStrongComponents, strongComponents];
     }
 }
-exports.GrobAlgorithms = GrobAlgorithms;
 GrobAlgorithms.algLevel = 1;

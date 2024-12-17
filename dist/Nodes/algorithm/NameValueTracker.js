@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.NameValueTracker = exports.DoubleKeyedIndexTracker = void 0;
 class doubleKeyedTable {
     constructor() {
         this.index_one = {};
@@ -79,14 +76,13 @@ class doubleKeyedTable {
         return arr;
     }
 }
-class DoubleKeyedIndexTracker extends doubleKeyedTable {
+export class DoubleKeyedIndexTracker extends doubleKeyedTable {
     SymbolAndKeyToComponent(symbol, key, component) {
         this.remove_One(symbol);
         this.addData(symbol, key, component);
     }
 }
-exports.DoubleKeyedIndexTracker = DoubleKeyedIndexTracker;
-class NameValueTracker extends doubleKeyedTable {
+export class NameValueTracker extends doubleKeyedTable {
     nameToNumber(name, value, component) {
         this.remove_One(name);
         this.addData(name, value, component);
@@ -101,4 +97,3 @@ class NameValueTracker extends doubleKeyedTable {
         this.shift_Two(value, newValue);
     }
 }
-exports.NameValueTracker = NameValueTracker;

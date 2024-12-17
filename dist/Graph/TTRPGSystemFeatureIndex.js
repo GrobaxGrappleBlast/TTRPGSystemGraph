@@ -1,16 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TTRPGSystemFeatureIndex = void 0;
-const tslib_1 = require("tslib");
-const IOutputHandler_1 = require("../Abstractions/IOutputHandler");
-const _1 = require(".");
+import { __awaiter } from "tslib";
+import { newOutputHandler } from "../Abstractions/IOutputHandler";
+import { TTRPGSystemGraphModel } from ".";
 /**
  *  handles Model operations and Data Containment,
  * Ensures that data is maintained, as well as graphlinks
 */
-class TTRPGSystemFeatureIndex extends _1.TTRPGSystemGraphModel {
+export class TTRPGSystemFeatureIndex extends TTRPGSystemGraphModel {
     static processFeatureQue_getSources() {
-        return tslib_1.__awaiter(this, arguments, void 0, function* (iterative = false) {
+        return __awaiter(this, arguments, void 0, function* (iterative = false) {
             var _a;
             // ensure that there is a Feature loader Module.
             if (!TTRPGSystemFeatureIndex.featureLoader) {
@@ -65,7 +62,7 @@ class TTRPGSystemFeatureIndex extends _1.TTRPGSystemGraphModel {
         });
     }
     static loadFeatureSources(sources) {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        return __awaiter(this, void 0, void 0, function* () {
             // if the feature loader is not added, then return
             if (!TTRPGSystemFeatureIndex.featureLoader) {
                 console.error('Tried to load features, but no feature loader was installed');
@@ -78,7 +75,7 @@ class TTRPGSystemFeatureIndex extends _1.TTRPGSystemGraphModel {
         });
     }
     static loadFeatureSource(source_1) {
-        return tslib_1.__awaiter(this, arguments, void 0, function* (source, reload = false, out = (0, IOutputHandler_1.newOutputHandler)()) {
+        return __awaiter(this, arguments, void 0, function* (source, reload = false, out = newOutputHandler()) {
             var _a;
             // if the feature loader is not added, then return
             if (!TTRPGSystemFeatureIndex.featureLoader) {
@@ -149,7 +146,6 @@ class TTRPGSystemFeatureIndex extends _1.TTRPGSystemGraphModel {
         return features;
     }
 }
-exports.TTRPGSystemFeatureIndex = TTRPGSystemFeatureIndex;
 TTRPGSystemFeatureIndex.featureQue = [];
 TTRPGSystemFeatureIndex.loadedFeatures = {};
 TTRPGSystemFeatureIndex.loadedNameFeatures = {};

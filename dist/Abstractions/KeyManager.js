@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.keyManagerInstance = exports.KeyManager = void 0;
-class KeyManager {
+export class KeyManager {
     constructor() {
         this.keyCounter = 12;
     }
@@ -10,5 +7,4 @@ class KeyManager {
         return num.toString(16);
     }
 }
-exports.KeyManager = KeyManager;
-exports.keyManagerInstance = new KeyManager();
+export const keyManagerInstance = new KeyManager();

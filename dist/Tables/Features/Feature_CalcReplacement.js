@@ -1,13 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Feature_CalcReplacement = void 0;
-const tslib_1 = require("tslib");
-const _1 = require(".");
-const __1 = require("../..");
+import { __awaiter } from "tslib";
+import { Feature } from ".";
+import { GrobBonusNode } from "../..";
 /**
  * apply X at a time to Y targets
  */
-class Feature_CalcReplacement extends _1.Feature {
+export class Feature_CalcReplacement extends Feature {
     getType() {
         return Feature_CalcReplacement.getType();
     }
@@ -65,7 +62,7 @@ class Feature_CalcReplacement extends _1.Feature {
             this.systemsNodechoices[sys._key] = [];
         this.systemsNodechoices[sys._key].push(target);
         // Create a new replacement node. 
-        var chain = __1.GrobBonusNode
+        var chain = GrobBonusNode
             .CreateNodeChain(sys, this.getNodeFeatureName())
             .addCalculation(this.calc)
             .addFeatureAsFeatureSrc(this);
@@ -99,7 +96,7 @@ class Feature_CalcReplacement extends _1.Feature {
         const _super = Object.create(null, {
             dispose: { get: () => super.dispose }
         });
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        return __awaiter(this, void 0, void 0, function* () {
             for (let i = 0; i < this.systems.length; i++) {
                 const sys = this.systems[i];
                 this.remove(sys);
@@ -108,4 +105,3 @@ class Feature_CalcReplacement extends _1.Feature {
         });
     }
 }
-exports.Feature_CalcReplacement = Feature_CalcReplacement;
